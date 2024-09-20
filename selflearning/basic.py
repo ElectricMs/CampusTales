@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout
+from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout
 from PySide6.QtCore import Qt
 
 
@@ -7,10 +7,6 @@ class MyWindow(QWidget):
         super().__init__()
 
         mainlayout = QVBoxLayout()
-        button=QPushButton("Click me")
-
-
-        mainlayout.addWidget(button)
         self.setLayout(mainlayout)
 
 

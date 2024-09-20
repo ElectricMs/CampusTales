@@ -1,0 +1,34 @@
+from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QSlider
+from PySide6.QtCore import Qt
+
+
+class MyWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+
+        mainlayout = QVBoxLayout()
+
+        slider1 = QSlider(Qt.Orientation.Horizontal)
+        slider1.setTickPosition(QSlider.TickPosition.TicksBelow)
+        slider1.setTickInterval(10)
+        slider1.setMinimum(10)
+        slider1.setMaximum(50)
+        slider1.valueChanged.connect(self.showSlider)
+
+        mainlayout.addWidget(slider1)
+
+
+        self.setLayout(mainlayout)
+
+
+    def showSlider(self):
+        current_widget = self.sender()
+        print(current_widget.value()) # type: ignore
+
+
+
+if __name__ == '__main__':
+    app = QApplication([])
+    window = MyWindow()
+    window.show()
+    app.exec()

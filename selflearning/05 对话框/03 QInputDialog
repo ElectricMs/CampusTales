@@ -1,0 +1,44 @@
+from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QInputDialog, QPushButton, QLineEdit
+
+class myWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+        
+        btn = QPushButton("Open Dialog")
+        btn.clicked.connect(self.openDialog)
+
+        btn2 = QPushButton("Open Dialog 1")
+        btn2.clicked.connect(lambda: print(QInputDialog.getDouble(self, "Title", "Text", 1.0, 0.0, 100.0, 2)))
+        
+        btn3 = QPushButton("Open Dialog 2")
+        btn3.clicked.connect(lambda: print(QInputDialog.getItem(self, "Title", "Text", ["Item1", "Item2", "Item3"], 0, False)))
+
+        btn4 = QPushButton("Open Dialog 3")
+        btn4.clicked.connect(lambda: print(QInputDialog.getText(self, "Title", "Text", QLineEdit.EchoMode.Normal)))
+
+        btn5 = QPushButton("Open Dialog 4")
+        btn5.clicked.connect(lambda: print(QInputDialog.getMultiLineText(self, "Title", "Text")))
+
+        self.mainlayout = QVBoxLayout()
+        self.mainlayout.addWidget(btn)
+        self.mainlayout.addWidget(btn2)
+        self.mainlayout.addWidget(btn3)
+        self.mainlayout.addWidget(btn4)
+        self.mainlayout.addWidget(btn5)
+
+        self.setLayout(self.mainlayout)
+
+    def openDialog(self):
+        replay, ok = QInputDialog.getInt(self, "Title", "Text", 1, 0, 100, 1)
+        if ok:
+            print(replay)
+
+
+
+
+
+if __name__ == '__main__':
+    app = QApplication([])
+    window = myWindow()
+    window.show()
+    app.exec()

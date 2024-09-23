@@ -1,5 +1,7 @@
 import sys
 from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout, QWidget, QLabel, QLineEdit, QStackedLayout
+from Ui_MainMenu import Ui_widget  
+
 
 class MainWindow(QMainWindow):
     def __init__(self):

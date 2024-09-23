@@ -1,8 +1,12 @@
 import random
 import time
+from Code_Ui import MainMenu
 
 class Game:
-    def __init__(self):
+    def __init__(self,Ui:MainMenu):
+
+        print("class Game initiating...")
+        self.Ui=Ui
 
         # 存放游戏创建时间
         self.createTime=time.time()
@@ -11,7 +15,7 @@ class Game:
         self.reloadTime=time.time()
 
         # 存放所有事件，包括目前的可选事件和不可选事件，格式为 {事件名:事件实例}
-        self.allEvents=event.get_all_subEvents()
+        self.allEvents=event.get_all_subEvents(self)
 
         # 存放所有可选事件，格式为 {事件名:事件对象}
         self.optionalEvents={}
@@ -22,23 +26,26 @@ class Game:
         # 存放所有可选事件的概率，格式为 {事件名:概率}
         self.eventProbablity={}
         
-        # 存放已经完成的事件和时间
+        # 存放已经完成的事件和时间  用什么结构存再议
         self.completedEvents={}
 
         # 加载可选事件概率
         self.loadEventProbability()
         
         # 存放已加入主线的事件，格式为 [事件名（字符串）]
-        self.mainlineEvents=[]
+        self.mainlineEvents=["studies"]
 
         # 存放时间点，开始时为第一周
-        self.timePoints=1
+        self.timePoint=1
 
+        # 存放每周操作节点，0：展示文字：1：选择事件：2：分配能量 ：3：事件进度状态
+        self.weekPoint=0
 
 
     # 开始游戏
     def start(self):
-        pass
+        return dialogue.get_random_welcoming()
+
 
 
     # 重新加载游戏
@@ -46,8 +53,29 @@ class Game:
         self.reloadTime=time.time()
 
 
-    # 下一个时间点
+    # 下一个时间与操作点  点击next的时候调用
     def next(self):
+        if self.weekPoint==0:
+            self.weekpoint=1 # 选择事件状态
+            # 在这里需要出现随机事件并选择是否进行
+            self.Ui.game_layout_1.radioButton_NO.show() 
+            self.Ui.game_layout_1.radioButton_Yes.show()
+            pass
+
+        elif self.weekPoint==1:
+            self.weekPoint=2 #分配能量状态
+            # 在这里需要分配能量
+
+
+            pass
+
+        elif self.weekPoint==2:
+            self.weekPoint=0 #展示文字状态
+            # 在这里需要展示每周随机的一段文字
+
+
+            pass
+
         pass
 
 
@@ -83,8 +111,13 @@ class Game:
         
     # 刷新事件概率
     def loadEventProbability(self):
+
         for event in self.optionalEvents:
             self.eventProbablity[event.name]=event.probability
+        pass
+
+    # 结束一周
+    def endWeek(self):
         pass
 
 
@@ -93,8 +126,6 @@ class Game:
 
 
 
-if __name__=="__main__":
-    pass
 
 
 
@@ -103,7 +134,7 @@ if __name__=="__main__":
 
 
 class event:
-    def __init__(self,name,time,description,Game):
+    def __init__(self,name=None,time=time.time(),description=None,Game=None):
         self.name=name
         self.time=time
         self.description=description
@@ -113,21 +144,9 @@ class event:
 
     # 获取所有子类
     @classmethod
-    def get_all_subEvents(cls):
-        subEvents = {}
-
-        # 获取当前类所有的直接子类
-        direct_subEvents = event.__subclasses__()
-
-        for subEvent in direct_subEvents:
-            # 假设子类的构造函数需要这三个参数
-            # 你可以根据实际情况调整这些参数的值
-            instance = subEvent("事件名称", 0, "事件描述", Game)
-            # 将子类实例的名称和实例存入字典
-            subEvents[subEvent.__name__] = instance
-
-            # 递归调用以获取该子类的所有子类，并实例化它们
-            subEvents.update(subEvent.get_all_subEvents())
+    def get_all_subEvents(cls, Game):
+        subEvents={}
+        subEvents.update({'studies':event_studies(Game)})
         
         return subEvents
     
@@ -153,7 +172,29 @@ class event_crush_atFirstBlush(event):
     pass
 
 
+class event_studies(event):
+    def __init__(self,Game,name='studies',time=time.time(),description='学习'):
+        super().__init__(name,time,description,Game)
+        self.probability=0
 
+    def require(self):
+        return True
+
+    # 刷新概率，在事件结束时调用
+    def refreshProbability(self):
+        pass
+
+    # 事件影响
+    def affection(self,*args):
+        pass
+
+
+
+
+
+
+
+    pass
 
 
 
@@ -167,7 +208,20 @@ class dialogue:
         "这是我上大学的第一天。天哪，我可不能摆烂",
         "这是我的第一天大学生活，我得好好准备一下",
         "今天是我大学的第一天，我要好好学习",
+        "这是我上大学的第一天，烦死了这学我真是上不了一点"
     ]
+
+    @classmethod
+    def get_random_welcoming(cls):
+        return random.choice(dialogue.welcoming)
+
+
+
+
+
+
+
+
 
     random_talk=[
         """
@@ -197,3 +251,7 @@ class dialogue:
             了学校的电影院，看了一部新上映的电影，大家都觉得非常精彩。回到宿舍后，我们聊了很久，直到深夜才入睡。
         """,
     ]
+
+    @classmethod
+    def get_random_talk(cls):
+        return random.choice(dialogue.random_talk)

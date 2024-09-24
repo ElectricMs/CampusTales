@@ -53,6 +53,12 @@ class Ui_Form(object):
         self.label_Text.setGeometry(QRect(330, 100, 261, 141))
         self.label_Text.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignTop)
         self.label_Text.setWordWrap(True)
+        self.pushButton_Back = QPushButton(Form)
+        self.pushButton_Back.setObjectName(u"pushButton_Back")
+        self.pushButton_Back.setGeometry(QRect(860, 20, 75, 24))
+        font3 = QFont()
+        font3.setPointSize(7)
+        self.pushButton_Back.setFont(font3)
 
         self.retranslateUi(Form)
 
@@ -66,5 +72,6 @@ class Ui_Form(object):
         self.radioButton_NO.setText(QCoreApplication.translate("Form", u"No", None))
         self.radioButton_Yes.setText(QCoreApplication.translate("Form", u"Yes", None))
         self.label_Text.setText(QCoreApplication.translate("Form", u"TextLabel", None))
+        self.pushButton_Back.setText(QCoreApplication.translate("Form", u"BackToMain", None))
     # retranslateUi
 

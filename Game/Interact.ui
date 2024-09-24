@@ -56,7 +56,7 @@
     <string>Interact</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="pushButton_PSU">
    <property name="geometry">
     <rect>
      <x>180</x>

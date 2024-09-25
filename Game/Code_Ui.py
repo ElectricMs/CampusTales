@@ -3,13 +3,14 @@ from PySide6 import QtCore, QtGui, QtWidgets, QtQuick
 from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QPushButton, QStackedLayout, QLabel, QFrame, QHBoxLayout, QSizePolicy
 from PySide6.QtWidgets import QPlainTextEdit
 from PySide6.QtGui import QFontMetricsF, QTransform
-from PySide6.QtCore import Qt, QRect
+from PySide6.QtCore import Qt, QRect, QTimer
 
 
 from Ui_MainMenu import Ui_widget  
 from Ui_Game_1 import Ui_Form as Ui_game
 from Ui_Interact import Ui_Form as Ui_interact
 from Ui_Conversation import Ui_Form as Ui_conversation
+import asyncio
 
 
 
@@ -61,14 +62,49 @@ class GameLayout_Conversation(QWidget, Ui_conversation):
         #self.plainTextEdit_Input.setGeometry(QRect(380, 410, 421, 31))
         #self.plainTextEdit_Input.setPlaceholderText("输入消息")
         
-        self.add_msg("你好呀",is_me=False)
 
-    
+
+
+    def loading(self):
+        self.plainTextEdit_Input.setEnabled(False)
+        self.plainTextEdit_Input.setPlaceholderText("正在建立连接...")
+        self.pushButton_Send.setEnabled(False)
+        from Agent.talk import Agent
+        self.agent=Agent()
+        self.add_msg("你好呀",is_me=False)
+        self.plainTextEdit_Input.setEnabled(True)
+        self.plainTextEdit_Input.setPlaceholderText("开始对话...")
+        self.pushButton_Send.setEnabled(True)
+
+
     def send(self):
         msg = self.plainTextEdit_Input.toPlainText()
         if msg:
             self.add_msg(msg,is_me=True)
             self.plainTextEdit_Input.clear()
+            self.plainTextEdit_Input.setEnabled(False)
+            self.plainTextEdit_Input.setPlaceholderText("对方正在输入...")
+            self.pushButton_Send.setEnabled(False)
+
+            # 使用 QTimer 来稍作延迟再执行异步任务
+            QTimer.singleShot(50, lambda: self.run_async_task(msg))  # 延迟50毫秒
+
+
+    def run_async_task(self, msg):
+        loop = asyncio.new_event_loop()  # 创建新的事件循环
+        asyncio.set_event_loop(loop)  # 设置为当前事件循环
+        loop.run_until_complete(self.handle_send(msg))  # 运行异步任务
+        loop.close()  # 关闭事件循环
+
+
+    async def handle_send(self, msg):
+        answer = await self.agent.talk(msg)
+        print(answer)
+        self.add_msg(answer, is_me=False)
+        print("done")
+        self.plainTextEdit_Input.setEnabled(True)
+        self.pushButton_Send.setEnabled(True)
+        self.plainTextEdit_Input.setPlaceholderText("输入消息")
 
 
     def add_msg(self, msg, is_me=False):
@@ -146,6 +182,9 @@ class MainMenu(QMainWindow):
     def interact_PSU(self):
         print("interact : PSU")
         self.stacked_layout.setCurrentIndex(3)
+        print("loading...")
+        QTimer.singleShot(0, self.game_layout_conversation.loading)  # 延迟加载，但是还是没什么用
+
 
 
 

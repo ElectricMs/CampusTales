@@ -2,8 +2,10 @@ import random
 import time
 from Code_Ui import MainMenu
 
+
 class Game:
     def __init__(self,Ui:MainMenu):
+        from Event.event import event
 
         print("class Game initiating...")
         self.Ui=Ui
@@ -17,12 +19,8 @@ class Game:
         # 存放所有事件，包括目前的可选事件和不可选事件，格式为 {事件名:事件实例}
         self.allEvents=event.get_all_subEvents(self)
 
-        # 存放所有可选事件，格式为 {事件名:事件对象}
-        self.optionalEvents={}
-
         # 当前正在进行的事件
-        self.currentEvent=None
-
+        self.currentEvent:event
         # 存放所有可选事件的概率，格式为 {事件名:概率}
         self.eventProbablity={}
         
@@ -47,7 +45,6 @@ class Game:
         return dialogue.get_random_welcoming()
 
 
-
     # 重新加载游戏
     def reload(self):
         self.reloadTime=time.time()
@@ -59,18 +56,33 @@ class Game:
             print("选择事件状态")
             self.weekPoint=1 # 选择事件状态
             print(self.weekPoint)
-            self.Ui.game_layout_1.label_Text.setText("出现了新的事件")
+
+            # 这里需要选定一个加载的事件
+            if self.loadEvent():
+                # 加载成功
+                pass
+            else:
+                self.loadRandomEvent()
+            result = self.currentEvent.if_join()
+            if result is not None:
+                text1, text2 = result
+                self.Ui.game_layout_1.label_Text.setText(text1+'\n'+text2)
+            else:
+                # 处理 None 的情况，例如：
+                text1, text2 = "好像出了点问题", "默认文本"
+                self.Ui.game_layout_1.label_Text.setText(text1+'\n'+text2)
+
+            print(self.currentEvent.name)
+
+            text1, text2=self.currentEvent.if_join()
+            self.Ui.game_layout_1.label_Text.setText(text1)
+
+
             # 在这里需要出现随机事件并选择是否进行 默认选no
             self.Ui.game_layout_1.radioButton_NO.show() 
             self.Ui.game_layout_1.radioButton_Yes.show()
             self.Ui.game_layout_1.radioButton_NO.setChecked(True)
             self.Ui.game_layout_1.radioButton_Yes.setChecked(False)
-            # 这边想加一点文字函数，注意修改函数调用
-            # self.Ui.game_layout_1.radioButton_NO.clicked.connect(self.next)
-            # self.Ui.game_layout_1.radioButton_Yes.clicked.connect(self.next)
-
-
-
 
             pass
 
@@ -86,7 +98,9 @@ class Game:
             self.Ui.game_layout_1.radioButton_NO.hide() 
             self.Ui.game_layout_1.radioButton_Yes.hide()
             self.Ui.game_layout_1.label_Text.setText("该如何安排任务呢···")
+            self.allocateEnergy()
 
+            self.timePoint+=1
             pass
 
         elif self.weekPoint==2:
@@ -98,13 +112,16 @@ class Game:
             pass
 
         elif self.weekPoint==3:
-            print("进入支线")
             self.weekPoint=1 #点击next后分配能量
             self.Ui.game_layout_1.radioButton_NO.hide() 
             self.Ui.game_layout_1.radioButton_Yes.hide()
             self.Ui.game_layout_1.radioButton_NO.setChecked(True)
             self.Ui.game_layout_1.radioButton_Yes.setChecked(False)
-            self.Ui.game_layout_1.label_Text.setText("选择参与新的事件，在这里加入aigc，将事件加入主线")
+
+            print("进入支线")   # 选择了yes
+            self.currentEvent.event_start()
+
+            
             pass
 
         pass
@@ -112,6 +129,13 @@ class Game:
 
     # 分配能量
     def allocateEnergy(self):
+        # 这里需要分配精力
+        # 学习 运动 社交 娱乐
+
+
+
+
+
         pass
 
 
@@ -130,20 +154,34 @@ class Game:
 
         # 判断选择的事件是否可行
         if selected_event[0].require():
-            return selected_event[0]
+            self.currentEvent=selected_event[0]
+            return
         else:
-            return None
+            self.loadRandomEvent()
+            return
 
 
     # 加载特定事件
-    def loadEvent(self,event):
-        pass
+    def loadEvent(self):
+        if self.timePoint==1:
+            # 第一周的事件
+            self.currentEvent=self.allEvents["test"]
+            return True
+        elif self.timePoint==2:
+            # 第二周的事件
+            self.currentEvent=self.allEvents["test"]
+            return True
+        elif self.timePoint==3:
+            # 第三周的事件
+            self.currentEvent=self.allEvents["test"]
+            return True
+        return False
 
         
     # 刷新事件概率
     def loadEventProbability(self):
 
-        for event in self.optionalEvents:
+        for event in self.allEvents.values():
             self.eventProbablity[event.name]=event.probability
         pass
 
@@ -152,83 +190,6 @@ class Game:
         self.timePoint+=1
         # 这里需要有更多的操作
         pass
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-class event:
-    def __init__(self,name=None,time=time.time(),description=None,Game=None):
-        self.name=name
-        self.time=time
-        self.description=description
-        self.ui=None
-        self.setting=None
-        self.probability=1
-
-    # 获取所有子类
-    @classmethod
-    def get_all_subEvents(cls, Game):
-        subEvents={}
-        subEvents.update({'studies':event_studies(Game)})
-        
-        return subEvents
-    
-    def require(self):
-        
-        return True
-    
-
-    # 刷新概率，在事件结束时调用
-    def refreshProbability(self):
-        pass
-
-    
-    # 事件影响
-    def affection(self,*args):
-                    
-        pass
-    
-
-
-
-class event_crush_atFirstBlush(event):
-    pass
-
-
-class event_studies(event):
-    def __init__(self,Game,name='studies',time=time.time(),description='学习'):
-        super().__init__(name,time,description,Game)
-        self.probability=0
-
-    def require(self):
-        return True
-
-    # 刷新概率，在事件结束时调用
-    def refreshProbability(self):
-        pass
-
-    # 事件影响
-    def affection(self,*args):
-        pass
-
-
-
-
-
-
-
-    pass
-
 
 
 
@@ -247,13 +208,6 @@ class dialogue:
     @classmethod
     def get_random_welcoming(cls):
         return random.choice(dialogue.welcoming)
-
-
-
-
-
-
-
 
 
     random_talk=[

@@ -2,15 +2,16 @@ import sys
 from PySide6 import QtCore, QtGui, QtWidgets, QtQuick
 from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QPushButton, QStackedLayout, QLabel, QFrame, QHBoxLayout, QSizePolicy
 from PySide6.QtWidgets import QPlainTextEdit
-from PySide6.QtGui import QFontMetricsF, QTransform,QFont
-from PySide6.QtCore import Qt, QRect,QTimer
-import math
+from PySide6.QtGui import QFontMetricsF, QTransform
+from PySide6.QtCore import Qt, QRect, QTimer
 
-from Ui_MainMenu import Ui_widget
+
+from Ui_MainMenu import Ui_widget  
 from Ui_Game_1 import Ui_Form as Ui_game
 from Ui_Interact import Ui_Form as Ui_interact
 from Ui_Conversation import Ui_Form as Ui_conversation
 import asyncio
+
 
 
 class LimitedPlainTextEdit(QPlainTextEdit):
@@ -56,14 +57,12 @@ class GameLayout_Conversation(QWidget, Ui_conversation):
         super().__init__()
         self.setupUi(self)
         self.scrollArea_layout=QVBoxLayout(self.scrollAreaWidgetContents)
-        self.scrollArea_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
-        self.scrollArea_layout.setSpacing(10)
         self.pushButton_Send.clicked.connect(self.send)
         #self.plainTextEdit_Input = LimitedPlainTextEdit(5)
         #self.plainTextEdit_Input.setGeometry(QRect(380, 410, 421, 31))
         #self.plainTextEdit_Input.setPlaceholderText("输入消息")
-
         
+
     def loading(self):
         self.plainTextEdit_Input.setEnabled(False)
         self.plainTextEdit_Input.setPlaceholderText("正在建立连接...")
@@ -75,6 +74,7 @@ class GameLayout_Conversation(QWidget, Ui_conversation):
         self.plainTextEdit_Input.setPlaceholderText("开始对话...")
         self.pushButton_Send.setEnabled(True)
 
+
     def send(self):
         msg = self.plainTextEdit_Input.toPlainText()
         if msg:
@@ -83,13 +83,18 @@ class GameLayout_Conversation(QWidget, Ui_conversation):
             self.plainTextEdit_Input.setEnabled(False)
             self.plainTextEdit_Input.setPlaceholderText("对方正在输入...")
             self.pushButton_Send.setEnabled(False)
+
+            # 使用 QTimer 来稍作延迟再执行异步任务
             QTimer.singleShot(50, lambda: self.run_async_task(msg))  # 延迟50毫秒
-        
+
+
     def run_async_task(self, msg):
         loop = asyncio.new_event_loop()  # 创建新的事件循环
         asyncio.set_event_loop(loop)  # 设置为当前事件循环
         loop.run_until_complete(self.handle_send(msg))  # 运行异步任务
         loop.close()  # 关闭事件循环
+
+
     async def handle_send(self, msg):
         answer = await self.agent.talk(msg)
         print(answer)
@@ -98,72 +103,23 @@ class GameLayout_Conversation(QWidget, Ui_conversation):
         self.plainTextEdit_Input.setEnabled(True)
         self.pushButton_Send.setEnabled(True)
         self.plainTextEdit_Input.setPlaceholderText("输入消息")
+
+
     def add_msg(self, msg, is_me=False):
-
-        def compute_height(msg):
-            # newline_count = msg.count('\n')
-            # n=1+newline_count
-            n=1
-            num=0
-            for char in msg:
-                if char != '\n':
-                    num += 1
-                    if num == 12:
-                        n+=1
-                        num=1
-                else:
-                    num = 0
-                    n+=1
-            return n
-        def compute_width(msg):
-            if '\n' in msg:
-                max=0
-                n=0
-                for char in msg:
-                    if char != '\n':
-                        n+=1
-                        if n>max:
-                            max=n
-                    else:
-                        n=0
-                return max
-            else:
-                return len(msg)
-
-
-        max_width=compute_width(msg)
-        height =compute_height(msg)
-        if max_width >=11:
-            should_width=160
-        else:
-            should_width=14*max_width+13
-        #message_label为消息文本内容
         message_label = QLabel(msg)
         message_label.setWordWrap(True)
-        message_label.setFixedWidth(should_width)
-        font = QFont('微软雅黑', 10)
-        message_label.setFont(font)
         message_label.setStyleSheet("background-color: {}; padding: 5px; border-radius: 10px;".format("#DCF8C6" if is_me else "#ECECEC"))
-        message_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
-        message_label.setSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
-        message_label.setMaximumHeight(33*height)
+        message_label.setAlignment(Qt.AlignmentFlag.AlignRight if is_me else Qt.AlignmentFlag.AlignLeft)
+        message_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
 
-        #frame为气泡
         frame = QFrame()
         frame_layout = QHBoxLayout()
-
-
-        # frame.setStyleSheet("background-color: red;")
-        frame_layout.setAlignment( Qt.AlignmentFlag.AlignRight if is_me else Qt.AlignmentFlag.AlignLeft)
+        frame_layout.setAlignment(Qt.AlignmentFlag.AlignRight if is_me else Qt.AlignmentFlag.AlignLeft)
         frame_layout.addWidget(message_label)
-        frame_layout.setContentsMargins(0, 0, 0, 0)
         frame.setLayout(frame_layout)
-         # 设置 QFrame 的大小策略
-        frame.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
 
         self.scrollArea_layout.addWidget(frame)
         self.scrollArea.verticalScrollBar().setValue(self.scrollArea.verticalScrollBar().maximum())
-
 
 
 
@@ -182,14 +138,14 @@ class MainMenu(QMainWindow):
         self.stacked_layout.addWidget(self.game_layout_interact)    # 2
         self.stacked_layout.addWidget(self.game_layout_conversation)    # 3
 
-
+        
         central_widget = QWidget()
         central_widget.setLayout(self.stacked_layout)
         self.setCentralWidget(central_widget)
 
         self.bind()
-
-        # 设置当前显示的布局为主菜单
+        
+        # 设置当前显示的布局为主菜单 
         self.current_layout_index = 0
         self.stacked_layout.setCurrentIndex(self.current_layout_index)
 
@@ -237,7 +193,7 @@ class MainMenu(QMainWindow):
 
     def back(self):
         self.stacked_layout.setCurrentIndex(0)
-
+        
 
 
 if __name__ == '__main__':

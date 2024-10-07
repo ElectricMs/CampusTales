@@ -169,7 +169,7 @@ class MainMenu(QMainWindow):
         self.stacked_layout.setCurrentIndex(1)
         from main import Game
         self.game = Game(self)
-        self.game_layout_1.label_Text.setText(self.game.start())
+        self.game_layout_1.label_Text.setText(self.game.start()+"不管怎样，我决定从现在开始记日记，这应该是个好习惯吧。")
 
 
     def interact(self):

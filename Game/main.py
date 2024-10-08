@@ -198,8 +198,6 @@ class Game:
 
 
 
-
-
 class dialogue:
     welcoming=[
         "这是我上大学的第一天。天哪，我可不能摆烂。",
@@ -221,19 +219,57 @@ class dialogue:
             今天天气不错，阳光明媚，适合户外活动。早上没有课，我决定早起去操场跑步，顺便呼吸一下新鲜空气。
         """,
         """
-            昨晚和室友一起看了部电影，不知不觉就到了深夜。匆忙洗漱后，一路小跑到教室，还好最后赶上了。
+            昨晚和室友一起看了部电影，不知不觉就到了深夜。早上匆忙洗漱后，一路小跑到教室，还好最后赶上了早八。
         """,
         """
             今天天气特别好，阳光明媚。早上起来后，我决定去校园里散散步，享受一下早晨的宁静。
         """,
         """
-            今天是周五，心情特别好。早上8点的课是文学欣赏，老师讲了一篇经典的短篇小说，让我们受益匪浅。
+            今天是周五，心情特别好。早上8点的课是大学语文，老师讲了一篇经典的短篇小说，让我受益匪浅。
+        """,
+        """
+            今天早上起床后发现窗外下着小雨，心想这天儿真适合赖床。不过想到还有早八的课，只能硬着头皮爬起来。
+        """,
+        """
+            今天早上起床后突然想起昨晚忘记打卡签到，赶紧打开手机补签。还好系统允许补签，不然平时分没了。
+        """,
+        """
+            刚刚在寝室和室友打了一局游戏，结果输得一塌糊涂。室友太菜了下次不和他一起排位了。
+        """,
+        """
+            刚刚收到了妈妈寄来的补给，好多好多的水果！晚上准备和室友一起分享。
+        """,
+        """
+            刚刚在图书馆复习了一上午，感觉大脑快要爆炸了。中午决定去操场跑几圈，放松一下。
+        """
+    ]
+
+    @classmethod
+    def get_random_talk(cls) -> str:
+        choice = random.choice(dialogue.random_talk).lstrip()
+        if len(cls.random_talk) != 1:
+            cls.random_talk.remove(choice)
+        return choice
+
+
+    random_talk_terminal=[
+        """
+            不知不觉怎么就期末了啊，感觉还没过几周呢，怎么就要考试了啊。
+        """,
+        """
+            课就要结束了，感觉自己好像学的还不错，不过这学期的课也太多了，感觉没什么时间复习了啊。
+        """,
+        """
+            考试周真的要到了，这学期的课太多了，真的有点看不完了。
         """,
     ]
 
     @classmethod
-    def get_random_talk(cls):
-        return random.choice(dialogue.random_talk).lstrip()
+    def get_random_talk_terminal(cls) -> str:
+        choice = random.choice(dialogue.random_talk_terminal).lstrip()
+        if len(cls.random_talk_terminal) != 1:
+            cls.random_talk_terminal.remove(choice)
+        return choice
     
 
 
@@ -267,8 +303,13 @@ class RandomEvents:
             self.weight.append(event.probability)
 
 
-    def get_random_event(self):
-        return random.choices(self.events, weights=self.weight, k=1)[0]
+    def get_random_event(self) -> 'RandomEvent':
+        choice = random.choices(self.events, weights=self.weight, k=1)[0]
+        index = self.events.index(choice)
+        self.weight[index] = 0
+        return choice
+
+
 
 
     class RandomEvent:

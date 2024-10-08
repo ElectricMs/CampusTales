@@ -8,7 +8,7 @@ class event_template(Event.event):
         self.probability=0
 
 
-    def if_join(self)-> Tuple[str, str]:
+    def if_join(self) -> Tuple[str, str]:
         return "",""
 
 

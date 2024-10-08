@@ -1,0 +1,616 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>strength_assignment</class>
+ <widget class="QMainWindow" name="strength_assignment">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1280</width>
+    <height>720</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">#centralwidget{border-image: url(:/image/resource/Strength_assign/p0424_l.png);}</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>40</y>
+      <width>991</width>
+      <height>631</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/image/resource/Strength_assign/02_brown.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>760</x>
+      <y>680</y>
+      <width>100</width>
+      <height>35</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#pushButton{
+	border-image: url(:/image/resource/Strength_assign/qsave.png);}
+#pushButton:hover{
+	border-image: url(:/image/resource/Strength_assign/qload2.png);}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="geometry">
+     <rect>
+      <x>1120</x>
+      <y>680</y>
+      <width>100</width>
+      <height>35</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#pushButton_2{
+	border-image: url(:/image/resource/Strength_assign/screen.png);}
+#pushButton_2:hover{
+	
+	border-image: url(:/image/resource/Strength_assign/screen2.png);}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>1000</x>
+      <y>680</y>
+      <width>100</width>
+      <height>35</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#pushButton_3{
+	border-image: url(:/image/resource/Strength_assign/title.png);
+	}
+#pushButton_3:hover{
+	border-image: url(:/image/resource/Strength_assign/title2.png);
+	}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_4">
+    <property name="geometry">
+     <rect>
+      <x>880</x>
+      <y>680</y>
+      <width>100</width>
+      <height>35</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#pushButton_4{
+	border-image: url(:/image/resource/Strength_assign/qload.png);}
+#pushButton_4:hover{
+	border-image: url(:/image/resource/Strength_assign/qload2.png);}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>80</y>
+      <width>541</width>
+      <height>551</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#label_2{border-image: url(:/image/resource/Strength_assign/paper2_yellow_l.png);}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>850</x>
+      <y>90</y>
+      <width>311</width>
+      <height>531</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/image/resource/Strength_assign/label2_l.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>910</x>
+      <y>149</y>
+      <width>191</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>微软雅黑</family>
+      <pointsize>24</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LayoutDirection::LeftToRight</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QCheckBox::indicator:unchecked {
+      
+	border-image: url(:/image/resource/Strength_assign/round_s.png);}
+
+QCheckBox::indicator{/*选择框尺寸*/
+    
+	width: 50px;
+	height: 50px;
+}
+QCheckBox::indicator:checked {
+       
+	border-image: url(:/image/resource/Strength_assign/round_pressed.png);
+}</string>
+    </property>
+    <property name="text">
+     <string> 学习</string>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_2">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>910</x>
+      <y>220</y>
+      <width>191</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>微软雅黑</family>
+      <pointsize>24</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LayoutDirection::LeftToRight</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QCheckBox::indicator:unchecked {
+      
+	border-image: url(:/image/resource/Strength_assign/round_s.png);}
+
+QCheckBox::indicator{/*选择框尺寸*/
+    
+	width: 50px;
+	height: 50px;
+}
+QCheckBox::indicator:checked {
+       
+	border-image: url(:/image/resource/Strength_assign/round_pressed.png);
+}</string>
+    </property>
+    <property name="text">
+     <string> 学习</string>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_3">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>910</x>
+      <y>290</y>
+      <width>191</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>微软雅黑</family>
+      <pointsize>24</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LayoutDirection::LeftToRight</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QCheckBox::indicator:unchecked {
+      
+	border-image: url(:/image/resource/Strength_assign/round_s.png);}
+
+QCheckBox::indicator{/*选择框尺寸*/
+    
+	width: 50px;
+	height: 50px;
+}
+QCheckBox::indicator:checked {
+       
+	border-image: url(:/image/resource/Strength_assign/round_pressed.png);
+}</string>
+    </property>
+    <property name="text">
+     <string> 学习</string>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_4">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>910</x>
+      <y>360</y>
+      <width>191</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>微软雅黑</family>
+      <pointsize>24</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LayoutDirection::LeftToRight</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QCheckBox::indicator:unchecked {
+      
+	border-image: url(:/image/resource/Strength_assign/round_s.png);}
+
+QCheckBox::indicator{/*选择框尺寸*/
+    
+	width: 50px;
+	height: 50px;
+}
+QCheckBox::indicator:checked {
+       
+	border-image: url(:/image/resource/Strength_assign/round_pressed.png);
+}</string>
+    </property>
+    <property name="text">
+     <string> 学习</string>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_5">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>910</x>
+      <y>430</y>
+      <width>191</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>微软雅黑</family>
+      <pointsize>24</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LayoutDirection::LeftToRight</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QCheckBox::indicator:unchecked {
+      
+	border-image: url(:/image/resource/Strength_assign/round_s.png);}
+
+QCheckBox::indicator{/*选择框尺寸*/
+    
+	width: 50px;
+	height: 50px;
+}
+QCheckBox::indicator:checked {
+       
+	border-image: url(:/image/resource/Strength_assign/round_pressed.png);
+}</string>
+    </property>
+    <property name="text">
+     <string> 学习</string>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_5">
+    <property name="geometry">
+     <rect>
+      <x>990</x>
+      <y>530</y>
+      <width>130</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>微软雅黑</family>
+      <pointsize>13</pointsize>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#pushButton_5{
+border-image: url(:/image/resource/Strength_assign/002_07.png);
+padding:10px;
+}
+#pushButton_5:hover{
+	border-image: url(:/image/resource/Strength_assign/002_07_hover.png);}
+#pushButton_5:pressed{
+	border-image: url(:/image/resource/Strength_assign/002_07_click.png);}</string>
+    </property>
+    <property name="text">
+     <string>开始新的一周</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_checkbox1">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>150</y>
+      <width>491</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>90</y>
+      <width>431</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>可选项目</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_checkbox2">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>175</y>
+      <width>491</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_checkbox3">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>205</y>
+      <width>491</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_checkbox4">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>230</y>
+      <width>491</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_checkbox5">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>265</y>
+      <width>491</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>160</y>
+      <width>151</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>小明（你自己）</string>
+    </property>
+   </widget>
+   <widget class="QGraphicsView" name="graphicsView">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>20</y>
+      <width>141</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/image/resource/Strength_assign/boy_normal_-removebg-preview.png);
+background-color:grey;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>250</y>
+      <width>141</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>精力值：X</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>320</y>
+      <width>141</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>属性值：Maybe</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_9">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>540</y>
+      <width>411</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>更多活动，请闯关解锁.........</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources>
+  <include location="resource3.qrc"/>
+ </resources>
+ <connections/>
+</ui>

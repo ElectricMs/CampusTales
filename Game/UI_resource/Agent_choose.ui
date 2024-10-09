@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Agent_choose</class>
+ <widget class="QMainWindow" name="Agent_choose">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1280</width>
+    <height>720</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">border-image: url(:/image/resource/Agent/paper_l.png);</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>180</y>
+      <width>201</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>23</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#pushButton{
+border-image: url(:/image/resource/Agent/对话标签2.jpg);
+ }</string>
+    </property>
+    <property name="text">
+     <string>girlfriend</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>40</y>
+      <width>141</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>30</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#label{color: rgb(85, 0, 0);}
+#label{letter-spacing:3px;}</string>
+    </property>
+    <property name="text">
+     <string>Agent</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>410</y>
+      <width>200</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>23</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/image/resource/Agent/对话标签2.jpg);</string>
+    </property>
+    <property name="text">
+     <string>president</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>440</y>
+      <width>200</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>23</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/image/resource/Agent/对话标签2.jpg);</string>
+    </property>
+    <property name="text">
+     <string>president</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_4">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>270</y>
+      <width>200</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>23</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/image/resource/Agent/对话标签2.jpg);</string>
+    </property>
+    <property name="text">
+     <string>president</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_5">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>140</y>
+      <width>200</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>23</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/image/resource/Agent/对话标签2.jpg);</string>
+    </property>
+    <property name="text">
+     <string>president</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_6">
+    <property name="geometry">
+     <rect>
+      <x>900</x>
+      <y>680</y>
+      <width>100</width>
+      <height>35</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#pushButton_6{border-image: url(:/image/resource/Agent/qload.png);}
+#pushButton_6:hover{border-image: url(:/image/resource/Agent/qload2.png);}
+</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_7">
+    <property name="geometry">
+     <rect>
+      <x>1140</x>
+      <y>680</y>
+      <width>100</width>
+      <height>35</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#pushButton_7{border-image:url(:/image/resource/Agent/screen.png);}
+#pushButton_7:hover{
+	border-image: url(:/image/resource/Agent/screen2.png);}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_8">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>680</y>
+      <width>100</width>
+      <height>35</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#pushButton_8{border-image: url(:/image/resource/Agent/qsave.png);}
+#pushButton_8:hover{border-image: url(:/image/resource/Agent/qsave2.png);}
+</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_9">
+    <property name="geometry">
+     <rect>
+      <x>1020</x>
+      <y>680</y>
+      <width>100</width>
+      <height>35</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#pushButton_9{
+	border-image: url(:/image/resource/Agent/title.png);}
+#pushButton_9:hover{
+	border-image: url(:/image/resource/Agent/title2.png);}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources>
+  <include location="resource2.qrc"/>
+ </resources>
+ <connections/>
+</ui>

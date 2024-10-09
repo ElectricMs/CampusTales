@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1280</width>
+    <height>720</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">#centralwidget{border-image: url(:/image/resource/cover.png);}</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>180</y>
+      <width>480</width>
+      <height>45</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+#pushButton{
+background-color:transparent;
+border:None;
+text-align:left;
+}
+#pushButton:hover{
+border-image:  url(:/image/resource/new_button.png);
+color:white;
+text-align:left;
+}</string>
+    </property>
+    <property name="text">
+     <string>                                    开始游戏                  START GAME</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>270</y>
+      <width>480</width>
+      <height>45</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+#pushButton_2{
+background-color:transparent;
+border:None;
+text-align:left;
+}
+#pushButton_2:hover{
+border-image: url(:/image/resource/new_button.png);
+color:white;
+text-align:left;
+}</string>
+    </property>
+    <property name="text">
+     <string>                                    读取存档                  LOAD GAME</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>360</y>
+      <width>480</width>
+      <height>45</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+#pushButton_3{
+background-color:transparent;
+border:None;
+text-align:left;
+}
+#pushButton_3:hover{
+border-image: url(:/image/resource/new_button.png);
+color:white;
+text-align:left;
+}</string>
+    </property>
+    <property name="text">
+     <string>                                    游戏设置                  CONFIGS</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_4">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>450</y>
+      <width>480</width>
+      <height>45</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#pushButton_4{
+background-color:transparent;
+border:None;
+text-align:left;
+}
+#pushButton_4:hover{
+border-image: url(:/image/resource/new_button.png);
+color:white;
+text-align:left;
+}</string>
+    </property>
+    <property name="text">
+     <string>                                    角色交流                  ACTOR INTERACT</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_5">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>540</y>
+      <width>480</width>
+      <height>45</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#pushButton_5{
+background-color:transparent;
+border:None;
+text-align:left;
+}
+#pushButton_5:hover{
+border-image: url(:/image/resource/new_button.png);
+color:white;
+text-align:left;
+}</string>
+    </property>
+    <property name="text">
+     <string>                                    退出游戏                  EXIT</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources>
+  <include location="resoure_main.qrc"/>
+ </resources>
+ <connections/>
+</ui>

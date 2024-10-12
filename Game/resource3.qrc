@@ -1,5 +1,13 @@
 <RCC>
   <qresource prefix="image">
+    <file>resource/右箭头.png</file>
+    <file>resource/左箭头.png</file>
+    <file>resource/加号.png</file>
+    <file>resource/减号.png</file>
+    <file>resource/exit_button2.png</file>
+    <file>resource/exit_hover.png</file>
+    <file>resource/save_button2.png</file>
+    <file>resource/save_hover.png</file>
     <file>resource/Strength_assign/round_pressed.png</file>
     <file>resource/Strength_assign/002_07.png</file>
     <file>resource/Strength_assign/002_07_click.png</file>

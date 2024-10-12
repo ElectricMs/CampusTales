@@ -1,5 +1,11 @@
 <RCC>
   <qresource prefix="image">
+    <file>resource/exit_hover.png</file>
+    <file>resource/save_hover.png</file>
+    <file>resource/exit_button2.png</file>
+    <file>resource/save_button2.png</file>
+    <file>resource/exit_button.png</file>
+    <file>resource/save_button.png</file>
     <file>resource/Agent/paper_l.png</file>
     <file>resource/Agent/qload.png</file>
     <file>resource/Agent/qload2.png</file>

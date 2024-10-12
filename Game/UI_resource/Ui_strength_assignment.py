@@ -15,8 +15,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QGraphicsView, QLabel,
-    QMainWindow, QPushButton, QSizePolicy, QWidget)
+from PySide6.QtWidgets import (QApplication, QGraphicsView, QLabel, QMainWindow,
+    QPushButton, QSizePolicy, QWidget)
 import resource3_rc
 
 class Ui_strength_assignment(object):
@@ -31,37 +31,27 @@ class Ui_strength_assignment(object):
         self.label.setObjectName(u"label")
         self.label.setGeometry(QRect(230, 40, 991, 631))
         self.label.setStyleSheet(u"border-image: url(:/image/resource/Strength_assign/02_brown.png);")
-        self.pushButton = QPushButton(self.centralwidget)
-        self.pushButton.setObjectName(u"pushButton")
-        self.pushButton.setGeometry(QRect(760, 680, 100, 35))
-        self.pushButton.setStyleSheet(u"#pushButton{\n"
-"	border-image: url(:/image/resource/Strength_assign/qsave.png);}\n"
-"#pushButton:hover{\n"
-"	border-image: url(:/image/resource/Strength_assign/qload2.png);}")
-        self.pushButton_2 = QPushButton(self.centralwidget)
-        self.pushButton_2.setObjectName(u"pushButton_2")
-        self.pushButton_2.setGeometry(QRect(1120, 680, 100, 35))
-        self.pushButton_2.setStyleSheet(u"#pushButton_2{\n"
-"	border-image: url(:/image/resource/Strength_assign/screen.png);}\n"
-"#pushButton_2:hover{\n"
-"	\n"
-"	border-image: url(:/image/resource/Strength_assign/screen2.png);}")
-        self.pushButton_3 = QPushButton(self.centralwidget)
-        self.pushButton_3.setObjectName(u"pushButton_3")
-        self.pushButton_3.setGeometry(QRect(1000, 680, 100, 35))
-        self.pushButton_3.setStyleSheet(u"#pushButton_3{\n"
-"	border-image: url(:/image/resource/Strength_assign/title.png);\n"
+        self.exit_button = QPushButton(self.centralwidget)
+        self.exit_button.setObjectName(u"exit_button")
+        self.exit_button.setGeometry(QRect(1120, 680, 100, 35))
+        self.exit_button.setStyleSheet(u"#exit_button{\n"
+"	border-image: url(:/image/resource/exit_button2.png);\n"
 "	}\n"
-"#pushButton_3:hover{\n"
-"	border-image: url(:/image/resource/Strength_assign/title2.png);\n"
+"#exit_button:hover{\n"
+"	\n"
+"	border-image: url(:/image/resource/exit_hover.png);\n"
+"}")
+        self.save_button = QPushButton(self.centralwidget)
+        self.save_button.setObjectName(u"save_button")
+        self.save_button.setGeometry(QRect(1000, 680, 100, 35))
+        self.save_button.setStyleSheet(u"#save_button{\n"
+"	\n"
+"	border-image: url(:/image/resource/save_button2.png);\n"
+"	}\n"
+"#save_button:hover{\n"
+"	\n"
+"	border-image: url(:/image/resource/save_hover.png);\n"
 "	}")
-        self.pushButton_4 = QPushButton(self.centralwidget)
-        self.pushButton_4.setObjectName(u"pushButton_4")
-        self.pushButton_4.setGeometry(QRect(880, 680, 100, 35))
-        self.pushButton_4.setStyleSheet(u"#pushButton_4{\n"
-"	border-image: url(:/image/resource/Strength_assign/qload.png);}\n"
-"#pushButton_4:hover{\n"
-"	border-image: url(:/image/resource/Strength_assign/qload2.png);}")
         self.label_2 = QLabel(self.centralwidget)
         self.label_2.setObjectName(u"label_2")
         self.label_2.setGeometry(QRect(290, 80, 541, 551))
@@ -70,118 +60,14 @@ class Ui_strength_assignment(object):
         self.label_3.setObjectName(u"label_3")
         self.label_3.setGeometry(QRect(850, 90, 311, 531))
         self.label_3.setStyleSheet(u"border-image: url(:/image/resource/Strength_assign/label2_l.png);")
-        self.checkBox = QCheckBox(self.centralwidget)
-        self.checkBox.setObjectName(u"checkBox")
-        self.checkBox.setEnabled(True)
-        self.checkBox.setGeometry(QRect(910, 149, 191, 61))
-        font = QFont()
-        font.setFamilies([u"\u5fae\u8f6f\u96c5\u9ed1"])
-        font.setPointSize(24)
-        font.setBold(True)
-        self.checkBox.setFont(font)
-        self.checkBox.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-        self.checkBox.setStyleSheet(u"QCheckBox::indicator:unchecked {\n"
-"      \n"
-"	border-image: url(:/image/resource/Strength_assign/round_s.png);}\n"
-"\n"
-"QCheckBox::indicator{/*\u9009\u62e9\u6846\u5c3a\u5bf8*/\n"
-"    \n"
-"	width: 50px;\n"
-"	height: 50px;\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"       \n"
-"	border-image: url(:/image/resource/Strength_assign/round_pressed.png);\n"
-"}")
-        self.checkBox.setIconSize(QSize(30, 30))
-        self.checkBox_2 = QCheckBox(self.centralwidget)
-        self.checkBox_2.setObjectName(u"checkBox_2")
-        self.checkBox_2.setEnabled(True)
-        self.checkBox_2.setGeometry(QRect(910, 220, 191, 61))
-        self.checkBox_2.setFont(font)
-        self.checkBox_2.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-        self.checkBox_2.setStyleSheet(u"QCheckBox::indicator:unchecked {\n"
-"      \n"
-"	border-image: url(:/image/resource/Strength_assign/round_s.png);}\n"
-"\n"
-"QCheckBox::indicator{/*\u9009\u62e9\u6846\u5c3a\u5bf8*/\n"
-"    \n"
-"	width: 50px;\n"
-"	height: 50px;\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"       \n"
-"	border-image: url(:/image/resource/Strength_assign/round_pressed.png);\n"
-"}")
-        self.checkBox_2.setIconSize(QSize(30, 30))
-        self.checkBox_3 = QCheckBox(self.centralwidget)
-        self.checkBox_3.setObjectName(u"checkBox_3")
-        self.checkBox_3.setEnabled(True)
-        self.checkBox_3.setGeometry(QRect(910, 290, 191, 61))
-        self.checkBox_3.setFont(font)
-        self.checkBox_3.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-        self.checkBox_3.setStyleSheet(u"QCheckBox::indicator:unchecked {\n"
-"      \n"
-"	border-image: url(:/image/resource/Strength_assign/round_s.png);}\n"
-"\n"
-"QCheckBox::indicator{/*\u9009\u62e9\u6846\u5c3a\u5bf8*/\n"
-"    \n"
-"	width: 50px;\n"
-"	height: 50px;\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"       \n"
-"	border-image: url(:/image/resource/Strength_assign/round_pressed.png);\n"
-"}")
-        self.checkBox_3.setIconSize(QSize(30, 30))
-        self.checkBox_4 = QCheckBox(self.centralwidget)
-        self.checkBox_4.setObjectName(u"checkBox_4")
-        self.checkBox_4.setEnabled(True)
-        self.checkBox_4.setGeometry(QRect(910, 360, 191, 61))
-        self.checkBox_4.setFont(font)
-        self.checkBox_4.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-        self.checkBox_4.setStyleSheet(u"QCheckBox::indicator:unchecked {\n"
-"      \n"
-"	border-image: url(:/image/resource/Strength_assign/round_s.png);}\n"
-"\n"
-"QCheckBox::indicator{/*\u9009\u62e9\u6846\u5c3a\u5bf8*/\n"
-"    \n"
-"	width: 50px;\n"
-"	height: 50px;\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"       \n"
-"	border-image: url(:/image/resource/Strength_assign/round_pressed.png);\n"
-"}")
-        self.checkBox_4.setIconSize(QSize(30, 30))
-        self.checkBox_5 = QCheckBox(self.centralwidget)
-        self.checkBox_5.setObjectName(u"checkBox_5")
-        self.checkBox_5.setEnabled(True)
-        self.checkBox_5.setGeometry(QRect(910, 430, 191, 61))
-        self.checkBox_5.setFont(font)
-        self.checkBox_5.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-        self.checkBox_5.setStyleSheet(u"QCheckBox::indicator:unchecked {\n"
-"      \n"
-"	border-image: url(:/image/resource/Strength_assign/round_s.png);}\n"
-"\n"
-"QCheckBox::indicator{/*\u9009\u62e9\u6846\u5c3a\u5bf8*/\n"
-"    \n"
-"	width: 50px;\n"
-"	height: 50px;\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"       \n"
-"	border-image: url(:/image/resource/Strength_assign/round_pressed.png);\n"
-"}")
-        self.checkBox_5.setIconSize(QSize(30, 30))
         self.pushButton_5 = QPushButton(self.centralwidget)
         self.pushButton_5.setObjectName(u"pushButton_5")
         self.pushButton_5.setGeometry(QRect(990, 530, 130, 41))
-        font1 = QFont()
-        font1.setFamilies([u"\u5fae\u8f6f\u96c5\u9ed1"])
-        font1.setPointSize(13)
-        font1.setBold(False)
-        self.pushButton_5.setFont(font1)
+        font = QFont()
+        font.setFamilies([u"\u5fae\u8f6f\u96c5\u9ed1"])
+        font.setPointSize(13)
+        font.setBold(False)
+        self.pushButton_5.setFont(font)
         self.pushButton_5.setStyleSheet(u"#pushButton_5{\n"
 "border-image: url(:/image/resource/Strength_assign/002_07.png);\n"
 "padding:10px;\n"
@@ -190,61 +76,197 @@ class Ui_strength_assignment(object):
 "	border-image: url(:/image/resource/Strength_assign/002_07_hover.png);}\n"
 "#pushButton_5:pressed{\n"
 "	border-image: url(:/image/resource/Strength_assign/002_07_click.png);}")
-        self.label_checkbox1 = QLabel(self.centralwidget)
-        self.label_checkbox1.setObjectName(u"label_checkbox1")
-        self.label_checkbox1.setGeometry(QRect(320, 150, 491, 31))
-        font2 = QFont()
-        font2.setPointSize(11)
-        self.label_checkbox1.setFont(font2)
         self.label_6 = QLabel(self.centralwidget)
         self.label_6.setObjectName(u"label_6")
-        self.label_6.setGeometry(QRect(320, 90, 431, 31))
-        font3 = QFont()
-        font3.setPointSize(13)
-        font3.setBold(False)
-        self.label_6.setFont(font3)
-        self.label_checkbox2 = QLabel(self.centralwidget)
-        self.label_checkbox2.setObjectName(u"label_checkbox2")
-        self.label_checkbox2.setGeometry(QRect(320, 175, 491, 31))
-        self.label_checkbox2.setFont(font2)
-        self.label_checkbox3 = QLabel(self.centralwidget)
-        self.label_checkbox3.setObjectName(u"label_checkbox3")
-        self.label_checkbox3.setGeometry(QRect(320, 205, 491, 31))
-        self.label_checkbox3.setFont(font2)
-        self.label_checkbox4 = QLabel(self.centralwidget)
-        self.label_checkbox4.setObjectName(u"label_checkbox4")
-        self.label_checkbox4.setGeometry(QRect(320, 230, 491, 31))
-        self.label_checkbox4.setFont(font2)
-        self.label_checkbox5 = QLabel(self.centralwidget)
-        self.label_checkbox5.setObjectName(u"label_checkbox5")
-        self.label_checkbox5.setGeometry(QRect(320, 265, 491, 21))
-        self.label_checkbox5.setFont(font2)
+        self.label_6.setGeometry(QRect(300, 90, 431, 31))
+        font1 = QFont()
+        font1.setFamilies([u"\u5343\u56fe\u7b14\u950b\u624b\u5199\u4f53"])
+        font1.setPointSize(17)
+        font1.setBold(True)
+        self.label_6.setFont(font1)
+        self.mission_2 = QLabel(self.centralwidget)
+        self.mission_2.setObjectName(u"mission_2")
+        self.mission_2.setGeometry(QRect(310, 140, 131, 41))
+        self.mission_2.setFont(font1)
+        self.mission_3 = QLabel(self.centralwidget)
+        self.mission_3.setObjectName(u"mission_3")
+        self.mission_3.setGeometry(QRect(310, 170, 131, 41))
+        self.mission_3.setFont(font1)
         self.label_5 = QLabel(self.centralwidget)
         self.label_5.setObjectName(u"label_5")
-        self.label_5.setGeometry(QRect(50, 160, 151, 61))
-        font4 = QFont()
-        font4.setPointSize(16)
-        self.label_5.setFont(font4)
+        self.label_5.setGeometry(QRect(30, 200, 161, 91))
+        font2 = QFont()
+        font2.setPointSize(17)
+        self.label_5.setFont(font2)
+        self.label_5.setAlignment(Qt.AlignmentFlag.AlignHCenter|Qt.AlignmentFlag.AlignTop)
         self.graphicsView = QGraphicsView(self.centralwidget)
         self.graphicsView.setObjectName(u"graphicsView")
-        self.graphicsView.setGeometry(QRect(50, 20, 141, 141))
+        self.graphicsView.setGeometry(QRect(30, 20, 161, 161))
         self.graphicsView.setStyleSheet(u"border-image: url(:/image/resource/Strength_assign/boy_normal_-removebg-preview.png);\n"
 "background-color:grey;")
         self.label_7 = QLabel(self.centralwidget)
         self.label_7.setObjectName(u"label_7")
-        self.label_7.setGeometry(QRect(50, 250, 141, 41))
-        font5 = QFont()
-        font5.setPointSize(13)
-        self.label_7.setFont(font5)
+        self.label_7.setGeometry(QRect(30, 250, 171, 51))
+        font3 = QFont()
+        font3.setPointSize(17)
+        font3.setBold(True)
+        self.label_7.setFont(font3)
         self.label_8 = QLabel(self.centralwidget)
         self.label_8.setObjectName(u"label_8")
-        self.label_8.setGeometry(QRect(50, 320, 141, 51))
-        self.label_8.setFont(font5)
+        self.label_8.setGeometry(QRect(30, 360, 171, 51))
+        self.label_8.setFont(font3)
         self.label_9 = QLabel(self.centralwidget)
         self.label_9.setObjectName(u"label_9")
-        self.label_9.setGeometry(QRect(360, 540, 411, 20))
-        self.label_9.setFont(font5)
+        self.label_9.setGeometry(QRect(360, 529, 411, 31))
+        self.label_9.setFont(font1)
         self.label_9.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.misson_1 = QLabel(self.centralwidget)
+        self.misson_1.setObjectName(u"misson_1")
+        self.misson_1.setGeometry(QRect(310, 120, 131, 31))
+        self.misson_1.setFont(font1)
+        self.mission_4 = QLabel(self.centralwidget)
+        self.mission_4.setObjectName(u"mission_4")
+        self.mission_4.setEnabled(True)
+        self.mission_4.setGeometry(QRect(310, 200, 131, 31))
+        self.mission_4.setFont(font1)
+        self.mission_5 = QLabel(self.centralwidget)
+        self.mission_5.setObjectName(u"mission_5")
+        self.mission_5.setGeometry(QRect(310, 220, 131, 51))
+        self.mission_5.setFont(font1)
+        self.mission_6 = QLabel(self.centralwidget)
+        self.mission_6.setObjectName(u"mission_6")
+        self.mission_6.setGeometry(QRect(310, 250, 141, 41))
+        self.mission_6.setFont(font1)
+        self.mission_7 = QLabel(self.centralwidget)
+        self.mission_7.setObjectName(u"mission_7")
+        self.mission_7.setGeometry(QRect(310, 280, 141, 41))
+        font4 = QFont()
+        font4.setFamilies([u"\u5343\u56fe\u7b14\u950b\u624b\u5199\u4f53"])
+        font4.setPointSize(17)
+        self.mission_7.setFont(font4)
+        self.mission_8 = QLabel(self.centralwidget)
+        self.mission_8.setObjectName(u"mission_8")
+        self.mission_8.setGeometry(QRect(310, 310, 141, 31))
+        self.mission_8.setFont(font1)
+        self.mission_9 = QLabel(self.centralwidget)
+        self.mission_9.setObjectName(u"mission_9")
+        self.mission_9.setGeometry(QRect(310, 335, 141, 41))
+        self.mission_9.setFont(font1)
+        self.mission_10 = QLabel(self.centralwidget)
+        self.mission_10.setObjectName(u"mission_10")
+        self.mission_10.setGeometry(QRect(310, 365, 141, 41))
+        self.mission_10.setFont(font1)
+        self.minus5 = QPushButton(self.centralwidget)
+        self.minus5.setObjectName(u"minus5")
+        self.minus5.setGeometry(QRect(890, 440, 40, 40))
+        font5 = QFont()
+        font5.setPointSize(48)
+        self.minus5.setFont(font5)
+        self.minus5.setStyleSheet(u"border-image: url(:/image/resource/\u51cf\u53f7.png);\n"
+"")
+        self.pushButton_15 = QPushButton(self.centralwidget)
+        self.pushButton_15.setObjectName(u"pushButton_15")
+        self.pushButton_15.setGeometry(QRect(1080, 440, 40, 40))
+        self.pushButton_15.setStyleSheet(u"\n"
+"	border-image: url(:/image/resource/\u52a0\u53f7.png);")
+        self.minus4 = QPushButton(self.centralwidget)
+        self.minus4.setObjectName(u"minus4")
+        self.minus4.setGeometry(QRect(890, 370, 40, 40))
+        self.minus4.setFont(font5)
+        self.minus4.setStyleSheet(u"border-image: url(:/image/resource/\u51cf\u53f7.png);\n"
+"")
+        self.pushButton_17 = QPushButton(self.centralwidget)
+        self.pushButton_17.setObjectName(u"pushButton_17")
+        self.pushButton_17.setGeometry(QRect(1080, 370, 40, 40))
+        self.pushButton_17.setStyleSheet(u"\n"
+"	border-image: url(:/image/resource/\u52a0\u53f7.png);")
+        self.minus3 = QPushButton(self.centralwidget)
+        self.minus3.setObjectName(u"minus3")
+        self.minus3.setGeometry(QRect(890, 300, 40, 40))
+        self.minus3.setFont(font5)
+        self.minus3.setStyleSheet(u"border-image: url(:/image/resource/\u51cf\u53f7.png);\n"
+"")
+        self.plus3 = QPushButton(self.centralwidget)
+        self.plus3.setObjectName(u"plus3")
+        self.plus3.setGeometry(QRect(1080, 300, 40, 40))
+        self.plus3.setFont(font5)
+        self.plus3.setStyleSheet(u"border-image: url(:/image/resource/\u52a0\u53f7.png);\n"
+"")
+        self.plus = QPushButton(self.centralwidget)
+        self.plus.setObjectName(u"plus")
+        self.plus.setGeometry(QRect(1080, 230, 40, 40))
+        self.plus.setFont(font5)
+        self.plus.setStyleSheet(u"border-image: url(:/image/resource/\u52a0\u53f7.png);\n"
+"")
+        self.minus2 = QPushButton(self.centralwidget)
+        self.minus2.setObjectName(u"minus2")
+        self.minus2.setGeometry(QRect(890, 230, 40, 40))
+        self.minus2.setFont(font5)
+        self.minus2.setStyleSheet(u"border-image: url(:/image/resource/\u51cf\u53f7.png);\n"
+"")
+        self.plus1 = QPushButton(self.centralwidget)
+        self.plus1.setObjectName(u"plus1")
+        self.plus1.setGeometry(QRect(1080, 170, 40, 40))
+        self.plus1.setFont(font5)
+        self.plus1.setStyleSheet(u"border-image: url(:/image/resource/\u52a0\u53f7.png);\n"
+"\n"
+"")
+        self.minus1 = QPushButton(self.centralwidget)
+        self.minus1.setObjectName(u"minus1")
+        self.minus1.setGeometry(QRect(890, 170, 40, 40))
+        font6 = QFont()
+        font6.setPointSize(51)
+        self.minus1.setFont(font6)
+        self.minus1.setStyleSheet(u"border-image: url(:/image/resource/\u51cf\u53f7.png);\n"
+"")
+        self.label_4 = QLabel(self.centralwidget)
+        self.label_4.setObjectName(u"label_4")
+        self.label_4.setGeometry(QRect(930, 160, 151, 61))
+        font7 = QFont()
+        font7.setFamilies([u"\u5343\u56fe\u9a6c\u514b\u624b\u5199\u4f53"])
+        font7.setPointSize(16)
+        font7.setBold(True)
+        self.label_4.setFont(font7)
+        self.label_4.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.label_10 = QLabel(self.centralwidget)
+        self.label_10.setObjectName(u"label_10")
+        self.label_10.setGeometry(QRect(930, 220, 151, 61))
+        self.label_10.setFont(font7)
+        self.label_10.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.label_11 = QLabel(self.centralwidget)
+        self.label_11.setObjectName(u"label_11")
+        self.label_11.setGeometry(QRect(930, 290, 151, 61))
+        self.label_11.setFont(font7)
+        self.label_11.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.label_15 = QLabel(self.centralwidget)
+        self.label_15.setObjectName(u"label_15")
+        self.label_15.setGeometry(QRect(930, 360, 151, 61))
+        self.label_15.setFont(font7)
+        self.label_15.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.label_12 = QLabel(self.centralwidget)
+        self.label_12.setObjectName(u"label_12")
+        self.label_12.setGeometry(QRect(930, 430, 151, 61))
+        self.label_12.setFont(font7)
+        self.label_12.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.pushButton = QPushButton(self.centralwidget)
+        self.pushButton.setObjectName(u"pushButton")
+        self.pushButton.setGeometry(QRect(920, 130, 41, 41))
+        self.pushButton.setStyleSheet(u"border-image: url(:/image/resource/\u5de6\u7bad\u5934.png);")
+        self.pushButton_4 = QPushButton(self.centralwidget)
+        self.pushButton_4.setObjectName(u"pushButton_4")
+        self.pushButton_4.setGeometry(QRect(1050, 130, 41, 41))
+        self.pushButton_4.setStyleSheet(u"border-image: url(:/image/resource/\u53f3\u7bad\u5934.png);")
+        self.label_13 = QLabel(self.centralwidget)
+        self.label_13.setObjectName(u"label_13")
+        self.label_13.setGeometry(QRect(50, 310, 131, 41))
+        font8 = QFont()
+        font8.setPointSize(19)
+        font8.setBold(True)
+        self.label_13.setFont(font8)
+        self.label_14 = QLabel(self.centralwidget)
+        self.label_14.setObjectName(u"label_14")
+        self.label_14.setGeometry(QRect(50, 400, 151, 61))
+        self.label_14.setFont(font8)
         strength_assignment.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(strength_assignment)
@@ -255,27 +277,44 @@ class Ui_strength_assignment(object):
     def retranslateUi(self, strength_assignment):
         strength_assignment.setWindowTitle(QCoreApplication.translate("strength_assignment", u"MainWindow", None))
         self.label.setText("")
-        self.pushButton.setText("")
-        self.pushButton_2.setText("")
-        self.pushButton_3.setText("")
-        self.pushButton_4.setText("")
+        self.exit_button.setText("")
+        self.save_button.setText("")
         self.label_2.setText("")
         self.label_3.setText("")
-        self.checkBox.setText(QCoreApplication.translate("strength_assignment", u" \u5b66\u4e60", None))
-        self.checkBox_2.setText(QCoreApplication.translate("strength_assignment", u" \u5b66\u4e60", None))
-        self.checkBox_3.setText(QCoreApplication.translate("strength_assignment", u" \u5b66\u4e60", None))
-        self.checkBox_4.setText(QCoreApplication.translate("strength_assignment", u" \u5b66\u4e60", None))
-        self.checkBox_5.setText(QCoreApplication.translate("strength_assignment", u" \u5b66\u4e60", None))
         self.pushButton_5.setText(QCoreApplication.translate("strength_assignment", u"\u5f00\u59cb\u65b0\u7684\u4e00\u5468", None))
-        self.label_checkbox1.setText(QCoreApplication.translate("strength_assignment", u"TextLabel", None))
-        self.label_6.setText(QCoreApplication.translate("strength_assignment", u"\u53ef\u9009\u9879\u76ee", None))
-        self.label_checkbox2.setText(QCoreApplication.translate("strength_assignment", u"TextLabel", None))
-        self.label_checkbox3.setText(QCoreApplication.translate("strength_assignment", u"TextLabel", None))
-        self.label_checkbox4.setText(QCoreApplication.translate("strength_assignment", u"TextLabel", None))
-        self.label_checkbox5.setText(QCoreApplication.translate("strength_assignment", u"TextLabel", None))
-        self.label_5.setText(QCoreApplication.translate("strength_assignment", u"\u5c0f\u660e\uff08\u4f60\u81ea\u5df1\uff09", None))
-        self.label_7.setText(QCoreApplication.translate("strength_assignment", u"\u7cbe\u529b\u503c\uff1aX", None))
-        self.label_8.setText(QCoreApplication.translate("strength_assignment", u"\u5c5e\u6027\u503c\uff1aMaybe", None))
+        self.label_6.setText(QCoreApplication.translate("strength_assignment", u"\u53ef\u9009\u9879\u76ee\uff1a", None))
+        self.mission_2.setText(QCoreApplication.translate("strength_assignment", u"2.", None))
+        self.mission_3.setText(QCoreApplication.translate("strength_assignment", u"3.", None))
+        self.label_5.setText(QCoreApplication.translate("strength_assignment", u"Your name", None))
+        self.label_7.setText(QCoreApplication.translate("strength_assignment", u"\u7cbe\u529b\u503c\uff1a", None))
+        self.label_8.setText(QCoreApplication.translate("strength_assignment", u"\u91d1\u94b1\uff1a", None))
         self.label_9.setText(QCoreApplication.translate("strength_assignment", u"\u66f4\u591a\u6d3b\u52a8\uff0c\u8bf7\u95ef\u5173\u89e3\u9501.........", None))
+        self.misson_1.setText(QCoreApplication.translate("strength_assignment", u"1.\u5b66\u4e60", None))
+        self.mission_4.setText(QCoreApplication.translate("strength_assignment", u"4.", None))
+        self.mission_5.setText(QCoreApplication.translate("strength_assignment", u"5.", None))
+        self.mission_6.setText(QCoreApplication.translate("strength_assignment", u"6.", None))
+        self.mission_7.setText(QCoreApplication.translate("strength_assignment", u"7.", None))
+        self.mission_8.setText(QCoreApplication.translate("strength_assignment", u"8.", None))
+        self.mission_9.setText(QCoreApplication.translate("strength_assignment", u"9.", None))
+        self.mission_10.setText(QCoreApplication.translate("strength_assignment", u"10.", None))
+        self.minus5.setText("")
+        self.pushButton_15.setText("")
+        self.minus4.setText("")
+        self.pushButton_17.setText("")
+        self.minus3.setText("")
+        self.plus3.setText("")
+        self.plus.setText("")
+        self.minus2.setText("")
+        self.plus1.setText("")
+        self.minus1.setText("")
+        self.label_4.setText(QCoreApplication.translate("strength_assignment", u"\u793e\u56e2\u6d3b\u52a8  1000", None))
+        self.label_10.setText(QCoreApplication.translate("strength_assignment", u"\u793e\u56e2\u6d3b\u52a8  1000", None))
+        self.label_11.setText(QCoreApplication.translate("strength_assignment", u"\u793e\u56e2\u6d3b\u52a8  1000", None))
+        self.label_15.setText(QCoreApplication.translate("strength_assignment", u"\u793e\u56e2\u6d3b\u52a8  1000", None))
+        self.label_12.setText(QCoreApplication.translate("strength_assignment", u"\u793e\u56e2\u6d3b\u52a8  1000", None))
+        self.pushButton.setText("")
+        self.pushButton_4.setText("")
+        self.label_13.setText(QCoreApplication.translate("strength_assignment", u"100", None))
+        self.label_14.setText(QCoreApplication.translate("strength_assignment", u"10000", None))
     # retranslateUi
 

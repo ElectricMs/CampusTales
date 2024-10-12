@@ -110,11 +110,13 @@ class MyWindow(QMainWindow):
         self.current_layout_index = 0
         self.stacked_layout.setCurrentIndex(self.current_layout_index)
     def bind(self):
-        self.game_layout_main_menu.pushButton.clicked.connect(self.choose_model_1)
-        self.game_layout_main_menu.pushButton_2.clicked.connect(self.strength_assign)
+        self.game_layout_main_menu.pushButton.clicked.connect(self.strength_assign)
+        
         #self.game_layout_main_menu.pushButton_3.click.connect()
         self.game_layout_main_menu.pushButton_4.clicked.connect(self.Agent_choose)
         self.game_layout_main_menu.pushButton_5.clicked.connect(self.close)
+        self.game_layout_Agent.exit_button.clicked.connect(self.back)
+        self.game_layout_strength_assign.exit_button.clicked.connect(self.back)
     def Agent_choose(self):
         
         self.stacked_layout.setCurrentIndex(1)
@@ -122,6 +124,8 @@ class MyWindow(QMainWindow):
         self.stacked_layout.setCurrentIndex(2)
     def strength_assign(self):
         self.stacked_layout.setCurrentIndex(3)
+    def back(self):
+        self.stacked_layout.setCurrentIndex(0)
         
    
 if __name__=="__main__":

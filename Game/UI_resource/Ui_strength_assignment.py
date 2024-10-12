@@ -15,18 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-<<<<<<< Updated upstream
 from PySide6.QtWidgets import (QApplication, QGraphicsView, QLabel, QMainWindow,
     QPushButton, QSizePolicy, QWidget)
-import resource3_rc
-=======
-from PySide6.QtWidgets import (QApplication, QCheckBox, QGraphicsView, QLabel,
-    QMainWindow, QPushButton, QSizePolicy, QWidget)
 import resource.resource3_rc
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 
 class Ui_strength_assignment(object):
     def setupUi(self, strength_assignment):

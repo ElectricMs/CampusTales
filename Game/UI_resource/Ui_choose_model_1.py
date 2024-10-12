@@ -19,7 +19,7 @@ from PySide6.QtWidgets import (QApplication, QFrame, QLabel, QMainWindow,
     QPushButton, QSizePolicy, QWidget)
 import resource.resource1_rc
 
-class Ui_choose_model_1(object):
+class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
@@ -36,24 +36,24 @@ class Ui_choose_model_1(object):
 "    }")
         self.frame.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame.setFrameShadow(QFrame.Shadow.Raised)
-        self.label = QLabel(self.frame)
-        self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(70, 0, 271, 51))
+        self.label_name = QLabel(self.frame)
+        self.label_name.setObjectName(u"label_name")
+        self.label_name.setGeometry(QRect(70, 0, 271, 51))
         font = QFont()
         font.setPointSize(16)
         font.setBold(True)
-        self.label.setFont(font)
-        self.label.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-        self.label.setStyleSheet(u"#label{letter-spacing:5px;}")
-        self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.label_2 = QLabel(self.frame)
-        self.label_2.setObjectName(u"label_2")
-        self.label_2.setGeometry(QRect(50, 60, 581, 51))
+        self.label_name.setFont(font)
+        self.label_name.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.label_name.setStyleSheet(u"#label{letter-spacing:5px;}")
+        self.label_name.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.label_content = QLabel(self.frame)
+        self.label_content.setObjectName(u"label_content")
+        self.label_content.setGeometry(QRect(50, 60, 581, 51))
         font1 = QFont()
         font1.setFamilies([u"\u5fae\u8f6f\u96c5\u9ed1"])
         font1.setPointSize(15)
         font1.setBold(False)
-        self.label_2.setFont(font1)
+        self.label_content.setFont(font1)
         self.pushButton_4 = QPushButton(self.frame)
         self.pushButton_4.setObjectName(u"pushButton_4")
         self.pushButton_4.setGeometry(QRect(930, 140, 100, 35))
@@ -70,14 +70,14 @@ class Ui_choose_model_1(object):
         self.pushButton_7.setObjectName(u"pushButton_7")
         self.pushButton_7.setGeometry(QRect(810, 140, 100, 35))
         self.pushButton_7.setStyleSheet(u"border-image: url(:/image2/resource/qsave.png);")
-        self.pushButton = QPushButton(self.centralwidget)
-        self.pushButton.setObjectName(u"pushButton")
-        self.pushButton.setGeometry(QRect(360, 100, 581, 81))
+        self.pushButton_option1 = QPushButton(self.centralwidget)
+        self.pushButton_option1.setObjectName(u"pushButton_option1")
+        self.pushButton_option1.setGeometry(QRect(360, 100, 581, 81))
         font2 = QFont()
         font2.setFamilies([u"\u5fae\u8f6f\u96c5\u9ed1"])
         font2.setPointSize(15)
-        self.pushButton.setFont(font2)
-        self.pushButton.setStyleSheet(u"#pushButton{\n"
+        self.pushButton_option1.setFont(font2)
+        self.pushButton_option1.setStyleSheet(u"#pushButton{\n"
 "    image: url(:/image1/resource/button.png);\n"
 "    background-color:transparent;\n"
 "    border:None;\n"
@@ -88,11 +88,11 @@ class Ui_choose_model_1(object):
 "    #pushButton:pressed{\n"
 "        image:url(:/image1/resource/button3.png);\n"
 "    }")
-        self.pushButton_2 = QPushButton(self.centralwidget)
-        self.pushButton_2.setObjectName(u"pushButton_2")
-        self.pushButton_2.setGeometry(QRect(360, 170, 581, 81))
-        self.pushButton_2.setFont(font2)
-        self.pushButton_2.setStyleSheet(u"#pushButton_2{\n"
+        self.pushButton_option2 = QPushButton(self.centralwidget)
+        self.pushButton_option2.setObjectName(u"pushButton_option2")
+        self.pushButton_option2.setGeometry(QRect(360, 170, 581, 81))
+        self.pushButton_option2.setFont(font2)
+        self.pushButton_option2.setStyleSheet(u"#pushButton_2{\n"
 "    image: url(:/image1/resource/button.png);\n"
 "    background-color:transparent;\n"
 "    border:None;\n"
@@ -103,13 +103,13 @@ class Ui_choose_model_1(object):
 "    #pushButton_2:pressed{\n"
 "        image:url(:/image1/resource/button3.png);\n"
 "    }")
-        self.pushButton_3 = QPushButton(self.centralwidget)
-        self.pushButton_3.setObjectName(u"pushButton_3")
-        self.pushButton_3.setGeometry(QRect(360, 240, 581, 81))
+        self.pushButton_option3 = QPushButton(self.centralwidget)
+        self.pushButton_option3.setObjectName(u"pushButton_option3")
+        self.pushButton_option3.setGeometry(QRect(360, 240, 581, 81))
         font3 = QFont()
         font3.setPointSize(15)
-        self.pushButton_3.setFont(font3)
-        self.pushButton_3.setStyleSheet(u"#pushButton_3{\n"
+        self.pushButton_option3.setFont(font3)
+        self.pushButton_option3.setStyleSheet(u"#pushButton_3{\n"
 "    image: url(:/image1/resource/button.png);\n"
 "    background-color:transparent;\n"
 "    border:None;\n"
@@ -138,9 +138,9 @@ class Ui_choose_model_1(object):
         self.label_8.raise_()
         self.label_7.raise_()
         self.frame.raise_()
-        self.pushButton.raise_()
-        self.pushButton_2.raise_()
-        self.pushButton_3.raise_()
+        self.pushButton_option1.raise_()
+        self.pushButton_option2.raise_()
+        self.pushButton_option3.raise_()
 
         self.retranslateUi(MainWindow)
 
@@ -149,15 +149,15 @@ class Ui_choose_model_1(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"choose_model", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"\u7fe0\u82b1", None))
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"\u5b66\u957f\u4f60\u597d\uff0c\u6211\u60f3\u7ade\u9009\u4eca\u5e74\u7684\u5b66\u751f\u4f1a\u4e3b\u5e2d\uff0c\u80fd\u7ed9\u6211\u4e00\u70b9\u6307\u5bfc\u5417\uff1f", None))
+        self.label_name.setText(QCoreApplication.translate("MainWindow", u"\u7fe0\u82b1", None))
+        self.label_content.setText(QCoreApplication.translate("MainWindow", u"\u5b66\u957f\u4f60\u597d\uff0c\u6211\u60f3\u7ade\u9009\u4eca\u5e74\u7684\u5b66\u751f\u4f1a\u4e3b\u5e2d\uff0c\u80fd\u7ed9\u6211\u4e00\u70b9\u6307\u5bfc\u5417\uff1f", None))
         self.pushButton_4.setText("")
         self.pushButton_5.setText("")
         self.pushButton_6.setText("")
         self.pushButton_7.setText("")
-        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"\u597d\uff0c\u4eca\u5929\u665a\u4e0a\u6211\u4eec\u4e00\u8d77\u53bb\u81ea\u4e60\u5ba4\u5427", None))
-        self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"\u597d\uff0c\u4eca\u5929\u665a\u4e0a\u6211\u4eec\u4e00\u8d77\u53bb\u81ea\u4e60\u5ba4\u5427", None))
-        self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"\u597d\uff0c\u4eca\u5929\u665a\u4e0a\u6211\u4eec\u4e00\u8d77\u53bb\u81ea\u4e60\u5ba4\u5427", None))
+        self.pushButton_option1.setText(QCoreApplication.translate("MainWindow", u"\u597d\uff0c\u4eca\u5929\u665a\u4e0a\u6211\u4eec\u4e00\u8d77\u53bb\u81ea\u4e60\u5ba4\u5427", None))
+        self.pushButton_option2.setText(QCoreApplication.translate("MainWindow", u"\u597d\uff0c\u4eca\u5929\u665a\u4e0a\u6211\u4eec\u4e00\u8d77\u53bb\u81ea\u4e60\u5ba4\u5427", None))
+        self.pushButton_option3.setText(QCoreApplication.translate("MainWindow", u"\u597d\uff0c\u4eca\u5929\u665a\u4e0a\u6211\u4eec\u4e00\u8d77\u53bb\u81ea\u4e60\u5ba4\u5427", None))
         self.label_6.setText("")
         self.label_8.setText("")
         self.label_7.setText("")

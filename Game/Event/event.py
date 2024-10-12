@@ -87,7 +87,7 @@ class event_test(event):
         # 事件开始 当用户选择参加时触发
         # 接下来可以通过Game控制ui
         # 相当于从现在开始event类接过游戏控制权 结束时再归还给Game类
-        self.game.Ui.game_layout_1.label_Text.setText("我选择了测试事件，让我看看究竟是怎么回事。好吧，好像也不会发生什么，你知道的，这毕竟只是一个测试事件。当然，这个测试事件也可以控制ui")
+        self.game.Ui.game_layout_diary.misson_1.setText("我选择了测试事件，让我看看究竟是怎么回事。好吧，好像也不会发生什么，你知道的，这毕竟只是一个测试事件。当然，这个测试事件也可以控制ui")
 
         # 还没想好在哪调用 是在这直接调用还是在game类中
         self.event_end()

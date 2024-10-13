@@ -1,5 +1,9 @@
 <RCC>
   <qresource prefix="image">
+    <file>resource/弹窗.png</file>
+    <file>resource/弹窗2.png</file>
+    <file>resource/004_02.png</file>
+    <file>resource/004_07.png</file>
     <file>resource/右箭头.png</file>
     <file>resource/左箭头.png</file>
     <file>resource/加号.png</file>

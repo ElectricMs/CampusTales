@@ -10,6 +10,7 @@ class Game:
 
         print("class Game initiating...")
         self.Ui=Ui
+        
 
         # 存放游戏创建时间
         self.createTime=time.time()
@@ -32,26 +33,73 @@ class Game:
         self.loadEventProbability()
         
         # 存放已加入主线的事件，格式为 [事件名（字符串）]
-        self.mainlineEvents=["studies"]
+        self.mainlineEvents=["学习", "锻炼", "社交", "娱乐","1","2","3","4","5","6","7","8","9","10"]
 
         # 存放时间点，开始时为第一周
-        self.timePoint=1
+        self.timePoint = 0
 
         # 存放每周操作节点，0：展示文字：1：选择事件：2：分配能量 ：3：事件进度状态
-        self.weekPoint=0
+        self.weekPoint = 0
 
         # 存放显示属性
         self.displaySetting={"gender":0, "study":60, "health": 60, "mood":60 , "social":60, "ability":60, "money":0}
 
+        self.allocateEnergy()
+
 
     # 开始游戏
     def start(self):
-        return dialogue.get_random_welcoming()
+        # return dialogue.get_random_welcoming()
+        self.loadEvent()
+        self.Ui.game_layout_allocateEnergy.label_content.setText(self.currentEvent.if_join()[0] + "," + self.currentEvent.if_join()[1]) 
+        self.Ui.game_layout_allocateEnergy.frame.setVisible(True)
+        
+        def disablePushButton():
+            self.Ui.game_layout_allocateEnergy.pushButton_minus1.setEnabled(False)
+            self.Ui.game_layout_allocateEnergy.pushButton_minus2.setEnabled(False)
+            self.Ui.game_layout_allocateEnergy.pushButton_minus3.setEnabled(False)
+            self.Ui.game_layout_allocateEnergy.pushButton_minus4.setEnabled(False)
+            self.Ui.game_layout_allocateEnergy.pushButton_minus5.setEnabled(False)
+
+            self.Ui.game_layout_allocateEnergy.pushButton_plus1.setEnabled(False)
+            self.Ui.game_layout_allocateEnergy.pushButton_plus2.setEnabled(False)
+            self.Ui.game_layout_allocateEnergy.pushButton_plus3.setEnabled(False)
+            self.Ui.game_layout_allocateEnergy.pushButton_plus4.setEnabled(False)
+            self.Ui.game_layout_allocateEnergy.pushButton_plus5.setEnabled(False)
+
+        disablePushButton()
 
 
     # 重新加载游戏
     def reload(self):
         self.reloadTime=time.time()
+
+
+    # 选择True的事件
+    def event_true(self):
+        self.Ui.game_layout_allocateEnergy.frame.setVisible(False)
+        self.currentEvent.event_start()
+
+
+    # 选择False的事件
+    def event_false(self):
+        self.Ui.game_layout_allocateEnergy.frame.setVisible(False)
+
+        def enablePushButton():
+            self.Ui.game_layout_allocateEnergy.pushButton_minus1.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_minus2.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_minus3.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_minus4.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_minus5.setEnabled(True)
+
+            self.Ui.game_layout_allocateEnergy.pushButton_plus1.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_plus2.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_plus3.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_plus4.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_plus5.setEnabled(True)
+
+        enablePushButton()
+        self.allocateEnergy()
 
 
     # 下一个时间与操作点  点击next的时候调用
@@ -70,16 +118,16 @@ class Game:
             result = self.currentEvent.if_join()
             if result is not None:
                 text1, text2 = result
-                self.Ui.game_layout_diary.misson_1.setText(text1+'\n'+text2)
+                self.Ui.game_layout_allocateEnergy.misson_1.setText(text1+'\n'+text2)
             else:
                 # 处理 None 的情况，例如：
                 text1, text2 = "好像出了点问题", "默认文本"
-                self.Ui.game_layout_diary.misson_1.setText(text1+'\n'+text2)
+                self.Ui.game_layout_allocateEnergy.misson_1.setText(text1+'\n'+text2)
 
             print(self.currentEvent.name)
 
             text1, text2=self.currentEvent.if_join()
-            self.Ui.game_layout_diary.misson_1.setText(text1)
+            self.Ui.game_layout_allocateEnergy.misson_1.setText(text1)
 
 
             # 在这里需要出现随机事件并选择是否进行 默认选no
@@ -101,7 +149,7 @@ class Game:
             # 在这里需要分配能量
             # self.Ui.game_layout_1.radioButton_NO.hide() 
             # self.Ui.game_layout_1.radioButton_Yes.hide()
-            self.Ui.game_layout_diary.misson_1.setText("该如何安排任务呢···")
+            self.Ui.game_layout_allocateEnergy.misson_1.setText("该如何安排任务呢···")
             self.allocateEnergy()
 
             self.timePoint+=1
@@ -111,7 +159,7 @@ class Game:
             print("展示文字状态")
             self.weekPoint=0 #展示文字状态
             # 在这里需要展示每周随机的一段文字
-            self.Ui.game_layout_diary.misson_1.setText(dialogue.get_random_talk())
+            self.Ui.game_layout_allocateEnergy.misson_1.setText(dialogue.get_random_talk())
 
             pass
 
@@ -135,13 +183,64 @@ class Game:
     def allocateEnergy(self):
         # 这里需要分配精力
         # 学习 运动 社交 娱乐 
-        # 附加：陪npy 竞赛 科研 
+        # 附加：陪npy 竞赛 科研 等
+        count = len(self.mainlineEvents)
+        page = (count-(count%5))/5+1
+        pageNow = 1
 
+        def pageTuning(value):
+            assert value in [1, -1], "Value must be either 1 or -1"
+            nonlocal pageNow
+            nonlocal page
+            if value==1:
+                if pageNow<page:
+                    print("next page")
+                    pageNow+=1
+                    refreshMissionList()
+                pass
+            else: # value==-1
+                if pageNow>1:
+                    print("previous page")
+                    pageNow-=1
+                    refreshMissionList()
+                pass
 
+        
+        def refreshMissionList():
+            nonlocal count
+            nonlocal pageNow
+            maxMission = count if count < pageNow * 5 else pageNow * 5
+            missionList = self.mainlineEvents[(pageNow-1)*5:maxMission]
+            self.Ui.game_layout_allocateEnergy.label_mission1_listed.setText(missionList[0])
+            if len(missionList)>1:
+                self.Ui.game_layout_allocateEnergy.label_mission2_listed.setText(missionList[1])
+            if len(missionList)>2:
+                self.Ui.game_layout_allocateEnergy.label_mission3_listed.setText(missionList[2])
+            if len(missionList)>3:
+                self.Ui.game_layout_allocateEnergy.label_mission4_listed.setText(missionList[3])
+            if len(missionList)>4:
+                self.Ui.game_layout_allocateEnergy.label_mission5_listed.setText(missionList[4])
 
+        refreshMissionList()
+        self.pageTuning = pageTuning
+        self.refreshMissionList = refreshMissionList
 
+        def enablePushButton():
+            self.Ui.game_layout_allocateEnergy.pushButton_minus1.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_minus2.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_minus3.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_minus4.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_minus5.setEnabled(True)
 
-        pass
+            self.Ui.game_layout_allocateEnergy.pushButton_plus1.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_plus2.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_plus3.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_plus4.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_plus5.setEnabled(True)
+
+        enablePushButton()
+        
+
 
 
     # 加载随机事件
@@ -168,7 +267,11 @@ class Game:
 
     # 加载特定事件
     def loadEvent(self):
-        if self.timePoint==1:
+        if self.timePoint==0:
+            # 第零周的事件
+            self.currentEvent=self.allEvents["crush_atFirstBlush"]
+            return True
+        elif self.timePoint==1:
             # 第一周的事件
             self.currentEvent=self.allEvents["test"]
             return True

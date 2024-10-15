@@ -1,7 +1,7 @@
 import random
 import time
-from Code_Ui import MainMenu
 from cover_start import MyWindow
+from PySide6.QtWidgets import QPushButton
 
 
 class Game:
@@ -64,7 +64,7 @@ class Game:
         # ============================
         self.loadEvent()
         self.Ui.game_layout_allocateEnergy.label_content.setText(self.currentEvent.if_join()[0] + "," + self.currentEvent.if_join()[1]) 
-        self.Ui.game_layout_allocateEnergy.frame.setVisible(True)
+        self.Ui.game_layout_allocateEnergy.frame_modal.setVisible(True)
         
         def disablePushButton():
             self.Ui.game_layout_allocateEnergy.pushButton_minus1.setEnabled(False)
@@ -91,7 +91,7 @@ class Game:
 
     # 选择True的事件
     def event_true(self):
-        self.Ui.game_layout_allocateEnergy.frame.setVisible(False)
+        self.Ui.game_layout_allocateEnergy.frame_modal.setVisible(False)
         self.currentEvent.event_start()
 
         def enablePushButton():
@@ -115,7 +115,7 @@ class Game:
 
     # 选择False的事件
     def event_false(self):
-        self.Ui.game_layout_allocateEnergy.frame.setVisible(False)
+        self.Ui.game_layout_allocateEnergy.frame_modal.setVisible(False)
 
         def enablePushButton():
             self.Ui.game_layout_allocateEnergy.pushButton_minus1.setEnabled(True)
@@ -142,7 +142,7 @@ class Game:
         self.Ui.game_layout_allocateEnergy.blur_recover()
         self.loadEvent()
         self.Ui.game_layout_allocateEnergy.label_content.setText(self.currentEvent.if_join()[0] + "," + self.currentEvent.if_join()[1]) 
-        self.Ui.game_layout_allocateEnergy.frame.setVisible(True)
+        self.Ui.game_layout_allocateEnergy.frame_modal.setVisible(True)
         
         def disablePushButton():
             self.Ui.game_layout_allocateEnergy.pushButton_minus1.setEnabled(False)
@@ -172,8 +172,6 @@ class Game:
             mission[1]=0
         self.refreshMissionList()
         
-
-
         # 模糊效果，出现日记本
         # 日记本中点击next按钮显示下一页（暂缓），直到点击next出现事件modal和能量分配按钮
         # 记录能量分配情况（待完善）
@@ -201,6 +199,21 @@ class Game:
         count = len(self.mainlineEvents)
         page = count//5+1 if count%5!=0 else count//5
         pageNow = 1
+
+        # 左侧罗列所有事件并供选择
+        # 删除 QFrame 布局中的所有子部件
+        while self.Ui.game_layout_allocateEnergy.frame_selectArea_layout.count():
+            item = self.Ui.game_layout_allocateEnergy.frame_selectArea_layout.takeAt(0)
+            widget = item.widget()
+            if widget:
+                widget.deleteLater()
+        for mission in self.mainlineEvents:
+            button = QPushButton(mission[0])
+            # 为按钮添加槽函数
+            # 还没加
+            
+            self.Ui.game_layout_allocateEnergy.frame_selectArea_layout.addWidget(button)
+
 
         def pageTuning(value):
             assert value in [1, -1], "Value must be either 1 or -1"

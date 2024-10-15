@@ -1,10 +1,11 @@
 from PySide6.QtCore import Qt,QEvent,QTimer, QEasingCurve, QPropertyAnimation, QVariantAnimation,QRect,QCoreApplication
 from PySide6.QtGui import QMouseEvent,QFont
-from PySide6.QtWidgets import QApplication,QWidget,QMainWindow,QPushButton,QStackedLayout,QGraphicsOpacityEffect,QGraphicsBlurEffect,QFrame,QLabel
+from PySide6.QtWidgets import QApplication, QWidget, QMainWindow, QPushButton, QStackedLayout, QGraphicsOpacityEffect, QGraphicsBlurEffect, QFrame,QLabel, QVBoxLayout
 from UI_resource.Ui_cover import Ui_cover
 from UI_resource.Ui_agent_choose import Ui_Agent_choose
 from UI_resource.Ui_choose_model_1 import Ui_MainWindow as Ui_choose_model_1
 from UI_resource.Ui_allocateEnergy import Ui_allocateEnergy
+from Animation.yinru_start import MyWindow as GameLayout_initialAnimation
 
 
 
@@ -53,8 +54,10 @@ class GameLayout_allocateEnergy(QMainWindow, Ui_allocateEnergy):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.frame.setVisible(False)
+        self.frame_modal.setVisible(False)
         self.add_diary_widget()
+        self.frame_selectArea_layout = QVBoxLayout()
+        self.frame_selectArea.setLayout(self.frame_selectArea_layout)
 
     
     def add_diary_widget(self):
@@ -80,11 +83,6 @@ class GameLayout_allocateEnergy(QMainWindow, Ui_allocateEnergy):
         self.label_diary_content.setWordWrap(True)
         self.label_diary_content.setText("Test")
 
-        #模糊状态恢复测试按钮
-        # self.pushButton_test_blur = QPushButton(self.widget_diary)
-        # self.pushButton_test_blur.setGeometry(QRect(500, 180, 75, 24))
-        # self.pushButton_test_blur.setText("恢复")
-        # self.pushButton_test_blur.clicked.connect(self.blur_recover)
         
         #每周执行任务的内容widget,模糊背景
         self.pushButton_diary_next = QPushButton(self.widget_diary)
@@ -147,17 +145,20 @@ class MyWindow(QMainWindow):
         self.game_layout_Agent= GameLayout_Agent()
         self.game_layout_choose_model_1= GameLayout_choose_model_1()
         self.game_layout_allocateEnergy= GameLayout_allocateEnergy()
+        self.game_layout_initialAnimation = GameLayout_initialAnimation()
 
-        
         self.stacked_layout.addWidget(self.game_layout_main_menu) # 0
         self.stacked_layout.addWidget(self.game_layout_Agent) # 1
         self.stacked_layout.addWidget(self.game_layout_choose_model_1) # 2
         self.stacked_layout.addWidget(self.game_layout_allocateEnergy) # 3
-        
-        
+        self.stacked_layout.addWidget(self.game_layout_initialAnimation) # 4
+
+          
         central_widget = QWidget()
         central_widget.setLayout(self.stacked_layout)
         self.setCentralWidget(central_widget)
+
+        
         
         self.bind()
         # 设置当前显示的布局为主菜单
@@ -186,6 +187,7 @@ class MyWindow(QMainWindow):
 
     def game_start(self):
         self.stacked_layout.setCurrentIndex(3)
+        self.game_layout_initialAnimation.start_flow_text()
         from main import Game
         self.game = Game(self)
         self.game.start()

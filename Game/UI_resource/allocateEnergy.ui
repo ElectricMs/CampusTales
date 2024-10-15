@@ -854,7 +854,7 @@ background-color:grey;</string>
      <string>10000</string>
     </property>
    </widget>
-   <widget class="QFrame" name="frame">
+   <widget class="QFrame" name="frame_modal">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -936,6 +936,26 @@ background-color:grey;</string>
       <string>否</string>
      </property>
     </widget>
+   </widget>
+   <widget class="QFrame" name="frame_selectArea">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>120</y>
+      <width>311</width>
+      <height>351</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: transparent;
+border:0px;</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Shape::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Shadow::Raised</enum>
+    </property>
    </widget>
   </widget>
  </widget>

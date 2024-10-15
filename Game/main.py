@@ -10,7 +10,6 @@ class Game:
 
         print("class Game initiating...")
         self.Ui=Ui
-        
 
         # 存放游戏创建时间
         self.createTime=time.time()
@@ -33,8 +32,11 @@ class Game:
         self.loadEventProbability()
         
         # 存放已加入主线的事件，格式为 [事件名（字符串）]
-        self.mainlineEvents=["学习", "锻炼", "社交", "娱乐","1","2","3","4","5","6","7","8","9","10"]
-
+        self.mainlineEvents=[["学习",0], ["锻炼",0], ["社交",0],["娱乐",0],["Test1",0],["Test2",0],["Test3",0],["Test4",0],["Test5",0],["Test6",0]]
+        
+        # 存放每周精力，结束后重新设置为10
+        self.energy=10
+        
         # 存放时间点，开始时为第一周
         self.timePoint = 0
 
@@ -185,7 +187,7 @@ class Game:
         # 学习 运动 社交 娱乐 
         # 附加：陪npy 竞赛 科研 等
         count = len(self.mainlineEvents)
-        page = (count-(count%5))/5+1
+        page = count//5+1 if count%5!=0 else count//5
         pageNow = 1
 
         def pageTuning(value):
@@ -205,24 +207,53 @@ class Game:
                     refreshMissionList()
                 pass
 
+
+        def modifyEnergy(value, position):
+            assert value in [1, -1], "Value must be either 1 or -1"
+            assert position in [1, 2, 3, 4, 5], "Position must be between 1 and 5"
+            nonlocal pageNow
+            if value==1:
+                if self.energy > 0:
+                    self.mainlineEvents[(pageNow-1)*5+position-1][1]+=1
+                    self.energy-=1
+            else: # value==-1
+                if self.mainlineEvents[(pageNow-1)*5+position-1][1]>0:
+                    self.mainlineEvents[(pageNow-1)*5+position-1][1]-=1
+                    self.energy+=1
+            refreshMissionList()
+
         
         def refreshMissionList():
             nonlocal count
             nonlocal pageNow
             maxMission = count if count < pageNow * 5 else pageNow * 5
             missionList = self.mainlineEvents[(pageNow-1)*5:maxMission]
-            self.Ui.game_layout_allocateEnergy.label_mission1_listed.setText(missionList[0])
-            if len(missionList)>1:
-                self.Ui.game_layout_allocateEnergy.label_mission2_listed.setText(missionList[1])
-            if len(missionList)>2:
-                self.Ui.game_layout_allocateEnergy.label_mission3_listed.setText(missionList[2])
-            if len(missionList)>3:
-                self.Ui.game_layout_allocateEnergy.label_mission4_listed.setText(missionList[3])
+            self.Ui.game_layout_allocateEnergy.label_energy_value.setText(str(self.energy))
+
+            self.Ui.game_layout_allocateEnergy.label_mission1_listed.setText(missionList[0][0]+' '+str(missionList[0][1]))
             if len(missionList)>4:
-                self.Ui.game_layout_allocateEnergy.label_mission5_listed.setText(missionList[4])
+                self.Ui.game_layout_allocateEnergy.label_mission5_listed.setText(missionList[4][0]+' '+str(missionList[4][1]))
+            else:
+                self.Ui.game_layout_allocateEnergy.label_mission5_listed.setText("")
+            
+            if len(missionList)>3:
+                self.Ui.game_layout_allocateEnergy.label_mission4_listed.setText(missionList[3][0]+' '+str(missionList[3][1]))
+            else:
+                self.Ui.game_layout_allocateEnergy.label_mission4_listed.setText("")
+          
+            if len(missionList)>2:
+                self.Ui.game_layout_allocateEnergy.label_mission3_listed.setText(missionList[2][0]+' '+str(missionList[2][1]))
+            else:
+                self.Ui.game_layout_allocateEnergy.label_mission3_listed.setText("")
+
+            if len(missionList)>1:
+                self.Ui.game_layout_allocateEnergy.label_mission2_listed.setText(missionList[1][0]+' '+str(missionList[1][1]))
+            else:
+                self.Ui.game_layout_allocateEnergy.label_mission2_listed.setText("")
 
         refreshMissionList()
         self.pageTuning = pageTuning
+        self.modifyEnergy = modifyEnergy
         self.refreshMissionList = refreshMissionList
 
         def enablePushButton():

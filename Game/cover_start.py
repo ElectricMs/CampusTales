@@ -290,17 +290,22 @@ class MyWindow(QMainWindow):
         # self.game_layout_diary.ui.misson_1.setText(self.game.start()+"不管怎样，我决定从现在开始记日记，这应该是个好习惯吧。")
         # 这里首先应该是黑屏的过场动画和基本选项选择 暂时先跳过
         def bind_afterGame():
-            self.game_layout_allocateEnergy.pushButton_nextPage.clicked.connect(self.test_nextPage)
-            self.game_layout_allocateEnergy.pushButton_previousPage.clicked.connect(self.test_previousPage)
+            self.game_layout_allocateEnergy.pushButton_nextPage.clicked.connect(lambda: self.game.pageTuning(1))
+            self.game_layout_allocateEnergy.pushButton_previousPage.clicked.connect(lambda: self.game.pageTuning(-1))
+            
+            self.game_layout_allocateEnergy.pushButton_minus1.clicked.connect(lambda: self.game.modifyEnergy(-1,1))
+            self.game_layout_allocateEnergy.pushButton_minus2.clicked.connect(lambda: self.game.modifyEnergy(-1,2))
+            self.game_layout_allocateEnergy.pushButton_minus3.clicked.connect(lambda: self.game.modifyEnergy(-1,3))
+            self.game_layout_allocateEnergy.pushButton_minus4.clicked.connect(lambda: self.game.modifyEnergy(-1,4))
+            self.game_layout_allocateEnergy.pushButton_minus5.clicked.connect(lambda: self.game.modifyEnergy(-1,5))
+            self.game_layout_allocateEnergy.pushButton_plus1.clicked.connect(lambda: self.game.modifyEnergy(1,1))
+            self.game_layout_allocateEnergy.pushButton_plus2.clicked.connect(lambda: self.game.modifyEnergy(1,2))
+            self.game_layout_allocateEnergy.pushButton_plus3.clicked.connect(lambda: self.game.modifyEnergy(1,3))
+            self.game_layout_allocateEnergy.pushButton_plus4.clicked.connect(lambda: self.game.modifyEnergy(1,4))
+            self.game_layout_allocateEnergy.pushButton_plus5.clicked.connect(lambda: self.game.modifyEnergy(1,5))
 
         bind_afterGame()
 
-
-    def test_nextPage(self):
-        self.game.pageTuning(1)
-
-    def test_previousPage(self):
-        self.game.pageTuning(-1)
 
 
     def event_true(self):

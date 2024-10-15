@@ -5,12 +5,10 @@ from UI_resource.Ui_cover import Ui_cover
 from UI_resource.Ui_agent_choose import Ui_Agent_choose
 from UI_resource.Ui_choose_model_1 import Ui_MainWindow as Ui_choose_model_1
 from UI_resource.Ui_allocateEnergy import Ui_allocateEnergy
-#全局变量用于存储每个任务的精力值
-value_list=[]
-#全局变量，用于实现Label的换页
-count=0
 
-#####我的UI
+
+
+# Agent对话事件界面
 class GameLayout_choose_model_1(QMainWindow, Ui_choose_model_1):
     def __init__(self):
         super().__init__()
@@ -20,7 +18,7 @@ class GameLayout_choose_model_1(QMainWindow, Ui_choose_model_1):
         self.opacity_effect_6 = QGraphicsOpacityEffect()
         self.opacity_effect_8 = QGraphicsOpacityEffect()
         
-        self.label_6.setGraphicsEffect(self.opacity_effect_6)
+        self.label_img_left.setGraphicsEffect(self.opacity_effect_6)
         self.label_8.setGraphicsEffect(self.opacity_effect_8)
         self.opacity_effect_8.setOpacity(0)
         self.opacity_effect_6.setOpacity(1)
@@ -29,20 +27,26 @@ class GameLayout_choose_model_1(QMainWindow, Ui_choose_model_1):
     def set_stream_text(self, text):
         if not isinstance(text, str):
             raise ValueError("text must be a string")
-        self.current_index=0
+        current_index = 0
+
+        def update_text_stream():
+            nonlocal current_index
+            if current_index < len(text):
+                self.label_content.setText(text[:current_index + 1])
+                current_index += 1
+            else:
+                self.timer.stop()
+
         if not hasattr(self, 'timer'):
             self.timer = QTimer(self)
-            self.timer.timeout.connect(lambda:self.update_text_stream(str(text)))
+            self.timer.timeout.connect(update_text_stream)
             self.timer.start(50)  # 每50毫秒更新一次
         else:
-            self.timer.start()
-
-    def update_text_stream(self,text:str):
-        if self.current_index < len(text):
-            self.label_content.setText(text[:self.current_index + 1])
-            self.current_index += 1
-        else:
             self.timer.stop()
+            self.timer = QTimer(self)
+            self.timer.timeout.connect(update_text_stream)
+            self.timer.start(50)
+
 
 
 class GameLayout_allocateEnergy(QMainWindow, Ui_allocateEnergy):
@@ -74,27 +78,27 @@ class GameLayout_allocateEnergy(QMainWindow, Ui_allocateEnergy):
         self.label_diary_content.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignTop)
         # self.widget_diary.label_content.setText(QCoreApplication.translate("strength_assignment", u"\u661f\u671f\u4e00      5\u670828\u65e5     \u6674", None))
         self.label_diary_content.setWordWrap(True)
-        self.label_diary_content.setText("你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好")
+        self.label_diary_content.setText("Test")
 
         #模糊状态恢复测试按钮
-        self.pushButton_test_blur = QPushButton(self.widget_diary)
-        self.pushButton_test_blur.setGeometry(QRect(500, 180, 75, 24))
-        self.pushButton_test_blur.setText("恢复")
-        self.pushButton_test_blur.clicked.connect(self.blur_recover)
+        # self.pushButton_test_blur = QPushButton(self.widget_diary)
+        # self.pushButton_test_blur.setGeometry(QRect(500, 180, 75, 24))
+        # self.pushButton_test_blur.setText("恢复")
+        # self.pushButton_test_blur.clicked.connect(self.blur_recover)
         
         #每周执行任务的内容widget,模糊背景
-        self.next_button = QPushButton(self.widget_diary)
-        self.next_button.setObjectName(u"next_button")
-        self.next_button.setGeometry(QRect(700, 620, 171, 41))
+        self.pushButton_diary_next = QPushButton(self.widget_diary)
+        self.pushButton_diary_next.setGeometry(QRect(700, 620, 171, 41))
+        self.pushButton_diary_next.setText("Next")
         font10 = QFont()
         font10.setPointSize(16)
         font10.setBold(True)
-        self.next_button.setFont(font10)
-        self.next_button.setStyleSheet("#next_button{color:brown;\n"
+        self.pushButton_diary_next.setFont(font10)
+        self.pushButton_diary_next.setStyleSheet("#pushButton_diary_next{color:brown;\n"
             "background-color: rgb(255, 230, 0);}"
-                    "#next_button:hover{color:brown;\n"
+                    "#pushButton_diary_next:hover{color:brown;\n"
             "background-color: rgb(255, 200, 0);}"
-                    "#next_button:pressed{color:brown;\n"
+                    "#pushButton_diary_next:pressed{color:brown;\n"
             "background-color: rgb(255, 170, 0);}"
         )
     
@@ -145,10 +149,10 @@ class MyWindow(QMainWindow):
         self.game_layout_allocateEnergy= GameLayout_allocateEnergy()
 
         
-        self.stacked_layout.addWidget(self.game_layout_main_menu) 
-        self.stacked_layout.addWidget(self.game_layout_Agent)
-        self.stacked_layout.addWidget(self.game_layout_choose_model_1)
-        self.stacked_layout.addWidget(self.game_layout_allocateEnergy)
+        self.stacked_layout.addWidget(self.game_layout_main_menu) # 0
+        self.stacked_layout.addWidget(self.game_layout_Agent) # 1
+        self.stacked_layout.addWidget(self.game_layout_choose_model_1) # 2
+        self.stacked_layout.addWidget(self.game_layout_allocateEnergy) # 3
         
         
         central_widget = QWidget()
@@ -185,8 +189,8 @@ class MyWindow(QMainWindow):
         from main import Game
         self.game = Game(self)
         self.game.start()
-        # self.game_layout_diary.ui.misson_1.setText(self.game.start()+"不管怎样，我决定从现在开始记日记，这应该是个好习惯吧。")
         # 这里首先应该是黑屏的过场动画和基本选项选择 暂时先跳过
+
         def bind_afterGame():
             self.game_layout_allocateEnergy.pushButton_nextPage.clicked.connect(lambda: self.game.pageTuning(1))
             self.game_layout_allocateEnergy.pushButton_previousPage.clicked.connect(lambda: self.game.pageTuning(-1))
@@ -201,6 +205,9 @@ class MyWindow(QMainWindow):
             self.game_layout_allocateEnergy.pushButton_plus3.clicked.connect(lambda: self.game.modifyEnergy(1,3))
             self.game_layout_allocateEnergy.pushButton_plus4.clicked.connect(lambda: self.game.modifyEnergy(1,4))
             self.game_layout_allocateEnergy.pushButton_plus5.clicked.connect(lambda: self.game.modifyEnergy(1,5))
+
+            self.game_layout_allocateEnergy.pushButton_diary_next.clicked.connect(self.game.next)
+            self.game_layout_choose_model_1.pushButton_next.clicked.connect(self.game.currentEvent.next) # type: ignore
 
         bind_afterGame()
 
@@ -231,47 +238,5 @@ class MyWindow(QMainWindow):
 if __name__=="__main__":
     app=QApplication([])
     window=MyWindow()
-    # input_list=["睡觉","睡觉","睡觉"]
-    # input_list=["睡觉","睡觉","睡觉","唱歌","跳舞","rap","打篮球"]
-    # list1=input_list
-    # input_list_length=len(list1)
-    
-    # for i in range(input_list_length):
-    #     value_list.append(0)
-    
-    # window.game_layout_diary.ui.mission1_show.setText("")
-    # window.game_layout_diary.ui.mission2_show.setText("")
-    # window.game_layout_diary.ui.mission3_show.setText("")
-    # window.game_layout_diary.ui.mission4_show.setText("")
-    # window.game_layout_diary.ui.mission5_show.setText("")
-    
-    
-    # #list初始化
-    # label_list=window.game_layout_diary.get_label_list()
-    # plus_button_list=window.game_layout_diary.get_plus_button_list()
-    # minus_button_list=window.game_layout_diary.get_minus_button_list()
-    # for i in range(5):
-    #     label_list[i].setVisible(False)
-    #     plus_button_list[i].setVisible(False)
-    #     minus_button_list[i].setVisible(False)
-    # bind()
-    # if input_list_length<=5:
-    #     for i in range(input_list_length):
-    #         label_list[i].setText(list1[i]+"  0")
-    #         label_list[i].setVisible(True)
-    #         plus_button_list[i].setVisible(True)
-    #         minus_button_list[i].setVisible(True)
-        
-            
-    # else:
-    #     for i in range(5):
-    #         label_list[i].setText(list1[i]+"  0")
-            
-    #         label_list[i].setVisible(True)
-    #         plus_button_list[i].setVisible(True)
-    #         minus_button_list[i].setVisible(True)
-        
-    #     window.game_layout_diary.ui.left_button.clicked.connect(left_show)
-    #     window.game_layout_diary.ui.right_button.clicked.connect(right_show)
     window.show()
     app.exec()

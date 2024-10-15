@@ -60,7 +60,7 @@ border-image: url(:/image1/resource/classroom.png);}</string>
       <string notr="true">#label{letter-spacing:5px;}</string>
      </property>
      <property name="text">
-      <string>翠花</string>
+      <string>Narrator</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -69,10 +69,10 @@ border-image: url(:/image1/resource/classroom.png);}</string>
     <widget class="QLabel" name="label_content">
      <property name="geometry">
       <rect>
-       <x>50</x>
-       <y>60</y>
-       <width>581</width>
-       <height>51</height>
+       <x>60</x>
+       <y>70</y>
+       <width>681</width>
+       <height>71</height>
       </rect>
      </property>
      <property name="font">
@@ -83,7 +83,13 @@ border-image: url(:/image1/resource/classroom.png);}</string>
       </font>
      </property>
      <property name="text">
-      <string>学长你好，我想竞选今年的学生会主席，能给我一点指导吗？</string>
+      <string>Test</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_4">
@@ -150,6 +156,29 @@ border-image: url(:/image1/resource/classroom.png);}</string>
       <string/>
      </property>
     </widget>
+    <widget class="QPushButton" name="pushButton_next">
+     <property name="geometry">
+      <rect>
+       <x>1050</x>
+       <y>70</y>
+       <width>111</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>PushButton</string>
+     </property>
+    </widget>
+    <widget class="QPlainTextEdit" name="plainTextEdit_input">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>70</y>
+       <width>601</width>
+       <height>71</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
    <widget class="QPushButton" name="pushButton_option1">
     <property name="geometry">
@@ -180,7 +209,7 @@ border-image: url(:/image1/resource/classroom.png);}</string>
     }</string>
     </property>
     <property name="text">
-     <string>好，今天晚上我们一起去自习室吧</string>
+     <string>Option1</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_option2">
@@ -212,7 +241,7 @@ border-image: url(:/image1/resource/classroom.png);}</string>
     }</string>
     </property>
     <property name="text">
-     <string>好，今天晚上我们一起去自习室吧</string>
+     <string>Option2</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_option3">
@@ -243,10 +272,10 @@ border-image: url(:/image1/resource/classroom.png);}</string>
     }</string>
     </property>
     <property name="text">
-     <string>好，今天晚上我们一起去自习室吧</string>
+     <string>Option3</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_6">
+   <widget class="QLabel" name="label_img_left">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -278,7 +307,7 @@ border-image: url(:/image1/resource/classroom.png);}</string>
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="label_7">
+   <widget class="QLabel" name="label_img_right">
     <property name="geometry">
      <rect>
       <x>860</x>
@@ -299,9 +328,9 @@ border-image: url(:/image1/resource/classroom.png);}</string>
      <string/>
     </property>
    </widget>
-   <zorder>label_6</zorder>
+   <zorder>label_img_left</zorder>
    <zorder>label_8</zorder>
-   <zorder>label_7</zorder>
+   <zorder>label_img_right</zorder>
    <zorder>frame</zorder>
    <zorder>pushButton_option1</zorder>
    <zorder>pushButton_option2</zorder>

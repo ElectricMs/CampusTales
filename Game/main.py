@@ -49,10 +49,19 @@ class Game:
         # 初始化随机事件
         self.randomEvents=RandomEvents(self)
 
+        # 存放每周精力分配结果
+        self.allocateResults=[]
+
+        # 存放每周事件结果
+        self.eventResults=[]
+
+
+
 
     # 开始游戏
     def start(self):
-        # return dialogue.get_random_welcoming()
+        # 添加黑屏过场动画
+        # ============================
         self.loadEvent()
         self.Ui.game_layout_allocateEnergy.label_content.setText(self.currentEvent.if_join()[0] + "," + self.currentEvent.if_join()[1]) 
         self.Ui.game_layout_allocateEnergy.frame.setVisible(True)
@@ -63,12 +72,14 @@ class Game:
             self.Ui.game_layout_allocateEnergy.pushButton_minus3.setEnabled(False)
             self.Ui.game_layout_allocateEnergy.pushButton_minus4.setEnabled(False)
             self.Ui.game_layout_allocateEnergy.pushButton_minus5.setEnabled(False)
-
             self.Ui.game_layout_allocateEnergy.pushButton_plus1.setEnabled(False)
             self.Ui.game_layout_allocateEnergy.pushButton_plus2.setEnabled(False)
             self.Ui.game_layout_allocateEnergy.pushButton_plus3.setEnabled(False)
             self.Ui.game_layout_allocateEnergy.pushButton_plus4.setEnabled(False)
             self.Ui.game_layout_allocateEnergy.pushButton_plus5.setEnabled(False)
+            self.Ui.game_layout_allocateEnergy.pushButton_next.setEnabled(False)
+            self.Ui.game_layout_allocateEnergy.pushButton_previousPage.setEnabled(False)
+            self.Ui.game_layout_allocateEnergy.pushButton_nextPage.setEnabled(False)
 
         disablePushButton()
 
@@ -89,12 +100,14 @@ class Game:
             self.Ui.game_layout_allocateEnergy.pushButton_minus3.setEnabled(True)
             self.Ui.game_layout_allocateEnergy.pushButton_minus4.setEnabled(True)
             self.Ui.game_layout_allocateEnergy.pushButton_minus5.setEnabled(True)
-
             self.Ui.game_layout_allocateEnergy.pushButton_plus1.setEnabled(True)
             self.Ui.game_layout_allocateEnergy.pushButton_plus2.setEnabled(True)
             self.Ui.game_layout_allocateEnergy.pushButton_plus3.setEnabled(True)
             self.Ui.game_layout_allocateEnergy.pushButton_plus4.setEnabled(True)
             self.Ui.game_layout_allocateEnergy.pushButton_plus5.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_next.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_previousPage.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_nextPage.setEnabled(True)
 
         enablePushButton()
         self.allocateEnergy()
@@ -110,20 +123,63 @@ class Game:
             self.Ui.game_layout_allocateEnergy.pushButton_minus3.setEnabled(True)
             self.Ui.game_layout_allocateEnergy.pushButton_minus4.setEnabled(True)
             self.Ui.game_layout_allocateEnergy.pushButton_minus5.setEnabled(True)
-
             self.Ui.game_layout_allocateEnergy.pushButton_plus1.setEnabled(True)
             self.Ui.game_layout_allocateEnergy.pushButton_plus2.setEnabled(True)
             self.Ui.game_layout_allocateEnergy.pushButton_plus3.setEnabled(True)
             self.Ui.game_layout_allocateEnergy.pushButton_plus4.setEnabled(True)
             self.Ui.game_layout_allocateEnergy.pushButton_plus5.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_next.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_previousPage.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_nextPage.setEnabled(True)
 
         enablePushButton()
         self.allocateEnergy()
 
 
-    # 下一页日记  点击next的时候调用
+    # 下一页日记  点击diary next的时候调用
     def next(self):
         # 我暂定日记只会展示一页好了，后面再改成可以展示多页的形式
+        self.Ui.game_layout_allocateEnergy.blur_recover()
+        self.loadEvent()
+        self.Ui.game_layout_allocateEnergy.label_content.setText(self.currentEvent.if_join()[0] + "," + self.currentEvent.if_join()[1]) 
+        self.Ui.game_layout_allocateEnergy.frame.setVisible(True)
+        
+        def disablePushButton():
+            self.Ui.game_layout_allocateEnergy.pushButton_minus1.setEnabled(False)
+            self.Ui.game_layout_allocateEnergy.pushButton_minus2.setEnabled(False)
+            self.Ui.game_layout_allocateEnergy.pushButton_minus3.setEnabled(False)
+            self.Ui.game_layout_allocateEnergy.pushButton_minus4.setEnabled(False)
+            self.Ui.game_layout_allocateEnergy.pushButton_minus5.setEnabled(False)
+            self.Ui.game_layout_allocateEnergy.pushButton_plus1.setEnabled(False)
+            self.Ui.game_layout_allocateEnergy.pushButton_plus2.setEnabled(False)
+            self.Ui.game_layout_allocateEnergy.pushButton_plus3.setEnabled(False)
+            self.Ui.game_layout_allocateEnergy.pushButton_plus4.setEnabled(False)
+            self.Ui.game_layout_allocateEnergy.pushButton_plus5.setEnabled(False)
+            self.Ui.game_layout_allocateEnergy.pushButton_next.setEnabled(False)
+            self.Ui.game_layout_allocateEnergy.pushButton_previousPage.setEnabled(False)
+            self.Ui.game_layout_allocateEnergy.pushButton_nextPage.setEnabled(False)
+
+        disablePushButton()
+        
+
+    # 点击下一周时触发
+    def nextWeek(self):
+        self.week+=3
+        # 首先保存分配结果，清空精力分配
+        self.allocateResults.append(self.mainlineEvents)
+        self.energy=10
+        for mission in self.mainlineEvents:
+            mission[1]=0
+        self.refreshMissionList()
+        
+
+
+        # 模糊效果，出现日记本
+        # 日记本中点击next按钮显示下一页（暂缓），直到点击next出现事件modal和能量分配按钮
+        # 记录能量分配情况（待完善）
+        self.Ui.game_layout_allocateEnergy.blur()
+        
+        
         ui = self.Ui.game_layout_allocateEnergy
         if self.week == 1:
             ui.label_diary_content.setText(dialogue.get_random_welcoming())
@@ -135,18 +191,6 @@ class Game:
         randomEvent = self.randomEvents.get_random_event()
         text = ui.label_diary_content.text() + "\n" + randomEvent.description
         ui.label_diary_content.setText(text)
-        
-
-
-    # 点击下一周时触发
-    def nextWeek(self):
-        self.week+=3
-        # 模糊效果，出现日记本
-        # 日记本中点击next按钮显示下一页（暂缓），直到点击next出现事件modal和能量分配按钮
-        self.Ui.game_layout_allocateEnergy.blur()
-        self.next()
-
-
 
 
     # 分配能量
@@ -268,17 +312,20 @@ class Game:
             # 第零周的事件
             self.currentEvent=self.allEvents["crush_atFirstBlush"]
             return True
-        elif self.week==1:
-            # 第一周的事件
-            self.currentEvent=self.allEvents["test"]
-            return True
-        elif self.week==2:
-            # 第二周的事件
-            self.currentEvent=self.allEvents["test"]
-            return True
-        elif self.week==3:
-            # 第三周的事件
-            self.currentEvent=self.allEvents["test"]
+        # elif self.week==1:
+        #     # 第一周的事件
+        #     self.currentEvent=self.allEvents["test"]
+        #     return True
+        # elif self.week==2:
+        #     # 第二周的事件
+        #     self.currentEvent=self.allEvents["test"]
+        #     return True
+        # elif self.week==3:
+        #     # 第三周的事件
+        #     self.currentEvent=self.allEvents["test"]
+        #     return True
+        else:
+            self.currentEvent=self.allEvents["crush_atFirstBlush"]
             return True
         return False
 

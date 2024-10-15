@@ -13,8 +13,8 @@ class event(ABC):
         self.description=description 
         self.game=Game
 
-        self.ui=None
-        self.setting=None
+        # self.ui=None
+        # self.setting=None
         self.probability=1
 
     # 获取所有子类
@@ -26,17 +26,19 @@ class event(ABC):
         subEvents={}
 
         # subEvents.update({'studentsUnion':event_studentsUnion(Game)})
-        subEvents.update({'test':event_test(Game)})
+        # subEvents.update({'test':event_test(Game)})
         subEvents.update({'crush_atFirstBlush':event_crush_atFirstBlush(Game)})
         
         return subEvents
     
 
+    # 需要返回一段描述性文字 在下方让用户选择是否参加
     @abstractmethod
     def if_join(self)-> Tuple[str, str]:
         pass
     
 
+    # 事件开始
     @abstractmethod
     def event_start(self):
         # 事件开始 当用户选择参加时触发
@@ -46,6 +48,19 @@ class event(ABC):
         pass
 
 
+    # 点击next按钮触发
+    @abstractmethod
+    def next(self):
+        pass
+
+
+    # 管理美术资源和效果 在event_start和next中调用
+    @abstractmethod
+    def set_art(self):
+        pass
+
+
+    # 事件结束
     @abstractmethod
     def event_end(self):
         pass
@@ -65,7 +80,7 @@ class event(ABC):
     
 
 
-
+# @deprecated
 class event_test(event):
     def __init__(self, Game:Game):
         super().__init__(name="测试事件", description="This is a test event", Game=Game)
@@ -89,12 +104,11 @@ class event_test(event):
         # 事件开始 当用户选择参加时触发
         # 接下来可以通过Game控制ui
         # 相当于从现在开始event类接过游戏控制权 结束时再归还给Game类
-        self.game.Ui.game_layout_allocateEnergy.misson_1.setText("我选择了测试事件，让我看看究竟是怎么回事。好吧，好像也不会发生什么，你知道的，这毕竟只是一个测试事件。当然，这个测试事件也可以控制ui")
+        # self.game.Ui.game_layout_allocateEnergy.misson_1.setText("我选择了测试事件，让我看看究竟是怎么回事。好吧，好像也不会发生什么，你知道的，这毕竟只是一个测试事件。当然，这个测试事件也可以控制ui")
 
         # 还没想好在哪调用 是在这直接调用还是在game类中
         self.event_end()
-        pass
-
+        pass 
 
     def event_end(self):
 

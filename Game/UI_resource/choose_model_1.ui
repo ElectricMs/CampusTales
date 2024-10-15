@@ -86,7 +86,7 @@ border-image: url(:/image1/resource/classroom.png);}</string>
       <string>学长你好，我想竞选今年的学生会主席，能给我一点指导吗？</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_4">
+    <widget class="QPushButton" name="next_button">
      <property name="geometry">
       <rect>
        <x>930</x>
@@ -96,13 +96,15 @@ border-image: url(:/image1/resource/classroom.png);}</string>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image: url(:/image2/resource/qload.png);</string>
+      <string notr="true">#next_button{border-image: url(:/image2/resource/next_button.png);}
+#next_button:hover{
+	border-image: url(:/image2/resource/next_button2.png);}</string>
      </property>
      <property name="text">
       <string/>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_5">
+    <widget class="QPushButton" name="save_button">
      <property name="geometry">
       <rect>
        <x>1050</x>
@@ -112,13 +114,16 @@ border-image: url(:/image1/resource/classroom.png);}</string>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image: url(:/image2/resource/title.png);</string>
+      <string notr="true">#save_button{
+	border-image: url(:/image2/resource/save_button2.png);}
+#save_button:hover{
+	border-image: url(:/image2/resource/save_hover.png);}</string>
      </property>
      <property name="text">
       <string/>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_6">
+    <widget class="QPushButton" name="exit_button">
      <property name="geometry">
       <rect>
        <x>1170</x>
@@ -128,26 +133,40 @@ border-image: url(:/image1/resource/classroom.png);}</string>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image: url(:/image2/resource/screen.png);</string>
+      <string notr="true">#exit_button{
+	border-image: url(:/image2/resource/exit_button2.png);}
+#exit_button:hover{
+	border-image: url(:/image2/resource/exit_hover.png);}</string>
      </property>
      <property name="text">
       <string/>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_7">
+    <widget class="QPlainTextEdit" name="plainTextEdit">
      <property name="geometry">
       <rect>
-       <x>810</x>
-       <y>140</y>
-       <width>100</width>
-       <height>35</height>
+       <x>40</x>
+       <y>70</y>
+       <width>851</width>
+       <height>111</height>
       </rect>
      </property>
-     <property name="styleSheet">
-      <string notr="true">border-image: url(:/image2/resource/qsave.png);</string>
+     <property name="font">
+      <font>
+       <family>微软雅黑</family>
+       <pointsize>15</pointsize>
+      </font>
      </property>
-     <property name="text">
+     <property name="styleSheet">
+      <string notr="true">#plainTextEdit{
+background-color:transparent;
+border:None;}</string>
+     </property>
+     <property name="plainText">
       <string/>
+     </property>
+     <property name="placeholderText">
+      <string>选择上方的选项，或者在此输入你的个性化回答~</string>
      </property>
     </widget>
    </widget>

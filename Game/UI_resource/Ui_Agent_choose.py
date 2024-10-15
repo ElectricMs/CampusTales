@@ -17,7 +17,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QLabel, QMainWindow, QPushButton,
     QSizePolicy, QWidget)
-import resource2_rc
+import resource.resource2_rc
 
 class Ui_Agent_choose(object):
     def setupUi(self, Agent_choose):

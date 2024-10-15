@@ -1,0 +1,34 @@
+<RCC>
+  <qresource prefix="image1">
+    <file>屏幕截图 2023-07-09 224553.png</file>
+    <file>resource/button.png</file>
+    <file>resource/button2.png</file>
+    <file>resource/button3.png</file>
+    <file>resource/classroom.png</file>
+    <file>resource/message.png</file>
+  </qresource>
+  <qresource prefix="image2">
+    <file>resource/exit_button2.png</file>
+    <file>resource/exit_hover.png</file>
+    <file>resource/next_button.png</file>
+    <file>resource/next_button2.png</file>
+    <file>resource/save_button2.png</file>
+    <file>resource/save_hover.png</file>
+    <file>resource/qload.png</file>
+    <file>resource/load.png</file>
+    <file>resource/qload2.png</file>
+    <file>resource/qsave.png</file>
+    <file>resource/qsave2.png</file>
+    <file>resource/save.png</file>
+    <file>resource/save2.png</file>
+    <file>resource/screen.png</file>
+    <file>resource/screen2.png</file>
+    <file>resource/title.png</file>
+    <file>resource/title2.png</file>
+  </qresource>
+  <qresource prefix="people">
+    <file>resource/girl_shy-removebg-preview (2).png</file>
+    <file>resource/boy_normal_-removebg-preview.png</file>
+    <file>resource/girl_smile-removebg-preview.png</file>
+  </qresource>
+</RCC>

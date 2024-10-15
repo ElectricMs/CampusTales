@@ -1,10 +1,11 @@
 import random
 import time
 from Code_Ui import MainMenu
+from cover_start import MyWindow
 
 
 class Game:
-    def __init__(self,Ui:MainMenu):
+    def __init__(self,Ui:MyWindow):
         from Event.event import event
 
         print("class Game initiating...")
@@ -69,38 +70,38 @@ class Game:
             result = self.currentEvent.if_join()
             if result is not None:
                 text1, text2 = result
-                self.Ui.game_layout_1.label_Text.setText(text1+'\n'+text2)
+                self.Ui.game_layout_diary.misson_1.setText(text1+'\n'+text2)
             else:
                 # 处理 None 的情况，例如：
                 text1, text2 = "好像出了点问题", "默认文本"
-                self.Ui.game_layout_1.label_Text.setText(text1+'\n'+text2)
+                self.Ui.game_layout_diary.misson_1.setText(text1+'\n'+text2)
 
             print(self.currentEvent.name)
 
             text1, text2=self.currentEvent.if_join()
-            self.Ui.game_layout_1.label_Text.setText(text1)
+            self.Ui.game_layout_diary.misson_1.setText(text1)
 
 
             # 在这里需要出现随机事件并选择是否进行 默认选no
-            self.Ui.game_layout_1.radioButton_NO.show() 
-            self.Ui.game_layout_1.radioButton_Yes.show()
-            self.Ui.game_layout_1.radioButton_NO.setChecked(True)
-            self.Ui.game_layout_1.radioButton_Yes.setChecked(False)
+            # self.Ui.game_layout_1.radioButton_NO.show() 
+            # self.Ui.game_layout_1.radioButton_Yes.show()
+            # self.Ui.game_layout_1.radioButton_NO.setChecked(True)
+            # self.Ui.game_layout_1.radioButton_Yes.setChecked(False)
 
             pass
 
         elif self.weekPoint==1:
-            if self.Ui.game_layout_1.radioButton_Yes.isChecked():
-                # 选择了yes
-                self.weekPoint=3
-                self.next()
-                return
+            # if self.Ui.game_layout_1.radioButton_Yes.isChecked():
+            #     # 选择了yes
+            #     self.weekPoint=3
+            #     self.next()
+            #     return
             print("分配精力状态")
             self.weekPoint=2 #分配能量状态
             # 在这里需要分配能量
-            self.Ui.game_layout_1.radioButton_NO.hide() 
-            self.Ui.game_layout_1.radioButton_Yes.hide()
-            self.Ui.game_layout_1.label_Text.setText("该如何安排任务呢···")
+            # self.Ui.game_layout_1.radioButton_NO.hide() 
+            # self.Ui.game_layout_1.radioButton_Yes.hide()
+            self.Ui.game_layout_diary.misson_1.setText("该如何安排任务呢···")
             self.allocateEnergy()
 
             self.timePoint+=1
@@ -110,16 +111,16 @@ class Game:
             print("展示文字状态")
             self.weekPoint=0 #展示文字状态
             # 在这里需要展示每周随机的一段文字
-            self.Ui.game_layout_1.label_Text.setText(dialogue.get_random_talk())
+            self.Ui.game_layout_diary.misson_1.setText(dialogue.get_random_talk())
 
             pass
 
         elif self.weekPoint==3:
             self.weekPoint=1 #点击next后分配能量
-            self.Ui.game_layout_1.radioButton_NO.hide() 
-            self.Ui.game_layout_1.radioButton_Yes.hide()
-            self.Ui.game_layout_1.radioButton_NO.setChecked(True)
-            self.Ui.game_layout_1.radioButton_Yes.setChecked(False)
+            # self.Ui.game_layout_1.radioButton_NO.hide() 
+            # self.Ui.game_layout_1.radioButton_Yes.hide()
+            # self.Ui.game_layout_1.radioButton_NO.setChecked(True)
+            # self.Ui.game_layout_1.radioButton_Yes.setChecked(False)
 
             print("进入支线")   # 选择了yes
             self.currentEvent.event_start()
@@ -133,7 +134,8 @@ class Game:
     # 分配能量
     def allocateEnergy(self):
         # 这里需要分配精力
-        # 学习 运动 社交 娱乐
+        # 学习 运动 社交 娱乐 
+        # 附加：陪npy 竞赛 科研 
 
 
 
@@ -246,10 +248,10 @@ class dialogue:
 
     @classmethod
     def get_random_talk(cls) -> str:
-        choice = random.choice(dialogue.random_talk).lstrip()
+        choice = random.choice(dialogue.random_talk)
         if len(cls.random_talk) != 1:
             cls.random_talk.remove(choice)
-        return choice
+        return choice.lstrip()
 
 
     random_talk_terminal=[
@@ -266,10 +268,10 @@ class dialogue:
 
     @classmethod
     def get_random_talk_terminal(cls) -> str:
-        choice = random.choice(dialogue.random_talk_terminal).lstrip()
+        choice = random.choice(dialogue.random_talk_terminal)
         if len(cls.random_talk_terminal) != 1:
             cls.random_talk_terminal.remove(choice)
-        return choice
+        return choice.lstrip()
     
 
 

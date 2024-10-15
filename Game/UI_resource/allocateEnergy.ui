@@ -140,7 +140,7 @@ padding:10px;
      <string>开始新的一周</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_6_optionalMission">
+   <widget class="QLabel" name="label_optionalMission">
     <property name="geometry">
      <rect>
       <x>300</x>

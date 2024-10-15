@@ -50,172 +50,70 @@ class GameLayout_allocateEnergy(QMainWindow, Ui_allocateEnergy):
         super().__init__()
         self.setupUi(self)
         self.frame.setVisible(False)
-        # self.ui.pushButton_5.clicked.connect(self.phase2)
+        self.add_diary_widget()
 
-        #弹窗测试按钮
-        # self.ui.pushButton_6 = QPushButton(self)
-        # self.ui.pushButton_6.setObjectName(u"pushButton_6")
-        # self.ui.pushButton_6.setGeometry(QRect(380, 180, 75, 24))
-        # self.ui.pushButton_6.setText("来个事件")
-        # self.ui.pushButton_6.clicked.connect(self.modal_appear)
+    
+    def add_diary_widget(self):
+        #每周展示diary的widget，包含许多组件
+        self.widget_diary = QWidget(self)
+        self.widget_diary.setVisible(False)
+        self.widget_diary.setGeometry(0, 0, 1280, 720)
+        # 背景图片
+        self.label_diary_img = QLabel(self.widget_diary)
+        self.label_diary_img.setGeometry(QRect(270, 30, 621, 661))
+        self.label_diary_img.setStyleSheet(u"border-image: url(:/image/resource/Strength_assign/paper2_yellow_l.png);")
+        # 内容
+        self.label_diary_content = QLabel(self.widget_diary)
+        self.label_diary_content.setGeometry(QRect(290, 50, 581, 561))
+        # 字体 后面要重命名
+        font_diaryWidget = QFont()
+        font_diaryWidget.setFamilies([u"\u5343\u56fe\u7b14\u950b\u624b\u5199\u4f53"])
+        font_diaryWidget.setPointSize(18)
+        font_diaryWidget.setBold(True)
+        self.label_diary_content.setFont(font_diaryWidget)
+        self.label_diary_content.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignTop)
+        # self.widget_diary.label_content.setText(QCoreApplication.translate("strength_assignment", u"\u661f\u671f\u4e00      5\u670828\u65e5     \u6674", None))
+        self.label_diary_content.setWordWrap(True)
+        self.label_diary_content.setText("你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好")
 
-        # #每周任务执行过程的widget
-        # self.new_widget = QWidget(self)
-        # self.new_widget.setVisible(False)
-        # self.new_widget.setGeometry(0, 0, 1280, 720)
-        # self.new_widget.label_16 = QLabel(self.new_widget)
-        # self.new_widget.label_16.setObjectName(u"label_16")
-        # self.new_widget.label_16.setGeometry(QRect(270, 30, 621, 661))
-        # self.new_widget.label_16.setStyleSheet(u"border-image: url(:/image/resource/Strength_assign/paper2_yellow_l.png);")
-        # self.new_widget.write_content = QLabel(self.new_widget)
-        # self.new_widget.write_content.setObjectName(u"write_content")
-        # self.new_widget.write_content.setGeometry(QRect(290, 50, 581, 561))
-        # font11 = QFont()
-        # font11.setFamilies([u"\u5343\u56fe\u7b14\u950b\u624b\u5199\u4f53"])
-        # font11.setPointSize(18)
-        # font11.setBold(True)
-        # self.new_widget.write_content.setFont(font11)
-        # self.new_widget.write_content.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignTop)
-        # self.new_widget.write_content.setText(QCoreApplication.translate("strength_assignment", u"\u661f\u671f\u4e00      5\u670828\u65e5     \u6674", None))
-        # self.new_widget.write_content.setWordWrap(True)
-        # self.new_widget.write_content.setText("你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好")
-        # #模糊状态恢复测试按钮
-        # self.new_widget.pushButton_7 = QPushButton(self.new_widget)
-        # self.new_widget.pushButton_7.setObjectName(u"pushButton_7")
-        # self.new_widget.pushButton_7.setGeometry(QRect(500, 180, 75, 24))
-        # self.new_widget.pushButton_7.setText("恢复")
-        # self.new_widget.pushButton_7.clicked.connect(self.recover)
+        #模糊状态恢复测试按钮
+        self.pushButton_test_blur = QPushButton(self.widget_diary)
+        self.pushButton_test_blur.setGeometry(QRect(500, 180, 75, 24))
+        self.pushButton_test_blur.setText("恢复")
+        self.pushButton_test_blur.clicked.connect(self.blur_recover)
         
         #每周执行任务的内容widget,模糊背景
-#         self.new_widget.next_button = QPushButton(self.new_widget)
-#         self.new_widget.next_button.setObjectName(u"next_button")
-#         self.new_widget.next_button.setGeometry(QRect(700, 620, 171, 41))
-#         font10 = QFont()
-#         font10.setPointSize(16)
-#         font10.setBold(True)
-#         self.new_widget.next_button.setFont(font10)
-#         self.new_widget.next_button.setStyleSheet(u"#next_button{color:brown;\n"
-# "background-color: rgb(255, 170, 0);}")
-        
-        # 链接事件
-        # self.ui.true_button.setText("是")
-        # self.ui.true_button.clicked.connect(self.guanbi)
-        # self.ui.false_button.setText("否")
-        # self.ui.false_button.clicked.connect(self.guanbi)
-        # self.new_widget.next_button.setText("Next")
-
-
-
-
-    # 返回右侧的五个可以列出的任务
-    # def get_label_list(self):
-    #     label_list=[self.ui.mission1_show,self.ui.mission2_show,self.ui.mission3_show,self.ui.mission4_show,self.ui.mission5_show]
-    #     return label_list
-    
-
-    # def get_plus_button_list(self):
-    #     plus_button_list=[self.ui.plus1,self.ui.plus2,self.ui.plus3,self.ui.plus4,self.ui.plus5]
-    #     return plus_button_list
-    
-
-    # def get_minus_button_list(self):
-    #     minus_button_list=[self.ui.minus1,self.ui.minus2,self.ui.minus3,self.ui.minus4,self.ui.minus5]
-    #     return minus_button_list
+        self.next_button = QPushButton(self.widget_diary)
+        self.next_button.setObjectName(u"next_button")
+        self.next_button.setGeometry(QRect(700, 620, 171, 41))
+        font10 = QFont()
+        font10.setPointSize(16)
+        font10.setBold(True)
+        self.next_button.setFont(font10)
+        self.next_button.setStyleSheet("#next_button{color:brown;\n"
+            "background-color: rgb(255, 230, 0);}"
+                    "#next_button:hover{color:brown;\n"
+            "background-color: rgb(255, 200, 0);}"
+                    "#next_button:pressed{color:brown;\n"
+            "background-color: rgb(255, 170, 0);}"
+        )
     
         
-        
-    # 点击pushButton_5进每周任务执行阶段
-    def phase2(self):
+    # 点击nextWeek后，模糊背景，显示diary页面
+    def blur(self):
         self.blur_effect = QGraphicsBlurEffect()
         self.blur_effect.setBlurRadius(20)
         self.blur_effect.setBlurHints(QGraphicsBlurEffect.BlurHint.PerformanceHint)
         self.centralwidget.setGraphicsEffect(self.blur_effect)
-        self.new_widget.setVisible(True) # ?
+        self.widget_diary.setVisible(True) # diary widget显示
 
 
-    #点击pushButton_7回到第一阶段，模糊消失
-    def recover(self):
-        self.ui.centralwidget.setGraphicsEffect(None)
-        self.new_widget.setVisible(False)
+    # 展示完最后一张日记后diary页面消失，显示能量分配界面
+    def blur_recover(self):
+        self.centralwidget.setGraphicsEffect(None)  # type: ignore
+        self.widget_diary.setVisible(False)
 
 
-###
-# 下面这些函数全部计划舍去
-###
-
-#以下是GameLayout_diary类外函数
-def plus(label:QLabel,label2:QLabel,num):
-        global value_list
-        if int(label2.text())<5:
-            return
-        words_list=label.text().split("  ")
-        value_list[num]=int(words_list[1])+5
-        label.setText(words_list[0]+"  "+str(value_list[num]))
-        print(num)
-        print(value_list[num])
-        tmp=int(label2.text())
-        tmp=tmp-5
-        label2.setText(str(tmp))
-
-
-def minus(label:QLabel,label2:QLabel,num):
-        global value_list
-        words_list=label.text().split("  ")
-        if int(words_list[1])<5: 
-            return
-        value_list[num]=int(words_list[1])-5
-        label.setText(words_list[0]+"  "+str(value_list[num]))
-        print(value_list[num])
-        tmp=int(label2.text())
-        tmp=tmp+5
-        label2.setText(str(tmp))
-
-
-#绑定按钮,因为绑定的信号是类外函数，在类内绑定的时候老是有参数报错，所以放在类外
-def bind():
-    window.game_layout_allocateEnergy.ui.plus1.clicked.connect(lambda:plus(window.game_layout_allocateEnergy.ui.mission1_show,window.game_layout_allocateEnergy.ui.total_strength,0+count))
-    window.game_layout_allocateEnergy.ui.minus1.clicked.connect(lambda:minus(window.game_layout_allocateEnergy.ui.mission1_show,window.game_layout_allocateEnergy.ui.total_strength,0+count))
-    window.game_layout_allocateEnergy.ui.plus2.clicked.connect(lambda:plus(window.game_layout_allocateEnergy.ui.mission2_show,window.game_layout_allocateEnergy.ui.total_strength,1+count))
-    window.game_layout_allocateEnergy.ui.minus2.clicked.connect(lambda:minus(window.game_layout_allocateEnergy.ui.mission2_show,window.game_layout_allocateEnergy.ui.total_strength,1+count))
-    window.game_layout_allocateEnergy.ui.plus3.clicked.connect(lambda:plus(window.game_layout_allocateEnergy.ui.mission3_show,window.game_layout_allocateEnergy.ui.total_strength,2+count))
-    window.game_layout_allocateEnergy.ui.minus3.clicked.connect(lambda:minus(window.game_layout_allocateEnergy.ui.mission3_show,window.game_layout_allocateEnergy.ui.total_strength,2+count))
-    window.game_layout_allocateEnergy.ui.plus4.clicked.connect(lambda:plus(window.game_layout_allocateEnergy.ui.mission4_show,window.game_layout_allocateEnergy.ui.total_strength,3+count))
-    window.game_layout_allocateEnergy.ui.minus4.clicked.connect(lambda:minus(window.game_layout_allocateEnergy.ui.mission4_show,window.game_layout_allocateEnergy.ui.total_strength,3+count))
-    window.game_layout_allocateEnergy.ui.plus5.clicked.connect(lambda:plus(window.game_layout_allocateEnergy.ui.mission5_show,window.game_layout_allocateEnergy.ui.total_strength,4+count))
-    window.game_layout_allocateEnergy.ui.minus5.clicked.connect(lambda:minus(window.game_layout_allocateEnergy.ui.mission5_show,window.game_layout_allocateEnergy.ui.total_strength,4+count)) 
-
-
-def xiaoyu5():
-    global count
-    count=0
-    
-    
-def dayu5():
-    global count
-    count=5
-    
-
-def left_show():
-    for i in range(5):
-        label_list[i].setText(list1[i]+"  "+str(value_list[i]))
-        label_list[i].setVisible(True)
-        plus_button_list[i].setVisible(True)
-        minus_button_list[i].setVisible(True)  
-    xiaoyu5()
-
-
-def right_show():
-        
-    for i in range(5):
-        label_list[i].setVisible(False)
-        plus_button_list[i].setVisible(False)
-        minus_button_list[i].setVisible(False)
-    for i in range(0,input_list_length-5):
-        label_list[i].setText(list1[i+5]+"  "+str(value_list[i+5]))
-        label_list[i].setVisible(True)
-        plus_button_list[i].setVisible(True)
-        minus_button_list[i].setVisible(True)
-    dayu5()     
 
 
 
@@ -269,7 +167,7 @@ class MyWindow(QMainWindow):
         self.game_layout_main_menu.pushButton_5.clicked.connect(self.close)
         self.game_layout_Agent.exit_button.clicked.connect(self.back)
         self.game_layout_allocateEnergy.pushButton_exit.clicked.connect(self.back)
-        self.game_layout_allocateEnergy.pushButton_next.clicked.connect(self.next)
+        self.game_layout_allocateEnergy.pushButton_next.clicked.connect(self.nextWeek)
         self.game_layout_Agent.pushButton.clicked.connect(self.agent_girlfriend)
         self.game_layout_allocateEnergy.pushButton_yes.clicked.connect(self.event_true)
         self.game_layout_allocateEnergy.pushButton_no.clicked.connect(self.event_false)
@@ -315,8 +213,9 @@ class MyWindow(QMainWindow):
         self.game.event_false()
 
 
-    def next(self):
-        self.game.next()
+    def nextWeek(self):
+        print("next week")
+        self.game.nextWeek()
 
 
     def back(self):

@@ -38,15 +38,16 @@ class Game:
         self.energy=10
         
         # 存放时间点，开始时为第一周
-        self.timePoint = 0
-
-        # 存放每周操作节点，0：展示文字：1：选择事件：2：分配能量 ：3：事件进度状态
-        self.weekPoint = 0
+        self.week = 0
 
         # 存放显示属性
         self.displaySetting={"gender":0, "study":60, "health": 60, "mood":60 , "social":60, "ability":60, "money":0}
 
+        # 初始化内嵌函数
         self.allocateEnergy()
+
+        # 初始化随机事件
+        self.randomEvents=RandomEvents(self)
 
 
     # 开始游戏
@@ -82,6 +83,22 @@ class Game:
         self.Ui.game_layout_allocateEnergy.frame.setVisible(False)
         self.currentEvent.event_start()
 
+        def enablePushButton():
+            self.Ui.game_layout_allocateEnergy.pushButton_minus1.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_minus2.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_minus3.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_minus4.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_minus5.setEnabled(True)
+
+            self.Ui.game_layout_allocateEnergy.pushButton_plus1.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_plus2.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_plus3.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_plus4.setEnabled(True)
+            self.Ui.game_layout_allocateEnergy.pushButton_plus5.setEnabled(True)
+
+        enablePushButton()
+        self.allocateEnergy()
+
 
     # 选择False的事件
     def event_false(self):
@@ -104,81 +121,32 @@ class Game:
         self.allocateEnergy()
 
 
-    # 下一个时间与操作点  点击next的时候调用
+    # 下一页日记  点击next的时候调用
     def next(self):
-        if self.weekPoint==0:
-            print("选择事件状态")
-            self.weekPoint=1 # 选择事件状态
-            print(self.weekPoint)
+        # 我暂定日记只会展示一页好了，后面再改成可以展示多页的形式
+        ui = self.Ui.game_layout_allocateEnergy
+        if self.week == 1:
+            ui.label_diary_content.setText(dialogue.get_random_welcoming())
+        elif self.week >= 16:
+            ui.label_diary_content.setText(dialogue.get_random_talk_terminal())
+        else:
+            ui.label_diary_content.setText(dialogue.get_random_talk())
 
-            # 这里需要选定一个加载的事件
-            if self.loadEvent():
-                # 加载成功
-                pass
-            else:
-                self.loadRandomEvent()
-            result = self.currentEvent.if_join()
-            if result is not None:
-                text1, text2 = result
-                self.Ui.game_layout_allocateEnergy.misson_1.setText(text1+'\n'+text2)
-            else:
-                # 处理 None 的情况，例如：
-                text1, text2 = "好像出了点问题", "默认文本"
-                self.Ui.game_layout_allocateEnergy.misson_1.setText(text1+'\n'+text2)
-
-            print(self.currentEvent.name)
-
-            text1, text2=self.currentEvent.if_join()
-            self.Ui.game_layout_allocateEnergy.misson_1.setText(text1)
+        randomEvent = self.randomEvents.get_random_event()
+        text = ui.label_diary_content.text() + "\n" + randomEvent.description
+        ui.label_diary_content.setText(text)
+        
 
 
-            # 在这里需要出现随机事件并选择是否进行 默认选no
-            # self.Ui.game_layout_1.radioButton_NO.show() 
-            # self.Ui.game_layout_1.radioButton_Yes.show()
-            # self.Ui.game_layout_1.radioButton_NO.setChecked(True)
-            # self.Ui.game_layout_1.radioButton_Yes.setChecked(False)
+    # 点击下一周时触发
+    def nextWeek(self):
+        self.week+=3
+        # 模糊效果，出现日记本
+        # 日记本中点击next按钮显示下一页（暂缓），直到点击next出现事件modal和能量分配按钮
+        self.Ui.game_layout_allocateEnergy.blur()
+        self.next()
 
-            pass
 
-        elif self.weekPoint==1:
-            # if self.Ui.game_layout_1.radioButton_Yes.isChecked():
-            #     # 选择了yes
-            #     self.weekPoint=3
-            #     self.next()
-            #     return
-            print("分配精力状态")
-            self.weekPoint=2 #分配能量状态
-            # 在这里需要分配能量
-            # self.Ui.game_layout_1.radioButton_NO.hide() 
-            # self.Ui.game_layout_1.radioButton_Yes.hide()
-            self.Ui.game_layout_allocateEnergy.misson_1.setText("该如何安排任务呢···")
-            self.allocateEnergy()
-
-            self.timePoint+=1
-            pass
-
-        elif self.weekPoint==2:
-            print("展示文字状态")
-            self.weekPoint=0 #展示文字状态
-            # 在这里需要展示每周随机的一段文字
-            self.Ui.game_layout_allocateEnergy.misson_1.setText(dialogue.get_random_talk())
-
-            pass
-
-        elif self.weekPoint==3:
-            self.weekPoint=1 #点击next后分配能量
-            # self.Ui.game_layout_1.radioButton_NO.hide() 
-            # self.Ui.game_layout_1.radioButton_Yes.hide()
-            # self.Ui.game_layout_1.radioButton_NO.setChecked(True)
-            # self.Ui.game_layout_1.radioButton_Yes.setChecked(False)
-
-            print("进入支线")   # 选择了yes
-            self.currentEvent.event_start()
-
-            
-            pass
-
-        pass
 
 
     # 分配能量
@@ -272,8 +240,6 @@ class Game:
         enablePushButton()
         
 
-
-
     # 加载随机事件
     def loadRandomEvent(self):
         if self.eventProbablity=={}:
@@ -298,19 +264,19 @@ class Game:
 
     # 加载特定事件
     def loadEvent(self):
-        if self.timePoint==0:
+        if self.week==0:
             # 第零周的事件
             self.currentEvent=self.allEvents["crush_atFirstBlush"]
             return True
-        elif self.timePoint==1:
+        elif self.week==1:
             # 第一周的事件
             self.currentEvent=self.allEvents["test"]
             return True
-        elif self.timePoint==2:
+        elif self.week==2:
             # 第二周的事件
             self.currentEvent=self.allEvents["test"]
             return True
-        elif self.timePoint==3:
+        elif self.week==3:
             # 第三周的事件
             self.currentEvent=self.allEvents["test"]
             return True
@@ -324,9 +290,8 @@ class Game:
             self.eventProbablity[event.name]=event.probability
         pass
 
-    # 结束一周
-    def endWeek(self):
-        self.timePoint+=1
+
+        
         # 这里需要有更多的操作
         pass
 
@@ -414,6 +379,7 @@ class RandomEvents:
         self.game = game
         self.events = []
         self.weight = []
+        self.add_random_events()
         
 
     def add_random_events(self):

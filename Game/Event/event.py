@@ -7,11 +7,12 @@ from main import Game
 
 
 class event(ABC):
-    def __init__(self, name:str, description:str, Game:Game, time=time.time()):
+    def __init__(self, name:str, description:str, Game:Game, time=time.time(), agent_mode=False):
         self.name=name
         self.time=time
         self.description=description 
         self.game=Game
+        self.agent_mode=agent_mode
 
         # self.ui=None
         # self.setting=None

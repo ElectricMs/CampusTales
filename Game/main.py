@@ -56,12 +56,8 @@ class Game:
         self.eventResults=[]
 
 
-
-
     # 开始游戏
     def start(self):
-        # 添加黑屏过场动画
-        # ============================
         self.loadEvent()
         self.Ui.game_layout_allocateEnergy.label_content.setText(self.currentEvent.if_join()[0] + "," + self.currentEvent.if_join()[1]) 
         self.Ui.game_layout_allocateEnergy.frame_modal.setVisible(True)

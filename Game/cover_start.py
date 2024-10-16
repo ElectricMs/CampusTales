@@ -168,31 +168,28 @@ class MyWindow(QMainWindow):
 
     def bind(self):
         self.game_layout_main_menu.pushButton.clicked.connect(self.game_start)
-        self.game_layout_main_menu.pushButton_4.clicked.connect(self.Agent_choose)
+        self.game_layout_main_menu.pushButton_4.clicked.connect(lambda: self.stacked_layout.setCurrentIndex(1))
         self.game_layout_main_menu.pushButton_5.clicked.connect(self.close)
         self.game_layout_Agent.exit_button.clicked.connect(self.back)
         self.game_layout_allocateEnergy.pushButton_exit.clicked.connect(self.back)
         self.game_layout_allocateEnergy.pushButton_next.clicked.connect(self.nextWeek)
         self.game_layout_Agent.pushButton.clicked.connect(self.agent_girlfriend)
-        self.game_layout_allocateEnergy.pushButton_yes.clicked.connect(self.event_true)
-        self.game_layout_allocateEnergy.pushButton_no.clicked.connect(self.event_false)
+        self.game_layout_allocateEnergy.pushButton_yes.clicked.connect(lambda: self.game.event_true())
+        self.game_layout_allocateEnergy.pushButton_no.clicked.connect(lambda: self.game.event_false())
 
-
-    def Agent_choose(self):
-        self.stacked_layout.setCurrentIndex(1)
-
-
-    def choose_model_1(self):
-        self.stacked_layout.setCurrentIndex(2)
 
     def game_start(self):
-        self.stacked_layout.setCurrentIndex(4) # Animation
-        # self.stacked_layout.setCurrentIndex(3) # allocateEnergy
+        # self.stacked_layout.setCurrentIndex(4) # Animation
         self.game_layout_initialAnimation.start_flow_text()
+        self.stacked_layout.setCurrentIndex(3) # allocateEnergy
+        
         from main import Game
-        self.game = Game(self)
+        if hasattr(self, 'game'):
+            if isinstance(self.game, Game):
+                pass
+        else:
+            self.game = Game(self)
         self.game.start()
-        # 这里首先应该是黑屏的过场动画和基本选项选择 暂时先跳过
 
         def bind_afterGame():
             self.game_layout_allocateEnergy.pushButton_nextPage.clicked.connect(lambda: self.game.pageTuning(1))
@@ -213,15 +210,7 @@ class MyWindow(QMainWindow):
             self.game_layout_choose_model_1.pushButton_next.clicked.connect(self.game.currentEvent.next) # type: ignore
 
         bind_afterGame()
-
-
-    def event_true(self):
-        self.game.event_true()
-
-
-    def event_false(self):
-        self.game.event_false()
-
+        
 
     def nextWeek(self):
         print("next week")
@@ -234,7 +223,14 @@ class MyWindow(QMainWindow):
 
     def agent_girlfriend(self):
         from Event.crush_atFirstBlush import event_crush_atFirstBlush
-        self.event_crush_atFirstBlush = event_crush_atFirstBlush(self.game)
+        # 这里的处理不太好，只是为了调试方便
+        from main import Game
+        if hasattr(self, 'game'):
+            if isinstance(self.game, Game):
+                self.event_crush_atFirstBlush = event_crush_atFirstBlush(self.game)
+        else:
+            self.game = Game(self)
+            self.event_crush_atFirstBlush = event_crush_atFirstBlush(Game(self))
         self.event_crush_atFirstBlush.event_start()
         
    

@@ -2,7 +2,7 @@ from PySide6.QtCore import Qt,QEvent,QTimer, QEasingCurve, QPropertyAnimation, Q
 from PySide6.QtGui import QMouseEvent,QFont
 from PySide6.QtWidgets import QApplication, QWidget, QMainWindow, QPushButton, QStackedLayout, QGraphicsOpacityEffect, QGraphicsBlurEffect, QFrame,QLabel, QVBoxLayout
 from UI_resource.Ui_cover import Ui_cover
-from UI_resource.Ui_Agent_choose import Ui_Agent_choose
+from UI_resource.Ui_agent_choose import Ui_Agent_choose
 from UI_resource.Ui_choose_model_1 import Ui_MainWindow as Ui_choose_model_1
 from UI_resource.Ui_allocateEnergy import Ui_allocateEnergy
 from Animation.yinru_start import MyWindow as GameLayout_initialAnimation
@@ -120,8 +120,6 @@ class GameLayout_allocateEnergy(QMainWindow, Ui_allocateEnergy):
 
 
 
-
-
 class GameLayout_Agent(QMainWindow, Ui_Agent_choose):
     def __init__(self):
         super().__init__()
@@ -148,7 +146,7 @@ class MyWindow(QMainWindow):
         self.game_layout_Agent= GameLayout_Agent()
         self.game_layout_choose_model_1= GameLayout_choose_model_1()
         self.game_layout_allocateEnergy= GameLayout_allocateEnergy()
-        self.game_layout_initialAnimation = GameLayout_initialAnimation()
+        self.game_layout_initialAnimation = GameLayout_initialAnimation(callback = lambda: self.stacked_layout.setCurrentIndex(3))
 
         self.stacked_layout.addWidget(self.game_layout_main_menu) # 0
         self.stacked_layout.addWidget(self.game_layout_Agent) # 1
@@ -161,7 +159,6 @@ class MyWindow(QMainWindow):
         central_widget.setLayout(self.stacked_layout)
         self.setCentralWidget(central_widget)
 
-        
         
         self.bind()
         # 设置当前显示的布局为主菜单
@@ -189,7 +186,8 @@ class MyWindow(QMainWindow):
         self.stacked_layout.setCurrentIndex(2)
 
     def game_start(self):
-        self.stacked_layout.setCurrentIndex(3)
+        self.stacked_layout.setCurrentIndex(4) # Animation
+        # self.stacked_layout.setCurrentIndex(3) # allocateEnergy
         self.game_layout_initialAnimation.start_flow_text()
         from main import Game
         self.game = Game(self)
@@ -217,9 +215,9 @@ class MyWindow(QMainWindow):
         bind_afterGame()
 
 
-
     def event_true(self):
         self.game.event_true()
+
 
     def event_false(self):
         self.game.event_false()
@@ -232,6 +230,7 @@ class MyWindow(QMainWindow):
 
     def back(self):
         self.stacked_layout.setCurrentIndex(0)
+
 
     def agent_girlfriend(self):
         from Event.crush_atFirstBlush import event_crush_atFirstBlush

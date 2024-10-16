@@ -4,8 +4,11 @@ from PySide6.QtWidgets import QApplication,QWidget,QMainWindow,QPushButton,QLabe
 from PySide6.QtMultimedia import QSoundEffect
 from Animation.Ui_yinru import Ui_Page1
 import Animation.resoure_main_rc
+
 #gender=1:男，gender=2:女
 gender=0
+
+
 
 class CustomPlainTextEdit(QPlainTextEdit):
     def __init__(self, parent=None):
@@ -27,17 +30,21 @@ class CustomPlainTextEdit(QPlainTextEdit):
         main_window = self.parent()
         if isinstance(main_window, QMainWindow):
             main_window.keyPressEvent(event)
+
+
+
 class MyWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self, callback):
         
         super().__init__()
         self.ui=Ui_Page1()
         self.ui.setupUi(self)
         self.page=1
         self.current_index = 0
+        self.callback_setCurrentIndex_allocateEnergy = callback
         # 创建一个QSoundEffect实例来播放音效
         self.sound_effect = QSoundEffect(self)
-        self.sound_effect.setSource(QUrl.fromLocalFile('Game\Animation\机械键盘打字音效.wav'))  # 替换为你的音频文件路径
+        self.sound_effect.setSource(QUrl.fromLocalFile('Game\Animation\机械键盘打字音效.wav'))  # type: ignore # 替换为你的音频文件路径
         self.ui.test_pushButton.setVisible(False)
 
         self.label_list=[]
@@ -73,10 +80,8 @@ class MyWindow(QMainWindow):
         if self.page==1:
             self.change1()
         if key==Qt.Key.Key_S and self.page==3:
-            # =============================
-            # main_window = self.parent()
-            # if isinstance(main_window, QMainWindow):
-            #     main_window.stacked_layout.setCurrentIndex(1)
+            print("KeyBoard S")
+            self.callback_setCurrentIndex_allocateEnergy()
             pass
             
         
@@ -112,7 +117,7 @@ class MyWindow(QMainWindow):
 "}")
         
         
-        self.plainTextEdit.setVisible(True)
+        self.plainTextEdit.setVisible(True) # type: ignore
         next_label = QLabel("按Enter键继续下一步",self.ui.centralwidget)
         next_label.setObjectName(u"next_label")
         next_label.setGeometry(QRect(500, 620, 331, 51))
@@ -162,8 +167,8 @@ class MyWindow(QMainWindow):
             button.setParent(None)
             button.deleteLater()
             button=None
-        self.plainTextEdit.setParent(None)
-        self.plainTextEdit.deleteLater()
+        self.plainTextEdit.setParent(None) # type: ignore
+        self.plainTextEdit.deleteLater() # type: ignore
         self.plainTextEdit=None
         self.Page2_label()
     def update_text(self):
@@ -367,12 +372,13 @@ class MyWindow(QMainWindow):
         label_5.show()
         label_6.show()
         label_7.show()
+
+
+
+
 if __name__=="__main__":
     gender=0
     app=QApplication([])
-    window=MyWindow()
+    window=MyWindow(callback = None)
     window.show()
-    
-    
-    
     app.exec()

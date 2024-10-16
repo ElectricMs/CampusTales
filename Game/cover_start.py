@@ -2,7 +2,7 @@ from PySide6.QtCore import Qt,QEvent,QTimer, QEasingCurve, QPropertyAnimation, Q
 from PySide6.QtGui import QMouseEvent,QFont
 from PySide6.QtWidgets import QApplication, QWidget, QMainWindow, QPushButton, QStackedLayout, QGraphicsOpacityEffect, QGraphicsBlurEffect, QFrame,QLabel, QVBoxLayout
 from UI_resource.Ui_cover import Ui_cover
-from UI_resource.Ui_agent_choose import Ui_Agent_choose
+from UI_resource.Ui_Agent_choose import Ui_Agent_choose
 from UI_resource.Ui_choose_model_1 import Ui_MainWindow as Ui_choose_model_1
 from UI_resource.Ui_allocateEnergy import Ui_allocateEnergy
 from Animation.yinru_start import MyWindow as GameLayout_initialAnimation
@@ -56,10 +56,10 @@ class GameLayout_allocateEnergy(QMainWindow, Ui_allocateEnergy):
         self.setupUi(self)
         self.frame_modal.setVisible(False)
         self.add_diary_widget()
-        self.frame_selectArea_layout = QVBoxLayout()
-        self.frame_selectArea.setLayout(self.frame_selectArea_layout)
-
-    
+        #self.frame_selectArea_layout = QVBoxLayout()
+        #self.frame_selectArea.setLayout(self.frame_selectArea_layout)
+        self.frame_selectArea.setGeometry(QRect(0,120,500,500))
+        #self.frame_selectArea.setStyleSheet(u"background-color: black;\n")
     def add_diary_widget(self):
         #每周展示diary的widget，包含许多组件
         self.widget_diary = QWidget(self)
@@ -120,6 +120,8 @@ class GameLayout_allocateEnergy(QMainWindow, Ui_allocateEnergy):
 
 
 
+
+
 class GameLayout_Agent(QMainWindow, Ui_Agent_choose):
     def __init__(self):
         super().__init__()
@@ -146,8 +148,8 @@ class MyWindow(QMainWindow):
         self.game_layout_Agent= GameLayout_Agent()
         self.game_layout_choose_model_1= GameLayout_choose_model_1()
         self.game_layout_allocateEnergy= GameLayout_allocateEnergy()
+        
         self.game_layout_initialAnimation = GameLayout_initialAnimation(callback = lambda: self.stacked_layout.setCurrentIndex(3))
-
         self.stacked_layout.addWidget(self.game_layout_main_menu) # 0
         self.stacked_layout.addWidget(self.game_layout_Agent) # 1
         self.stacked_layout.addWidget(self.game_layout_choose_model_1) # 2
@@ -160,37 +162,43 @@ class MyWindow(QMainWindow):
         self.setCentralWidget(central_widget)
 
         
+        
         self.bind()
         # 设置当前显示的布局为主菜单
         self.current_layout_index = 0
         self.stacked_layout.setCurrentIndex(self.current_layout_index)
-
+    def keyPressEvent(self, event):
+        # 将键盘事件传递给子窗口
+        self.game_layout_initialAnimation.keyPressEvent(event)
 
     def bind(self):
         self.game_layout_main_menu.pushButton.clicked.connect(self.game_start)
-        self.game_layout_main_menu.pushButton_4.clicked.connect(lambda: self.stacked_layout.setCurrentIndex(1))
+        self.game_layout_main_menu.pushButton_4.clicked.connect(self.Agent_choose)
         self.game_layout_main_menu.pushButton_5.clicked.connect(self.close)
         self.game_layout_Agent.exit_button.clicked.connect(self.back)
         self.game_layout_allocateEnergy.pushButton_exit.clicked.connect(self.back)
         self.game_layout_allocateEnergy.pushButton_next.clicked.connect(self.nextWeek)
         self.game_layout_Agent.pushButton.clicked.connect(self.agent_girlfriend)
-        self.game_layout_allocateEnergy.pushButton_yes.clicked.connect(lambda: self.game.event_true())
-        self.game_layout_allocateEnergy.pushButton_no.clicked.connect(lambda: self.game.event_false())
+        self.game_layout_allocateEnergy.pushButton_yes.clicked.connect(self.event_true)
+        self.game_layout_allocateEnergy.pushButton_no.clicked.connect(self.event_false)
 
+
+    def Agent_choose(self):
+        self.stacked_layout.setCurrentIndex(1)
+
+
+    def choose_model_1(self):
+        self.stacked_layout.setCurrentIndex(2)
 
     def game_start(self):
-        # self.stacked_layout.setCurrentIndex(4) # Animation
+        self.stacked_layout.setCurrentIndex(4) # Animation
+        # self.stacked_layout.setCurrentIndex(3) # allocateEnergy
         self.game_layout_initialAnimation.start_flow_text()
-        self.stacked_layout.setCurrentIndex(3) # allocateEnergy
-        
         from main import Game
-        if hasattr(self, 'game'):
-            if isinstance(self.game, Game):
-                pass
-        else:
-            self.game = Game(self)
+        self.game = Game(self)
         self.game.start()
-
+        # 这里首先应该是黑屏的过场动画和基本选项选择 暂时先跳过
+        
         def bind_afterGame():
             self.game_layout_allocateEnergy.pushButton_nextPage.clicked.connect(lambda: self.game.pageTuning(1))
             self.game_layout_allocateEnergy.pushButton_previousPage.clicked.connect(lambda: self.game.pageTuning(-1))
@@ -210,7 +218,15 @@ class MyWindow(QMainWindow):
             self.game_layout_choose_model_1.pushButton_next.clicked.connect(self.game.currentEvent.next) # type: ignore
 
         bind_afterGame()
-        
+
+
+
+    def event_true(self):
+        self.game.event_true()
+
+    def event_false(self):
+        self.game.event_false()
+
 
     def nextWeek(self):
         print("next week")
@@ -220,17 +236,9 @@ class MyWindow(QMainWindow):
     def back(self):
         self.stacked_layout.setCurrentIndex(0)
 
-
     def agent_girlfriend(self):
         from Event.crush_atFirstBlush import event_crush_atFirstBlush
-        # 这里的处理不太好，只是为了调试方便
-        from main import Game
-        if hasattr(self, 'game'):
-            if isinstance(self.game, Game):
-                self.event_crush_atFirstBlush = event_crush_atFirstBlush(self.game)
-        else:
-            self.game = Game(self)
-            self.event_crush_atFirstBlush = event_crush_atFirstBlush(Game(self))
+        self.event_crush_atFirstBlush = event_crush_atFirstBlush(self.game)
         self.event_crush_atFirstBlush.event_start()
         
    

@@ -160,46 +160,6 @@ padding:10px;
      <string>可选项目：</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_mission2">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>140</y>
-      <width>131</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>千图笔锋手写体</family>
-      <pointsize>17</pointsize>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>2.</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_mission3">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>170</y>
-      <width>131</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>千图笔锋手写体</family>
-      <pointsize>17</pointsize>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>3.</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
@@ -294,168 +254,6 @@ background-color:grey;</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignmentFlag::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_mission1">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>120</y>
-      <width>131</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>千图笔锋手写体</family>
-      <pointsize>17</pointsize>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>1.学习</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_mission4">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>200</y>
-      <width>131</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>千图笔锋手写体</family>
-      <pointsize>17</pointsize>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>4.</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_mission5">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>220</y>
-      <width>131</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>千图笔锋手写体</family>
-      <pointsize>17</pointsize>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>5.</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_mission6">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>250</y>
-      <width>141</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>千图笔锋手写体</family>
-      <pointsize>17</pointsize>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>6.</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_mission7">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>280</y>
-      <width>141</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>千图笔锋手写体</family>
-      <pointsize>17</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>7.</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_mission8">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>310</y>
-      <width>141</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>千图笔锋手写体</family>
-      <pointsize>17</pointsize>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>8.</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_mission9">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>335</y>
-      <width>141</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>千图笔锋手写体</family>
-      <pointsize>17</pointsize>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>9.</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_mission10">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>365</y>
-      <width>141</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>千图笔锋手写体</family>
-      <pointsize>17</pointsize>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>10.</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_minus5">
@@ -966,20 +764,10 @@ border:0px;</string>
    <zorder>label_3</zorder>
    <zorder>pushButton_next</zorder>
    <zorder>label_optionalMission</zorder>
-   <zorder>label_mission2</zorder>
-   <zorder>label_mission3</zorder>
    <zorder>label_5</zorder>
    <zorder>graphicsView</zorder>
    <zorder>label_money</zorder>
    <zorder>label_moreEvents</zorder>
-   <zorder>label_mission1</zorder>
-   <zorder>label_mission4</zorder>
-   <zorder>label_mission5</zorder>
-   <zorder>label_mission6</zorder>
-   <zorder>label_mission7</zorder>
-   <zorder>label_mission8</zorder>
-   <zorder>label_mission9</zorder>
-   <zorder>label_mission10</zorder>
    <zorder>pushButton_minus5</zorder>
    <zorder>pushButton_plus5</zorder>
    <zorder>pushButton_minus4</zorder>
@@ -998,8 +786,8 @@ border:0px;</string>
    <zorder>pushButton_previousPage</zorder>
    <zorder>pushButton_nextPage</zorder>
    <zorder>label_money_value</zorder>
-   <zorder>frame_modal</zorder>
    <zorder>frame_selectArea</zorder>
+   <zorder>frame_modal</zorder>
   </widget>
  </widget>
  <resources>

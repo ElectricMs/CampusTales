@@ -1,9 +1,18 @@
 import random
 import time
 from cover_start import MyWindow
-from PySide6.QtWidgets import QPushButton
-
-
+from PySide6.QtWidgets import QPushButton,QLabel
+from PySide6.QtCore import QRect,Qt,Signal
+from PySide6.QtGui import QFont
+class ClickableLabel(QLabel):
+    clicked = Signal()  # 定义一个点击信号
+    def __init__(self, text="", parent=None):
+        super().__init__(text, parent)
+        self.setMouseTracking(True)  # 启用鼠标跟踪
+    def mousePressEvent(self, event):
+        if event.button() == Qt.MouseButton.LeftButton:
+            self.clicked.emit()  # 发送点击信号
+        super().mousePressEvent(event)
 class Game:
     def __init__(self,Ui:MyWindow):
         from Event.event import event
@@ -56,8 +65,12 @@ class Game:
         self.eventResults=[]
 
 
+
+
     # 开始游戏
     def start(self):
+        # 添加黑屏过场动画
+        # ============================
         self.loadEvent()
         self.Ui.game_layout_allocateEnergy.label_content.setText(self.currentEvent.if_join()[0] + "," + self.currentEvent.if_join()[1]) 
         self.Ui.game_layout_allocateEnergy.frame_modal.setVisible(True)
@@ -195,20 +208,56 @@ class Game:
         count = len(self.mainlineEvents)
         page = count//5+1 if count%5!=0 else count//5
         pageNow = 1
-
+        for item in self.Ui.game_layout_allocateEnergy.frame_selectArea.findChildren(ClickableLabel):
+            item.setParent(None)
+            item.deleteLater()
+            item = None
         # 左侧罗列所有事件并供选择
         # 删除 QFrame 布局中的所有子部件
-        while self.Ui.game_layout_allocateEnergy.frame_selectArea_layout.count():
-            item = self.Ui.game_layout_allocateEnergy.frame_selectArea_layout.takeAt(0)
-            widget = item.widget()
-            if widget:
-                widget.deleteLater()
+        # while self.Ui.game_layout_allocateEnergy.frame_selectArea_layout.count():
+        #     item = self.Ui.game_layout_allocateEnergy.frame_selectArea_layout.takeAt(0)
+        #     widget = item.widget()
+        #     if widget:
+        #         widget.deleteLater()
+                
+        #初始y的偏移量
+        y_offset = 0
+        num=1
         for mission in self.mainlineEvents:
-            button = QPushButton(mission[0])
             # 为按钮添加槽函数
             # 还没加
             
-            self.Ui.game_layout_allocateEnergy.frame_selectArea_layout.addWidget(button)
+            tmp_str=str(num)+"、"+mission[0]
+#             button = QPushButton(tmp_str,self.Ui.game_layout_allocateEnergy)
+#             font1 = QFont()
+#             font1.setFamilies([u"\u5343\u56fe\u7b14\u950b\u624b\u5199\u4f53"])
+#             font1.setPointSize(17)
+#             font1.setBold(True)
+#             button.setGeometry(QRect(330, 120, 100, 31))
+#             button.setFont(font1)
+#             button.setStyleSheet(u"background-color: transparent;\n"
+# "border:None;\n"
+# "")
+#             button.move(310,y_offset)
+#             y_offset+=28
+            
+#             button.show()
+            #上方是按钮的解决方法，但是存在缺点，所以改用ClickableLabel，不过不知道这个ClickableLabel好不好用
+            label=ClickableLabel(tmp_str,self.Ui.game_layout_allocateEnergy.frame_selectArea)
+            font1 = QFont()
+            font1.setFamilies([u"\u5343\u56fe\u7b14\u950b\u624b\u5199\u4f53"])
+            font1.setPointSize(17)
+            font1.setBold(True)
+            label.setGeometry(QRect(0,0,100,30))
+            label.setFont(font1)
+            label.setStyleSheet(u"background-color: transparent;\n")
+            label.move(350,y_offset)
+            #self.Ui.game_layout_allocateEnergy.frame_selectArea_layout.addWidget(label)
+            y_offset+=28
+            label.show()
+            num+=1
+        print("nihao")
+           
 
 
         def pageTuning(value):

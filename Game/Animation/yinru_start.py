@@ -4,11 +4,8 @@ from PySide6.QtWidgets import QApplication,QWidget,QMainWindow,QPushButton,QLabe
 from PySide6.QtMultimedia import QSoundEffect
 from Animation.Ui_yinru import Ui_Page1
 import Animation.resoure_main_rc
-
 #gender=1:男，gender=2:女
 gender=0
-
-
 
 class CustomPlainTextEdit(QPlainTextEdit):
     def __init__(self, parent=None):
@@ -16,25 +13,23 @@ class CustomPlainTextEdit(QPlainTextEdit):
         self.read_only = False  # 初始化为非只读状态
 
     def keyPressEvent(self, event: QKeyEvent):
-        if self.read_only:
-            print("当前处于只读状态，忽略所有键事件")
-            return  # 如果已经是只读状态，直接返回，不处理任何键事件
+        print("文本编辑框keyPressEvent被执行")
+        
         if event.key() == Qt.Key.Key_Enter or event.key() == Qt.Key.Key_Return:
             
             print("Enter 键被按下，设置为只读")
+            self.setVisible(False)
             self.setReadOnly(True)
             self.read_only = True  # 记录当前状态
         else:
+           
             super().keyPressEvent(event)
         # 手动传递事件给 MainWindow
         main_window = self.parent()
         if isinstance(main_window, QMainWindow):
             main_window.keyPressEvent(event)
-
-
-
 class MyWindow(QMainWindow):
-    def __init__(self, callback):
+    def __init__(self,callback):
         
         super().__init__()
         self.ui=Ui_Page1()
@@ -44,9 +39,9 @@ class MyWindow(QMainWindow):
         self.callback_setCurrentIndex_allocateEnergy = callback
         # 创建一个QSoundEffect实例来播放音效
         self.sound_effect = QSoundEffect(self)
-        self.sound_effect.setSource(QUrl.fromLocalFile('Game\Animation\机械键盘打字音效.wav'))  # type: ignore # 替换为你的音频文件路径
+        self.sound_effect.setSource(QUrl.fromLocalFile('Game\Animation\机械键盘打字音效.wav'))# type: ignore  # 替换为你的音频文件路径
         self.ui.test_pushButton.setVisible(False)
-
+        self.ui.test_pushButton.clicked.connect(self.start_flow_text)
         self.label_list=[]
         self.text_list=[]
         for label in self.ui.centralwidget.findChildren(QLabel):
@@ -68,23 +63,28 @@ class MyWindow(QMainWindow):
 "                padding: 5px;               /* \u5185\u8fb9\u8ddd\uff0c\u53ef\u9009 */\n"
 " }")   
         self.plainTextEdit.setVisible(False)
+        
+        
+          
     def keyPressEvent(self,event):
+        print("yinru页面的keyPressEvent被执行")
+        
         # 当按下键时，此方法被调用
         #self.setGeometry(300, 300, 300, 300)
         key=event.key()
-        if key==Qt.Key.Key_Enter and self.page==3:
+        if key==Qt.Key.Key_Return and self.page==3:
             self.change3()
+            return
         if self.page==5:
             self.change_namepage()
             
         if self.page==1:
             self.change1()
-        if key==Qt.Key.Key_S and self.page==3:
-            print("KeyBoard S")
+        if self.page==3 and key==Qt.Key.Key_S:
+            print("S键被按下")
             self.callback_setCurrentIndex_allocateEnergy()
-            pass
-            
-        
+        if self.page==4:
+            self.callback_setCurrentIndex_allocateEnergy()
     
         
     def play_sound(self):
@@ -117,7 +117,7 @@ class MyWindow(QMainWindow):
 "}")
         
         
-        self.plainTextEdit.setVisible(True) # type: ignore
+        self.plainTextEdit.setVisible(True)# type: ignore
         next_label = QLabel("按Enter键继续下一步",self.ui.centralwidget)
         next_label.setObjectName(u"next_label")
         next_label.setGeometry(QRect(500, 620, 331, 51))
@@ -155,6 +155,7 @@ class MyWindow(QMainWindow):
         # self.ui.centralwidget.setStyleSheet("background-color: rgb(0, 0, 0);")
         # self.setWindowTitle("Page1")
         self.name_page()
+        print("change1结束")
     def change_namepage(self):
         self.label_list=[]
         self.text_list=[]
@@ -167,10 +168,10 @@ class MyWindow(QMainWindow):
             button.setParent(None)
             button.deleteLater()
             button=None
-        self.plainTextEdit.setParent(None) # type: ignore
-        self.plainTextEdit.deleteLater() # type: ignore
-        self.plainTextEdit=None
+        self.plainTextEdit.setVisible(False)
+        
         self.Page2_label()
+        print("change_name结束")
     def update_text(self):
         
         
@@ -193,15 +194,15 @@ class MyWindow(QMainWindow):
     def Page2_label(self):
         self.page=2
         
-        label = QLabel("请选择你的性别", self.ui.centralwidget)
-        label.setGeometry(QRect(390, 210, 531, 141))
+        label1 = QLabel("请选择你的性别", self.ui.centralwidget)
+        label1.setGeometry(QRect(390, 210, 531, 141))
         font = QFont()
         font.setFamilies([u"\u7ad9\u9177\u5c0f\u8587LOGO\u4f53"])
         font.setPointSize(54)
-        label.setFont(font)
-        label.setStyleSheet(u"color: rgb(255, 255, 255);")
+        label1.setFont(font)
+        label1.setStyleSheet(u"color: rgb(255, 255, 255);")
         #label.setText("请选择你的性别")
-        label.show()
+        label1.show()
         for label in self.ui.centralwidget.findChildren(QLabel):
             self.label_list.append(label)
             self.text_list.append(label.text())
@@ -222,6 +223,7 @@ class MyWindow(QMainWindow):
         
         pushButton.show()
         pushButton.clicked.connect(self.man)
+        pushButton.clicked.connect(self.change2)
         pushButton_2 = QPushButton("女",self.ui.centralwidget)
         #pushButton_2.setObjectName(u"pushButton_2")
         pushButton_2.setGeometry(QRect(720, 410, 75, 81))
@@ -230,6 +232,7 @@ class MyWindow(QMainWindow):
         "color:rgb(255, 255, 255);")
         pushButton_2.show()
         pushButton_2.clicked.connect(self.woman)
+        pushButton_2.clicked.connect(self.change2)
     def change2(self):
         self.label_list=[]
         self.text_list=[]
@@ -248,19 +251,19 @@ class MyWindow(QMainWindow):
         global gender
         gender=1
         print("男")
-        self.change2()
+        
     def woman(self):
         global gender
         gender=2
         print("女")
-        self.change2()
+        
     def Page3(self):
         self.page=3
-        label = QLabel("",self.ui.centralwidget)
-        label.setObjectName(u"label")
-        label.setGeometry(QRect(350, 130, 581, 201))
-        label.setStyleSheet(u"border-image: url(:/image/resource/\u6211\u7684\u5927\u5b66.png);")
-        label.show()
+        label1 = QLabel("",self.ui.centralwidget)
+        label1.setObjectName(u"label1")
+        label1.setGeometry(QRect(350, 130, 581, 201))
+        label1.setStyleSheet(u"border-image: url(:/image/resource/\u6211\u7684\u5927\u5b66.png);")
+        label1.show()
         explain_button = QLabel("按Enter键查看游戏介绍",self.ui.centralwidget)
         explain_button.setObjectName(u"explain_button")
         explain_button.setGeometry(QRect(430, 370, 421, 61))
@@ -284,6 +287,7 @@ class MyWindow(QMainWindow):
         
         self.start_flow_text()
         start_button.show()
+        
     def change3(self):
         self.label_list=[]
         self.text_list=[]
@@ -372,13 +376,12 @@ class MyWindow(QMainWindow):
         label_5.show()
         label_6.show()
         label_7.show()
-
-
-
-
 if __name__=="__main__":
     gender=0
     app=QApplication([])
     window=MyWindow(callback = None)
     window.show()
+    
+    
+    
     app.exec()

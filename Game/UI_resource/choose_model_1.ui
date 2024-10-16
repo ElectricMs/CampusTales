@@ -69,9 +69,9 @@ border-image: url(:/image1/resource/classroom.png);}</string>
     <widget class="QLabel" name="label_content">
      <property name="geometry">
       <rect>
-       <x>60</x>
+       <x>30</x>
        <y>70</y>
-       <width>681</width>
+       <width>711</width>
        <height>71</height>
       </rect>
      </property>
@@ -92,23 +92,7 @@ border-image: url(:/image1/resource/classroom.png);}</string>
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_4">
-     <property name="geometry">
-      <rect>
-       <x>930</x>
-       <y>140</y>
-       <width>100</width>
-       <height>35</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border-image: url(:/image2/resource/qload.png);</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_5">
+    <widget class="QPushButton" name="pushButton_save">
      <property name="geometry">
       <rect>
        <x>1050</x>
@@ -118,13 +102,16 @@ border-image: url(:/image1/resource/classroom.png);}</string>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image: url(:/image2/resource/title.png);</string>
+      <string notr="true">#pushButton_save{
+	border-image: url(:/image2/resource/save_button2.png);}
+#pushButton_save:hover{
+	border-image: url(:/image2/resource/save_hover.png);}</string>
      </property>
      <property name="text">
       <string/>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_6">
+    <widget class="QPushButton" name="pushButton_exit">
      <property name="geometry">
       <rect>
        <x>1170</x>
@@ -134,23 +121,10 @@ border-image: url(:/image1/resource/classroom.png);}</string>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image: url(:/image2/resource/screen.png);</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_7">
-     <property name="geometry">
-      <rect>
-       <x>810</x>
-       <y>140</y>
-       <width>100</width>
-       <height>35</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border-image: url(:/image2/resource/qsave.png);</string>
+      <string notr="true">#pushButton_exit{
+	border-image: url(:/image2/resource/exit_button2.png);}
+#pushButton_exit:hover{
+border-image: url(:/image2/resource/exit_hover.png);}</string>
      </property>
      <property name="text">
       <string/>
@@ -159,24 +133,46 @@ border-image: url(:/image1/resource/classroom.png);}</string>
     <widget class="QPushButton" name="pushButton_next">
      <property name="geometry">
       <rect>
-       <x>1050</x>
-       <y>70</y>
-       <width>111</width>
-       <height>41</height>
+       <x>930</x>
+       <y>140</y>
+       <width>100</width>
+       <height>35</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">#pushButton_next{
+border-image: url(:/image2/resource/next_button.png);
+}
+#pushButton_next:hover{
+	border-image: url(:/image2/resource/next_button2.png);
+}</string>
+     </property>
      <property name="text">
-      <string>PushButton</string>
+      <string/>
      </property>
     </widget>
     <widget class="QPlainTextEdit" name="plainTextEdit_input">
      <property name="geometry">
       <rect>
-       <x>60</x>
+       <x>30</x>
        <y>70</y>
-       <width>601</width>
+       <width>711</width>
        <height>71</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>15</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#plainTextEdit_input{
+background-color:transparent;
+border:None;
+}</string>
+     </property>
+     <property name="placeholderText">
+      <string>选择上方的选项，或者在此输入你的个性化回答~</string>
      </property>
     </widget>
    </widget>

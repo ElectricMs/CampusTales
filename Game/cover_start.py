@@ -2,7 +2,7 @@ from PySide6.QtCore import Qt,QEvent,QTimer, QEasingCurve, QPropertyAnimation, Q
 from PySide6.QtGui import QMouseEvent,QFont
 from PySide6.QtWidgets import QApplication, QWidget, QMainWindow, QPushButton, QStackedLayout, QGraphicsOpacityEffect, QGraphicsBlurEffect, QFrame,QLabel, QVBoxLayout
 from UI_resource.Ui_cover import Ui_cover
-from UI_resource.Ui_agent_choose import Ui_Agent_choose
+from UI_resource.Ui_Agent_choose import Ui_Agent_choose
 from UI_resource.Ui_choose_model_1 import Ui_MainWindow as Ui_choose_model_1
 from UI_resource.Ui_allocateEnergy import Ui_allocateEnergy
 from Animation.yinru_start import MyWindow as GameLayout_initialAnimation
@@ -24,7 +24,7 @@ class GameLayout_choose_model_1(QMainWindow, Ui_choose_model_1):
         self.opacity_effect_8.setOpacity(0)
         self.opacity_effect_6.setOpacity(1)
         
-
+        
     def set_stream_text(self, text):
         if not isinstance(text, str):
             raise ValueError("text must be a string")
@@ -67,15 +67,17 @@ class GameLayout_allocateEnergy(QMainWindow, Ui_allocateEnergy):
         self.widget_diary.setGeometry(0, 0, 1280, 720)
         # 背景图片
         self.label_diary_img = QLabel(self.widget_diary)
+        self.label_diary_img.setObjectName(u"label_diary_img")
         self.label_diary_img.setGeometry(QRect(270, 30, 621, 661))
-        self.label_diary_img.setStyleSheet(u"border-image: url(:/image/resource/Strength_assign/paper2_yellow_l.png);")
+        self.label_diary_img.setStyleSheet(u"#label_diary_img{border-image: url(:/image/resource/Strength_assign/paper2_yellow_l.png);}")
         # 内容
         self.label_diary_content = QLabel(self.widget_diary)
+        self.label_diary_content.setObjectName(u"label_diary_content")
         self.label_diary_content.setGeometry(QRect(290, 50, 581, 561))
         # 字体 后面要重命名
         font_diaryWidget = QFont()
         font_diaryWidget.setFamilies([u"\u5343\u56fe\u7b14\u950b\u624b\u5199\u4f53"])
-        font_diaryWidget.setPointSize(18)
+        font_diaryWidget.setPointSize(20)
         font_diaryWidget.setBold(True)
         self.label_diary_content.setFont(font_diaryWidget)
         self.label_diary_content.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignTop)
@@ -86,6 +88,7 @@ class GameLayout_allocateEnergy(QMainWindow, Ui_allocateEnergy):
         
         #每周执行任务的内容widget,模糊背景
         self.pushButton_diary_next = QPushButton(self.widget_diary)
+        self.pushButton_diary_next.setObjectName(u"pushButton_diary_next")
         self.pushButton_diary_next.setGeometry(QRect(700, 620, 171, 41))
         self.pushButton_diary_next.setText("Next")
         font10 = QFont()

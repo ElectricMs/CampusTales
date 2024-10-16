@@ -34,21 +34,21 @@ class Ui_allocateEnergy(object):
         self.pushButton_exit = QPushButton(self.centralwidget)
         self.pushButton_exit.setObjectName(u"pushButton_exit")
         self.pushButton_exit.setGeometry(QRect(1120, 680, 100, 35))
-        self.pushButton_exit.setStyleSheet(u"#exit_button{\n"
+        self.pushButton_exit.setStyleSheet(u"#pushButton_exit{\n"
 "	border-image: url(:/image/resource/exit_button2.png);\n"
 "	}\n"
-"#exit_button:hover{\n"
+"#pushButton_exit:hover{\n"
 "	\n"
 "	border-image: url(:/image/resource/exit_hover.png);\n"
 "}")
         self.pushButton_save = QPushButton(self.centralwidget)
         self.pushButton_save.setObjectName(u"pushButton_save")
         self.pushButton_save.setGeometry(QRect(1000, 680, 100, 35))
-        self.pushButton_save.setStyleSheet(u"#save_button{\n"
+        self.pushButton_save.setStyleSheet(u"#pushButton_save{\n"
 "	\n"
 "	border-image: url(:/image/resource/save_button2.png);\n"
 "	}\n"
-"#save_button:hover{\n"
+"#pushButton_save:hover{\n"
 "	\n"
 "	border-image: url(:/image/resource/save_hover.png);\n"
 "	}")
@@ -68,13 +68,13 @@ class Ui_allocateEnergy(object):
         font.setPointSize(13)
         font.setBold(False)
         self.pushButton_next.setFont(font)
-        self.pushButton_next.setStyleSheet(u"#pushButton_5{\n"
+        self.pushButton_next.setStyleSheet(u"#pushButton_next{\n"
 "border-image: url(:/image/resource/Strength_assign/002_07.png);\n"
 "padding:10px;\n"
 "}\n"
-"#pushButton_5:hover{\n"
+"#pushButton_next:hover{\n"
 "	border-image: url(:/image/resource/Strength_assign/002_07_hover.png);}\n"
-"#pushButton_5:pressed{\n"
+"#pushButton_next:pressed{\n"
 "	border-image: url(:/image/resource/Strength_assign/002_07_click.png);}")
         self.label_optionalMission = QLabel(self.centralwidget)
         self.label_optionalMission.setObjectName(u"label_optionalMission")
@@ -270,7 +270,7 @@ class Ui_allocateEnergy(object):
         self.frame_modal = QFrame(self.centralwidget)
         self.frame_modal.setObjectName(u"frame_modal")
         self.frame_modal.setGeometry(QRect(10, 160, 1111, 400))
-        self.frame_modal.setStyleSheet(u"#frame{border-image: url(:/image/resource/\u5f39\u7a97.png);}")
+        self.frame_modal.setStyleSheet(u"#frame_modal{border-image: url(:/image/resource/\u5f39\u7a97.png);}")
         self.frame_modal.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame_modal.setFrameShadow(QFrame.Shadow.Raised)
         self.label_content = QLabel(self.frame_modal)

@@ -48,7 +48,7 @@ class Ui_MainWindow(object):
         self.label_name.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.label_content = QLabel(self.frame)
         self.label_content.setObjectName(u"label_content")
-        self.label_content.setGeometry(QRect(60, 70, 681, 71))
+        self.label_content.setGeometry(QRect(30, 70, 711, 71))
         font1 = QFont()
         font1.setFamilies([u"\u5fae\u8f6f\u96c5\u9ed1"])
         font1.setPointSize(15)
@@ -56,35 +56,46 @@ class Ui_MainWindow(object):
         self.label_content.setFont(font1)
         self.label_content.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignTop)
         self.label_content.setWordWrap(True)
-        self.pushButton_4 = QPushButton(self.frame)
-        self.pushButton_4.setObjectName(u"pushButton_4")
-        self.pushButton_4.setGeometry(QRect(930, 140, 100, 35))
-        self.pushButton_4.setStyleSheet(u"border-image: url(:/image2/resource/qload.png);")
-        self.pushButton_5 = QPushButton(self.frame)
-        self.pushButton_5.setObjectName(u"pushButton_5")
-        self.pushButton_5.setGeometry(QRect(1050, 140, 100, 35))
-        self.pushButton_5.setStyleSheet(u"border-image: url(:/image2/resource/title.png);")
-        self.pushButton_6 = QPushButton(self.frame)
-        self.pushButton_6.setObjectName(u"pushButton_6")
-        self.pushButton_6.setGeometry(QRect(1170, 140, 100, 35))
-        self.pushButton_6.setStyleSheet(u"border-image: url(:/image2/resource/screen.png);")
-        self.pushButton_7 = QPushButton(self.frame)
-        self.pushButton_7.setObjectName(u"pushButton_7")
-        self.pushButton_7.setGeometry(QRect(810, 140, 100, 35))
-        self.pushButton_7.setStyleSheet(u"border-image: url(:/image2/resource/qsave.png);")
+        self.pushButton_save = QPushButton(self.frame)
+        self.pushButton_save.setObjectName(u"pushButton_save")
+        self.pushButton_save.setGeometry(QRect(1050, 140, 100, 35))
+        self.pushButton_save.setStyleSheet(u"#pushButton_save{\n"
+"	border-image: url(:/image2/resource/save_button2.png);}\n"
+"#pushButton_save:hover{\n"
+"	border-image: url(:/image2/resource/save_hover.png);}")
+        self.pushButton_exit = QPushButton(self.frame)
+        self.pushButton_exit.setObjectName(u"pushButton_exit")
+        self.pushButton_exit.setGeometry(QRect(1170, 140, 100, 35))
+        self.pushButton_exit.setStyleSheet(u"#pushButton_exit{\n"
+"	border-image: url(:/image2/resource/exit_button2.png);}\n"
+"#pushButton_exit:hover{\n"
+"border-image: url(:/image2/resource/exit_hover.png);}")
         self.pushButton_next = QPushButton(self.frame)
         self.pushButton_next.setObjectName(u"pushButton_next")
-        self.pushButton_next.setGeometry(QRect(1050, 70, 111, 41))
+        self.pushButton_next.setGeometry(QRect(930, 140, 100, 35))
+        self.pushButton_next.setStyleSheet(u"#pushButton_next{\n"
+"border-image: url(:/image2/resource/next_button.png);\n"
+"}\n"
+"#pushButton_next:hover{\n"
+"	border-image: url(:/image2/resource/next_button2.png);\n"
+"}")
         self.plainTextEdit_input = QPlainTextEdit(self.frame)
         self.plainTextEdit_input.setObjectName(u"plainTextEdit_input")
-        self.plainTextEdit_input.setGeometry(QRect(60, 70, 601, 71))
+        self.plainTextEdit_input.setGeometry(QRect(30, 70, 711, 71))
+        font2 = QFont()
+        font2.setPointSize(15)
+        self.plainTextEdit_input.setFont(font2)
+        self.plainTextEdit_input.setStyleSheet(u"#plainTextEdit_input{\n"
+"background-color:transparent;\n"
+"border:None;\n"
+"}")
         self.pushButton_option1 = QPushButton(self.centralwidget)
         self.pushButton_option1.setObjectName(u"pushButton_option1")
         self.pushButton_option1.setGeometry(QRect(360, 100, 581, 81))
-        font2 = QFont()
-        font2.setFamilies([u"\u5fae\u8f6f\u96c5\u9ed1"])
-        font2.setPointSize(15)
-        self.pushButton_option1.setFont(font2)
+        font3 = QFont()
+        font3.setFamilies([u"\u5fae\u8f6f\u96c5\u9ed1"])
+        font3.setPointSize(15)
+        self.pushButton_option1.setFont(font3)
         self.pushButton_option1.setStyleSheet(u"#pushButton{\n"
 "    image: url(:/image1/resource/button.png);\n"
 "    background-color:transparent;\n"
@@ -99,7 +110,7 @@ class Ui_MainWindow(object):
         self.pushButton_option2 = QPushButton(self.centralwidget)
         self.pushButton_option2.setObjectName(u"pushButton_option2")
         self.pushButton_option2.setGeometry(QRect(360, 170, 581, 81))
-        self.pushButton_option2.setFont(font2)
+        self.pushButton_option2.setFont(font3)
         self.pushButton_option2.setStyleSheet(u"#pushButton_2{\n"
 "    image: url(:/image1/resource/button.png);\n"
 "    background-color:transparent;\n"
@@ -114,9 +125,7 @@ class Ui_MainWindow(object):
         self.pushButton_option3 = QPushButton(self.centralwidget)
         self.pushButton_option3.setObjectName(u"pushButton_option3")
         self.pushButton_option3.setGeometry(QRect(360, 240, 581, 81))
-        font3 = QFont()
-        font3.setPointSize(15)
-        self.pushButton_option3.setFont(font3)
+        self.pushButton_option3.setFont(font2)
         self.pushButton_option3.setStyleSheet(u"#pushButton_3{\n"
 "    image: url(:/image1/resource/button.png);\n"
 "    background-color:transparent;\n"
@@ -139,7 +148,7 @@ class Ui_MainWindow(object):
         self.label_img_right = QLabel(self.centralwidget)
         self.label_img_right.setObjectName(u"label_img_right")
         self.label_img_right.setGeometry(QRect(860, 200, 500, 500))
-        self.label_img_right.setFont(font3)
+        self.label_img_right.setFont(font2)
         self.label_img_right.setStyleSheet(u"border-image: url(:/people/resource/boy_normal_-removebg-preview.png);")
         MainWindow.setCentralWidget(self.centralwidget)
         self.label_img_left.raise_()
@@ -159,11 +168,10 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"choose_model", None))
         self.label_name.setText(QCoreApplication.translate("MainWindow", u"Narrator", None))
         self.label_content.setText(QCoreApplication.translate("MainWindow", u"Test", None))
-        self.pushButton_4.setText("")
-        self.pushButton_5.setText("")
-        self.pushButton_6.setText("")
-        self.pushButton_7.setText("")
-        self.pushButton_next.setText(QCoreApplication.translate("MainWindow", u"PushButton", None))
+        self.pushButton_save.setText("")
+        self.pushButton_exit.setText("")
+        self.pushButton_next.setText("")
+        self.plainTextEdit_input.setPlaceholderText(QCoreApplication.translate("MainWindow", u"\u9009\u62e9\u4e0a\u65b9\u7684\u9009\u9879\uff0c\u6216\u8005\u5728\u6b64\u8f93\u5165\u4f60\u7684\u4e2a\u6027\u5316\u56de\u7b54~", None))
         self.pushButton_option1.setText(QCoreApplication.translate("MainWindow", u"Option1", None))
         self.pushButton_option2.setText(QCoreApplication.translate("MainWindow", u"Option2", None))
         self.pushButton_option3.setText(QCoreApplication.translate("MainWindow", u"Option3", None))

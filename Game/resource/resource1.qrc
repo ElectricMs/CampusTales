@@ -8,6 +8,12 @@
     <file>resource/message.png</file>
   </qresource>
   <qresource prefix="image2">
+    <file>resource/exit_button2.png</file>
+    <file>resource/exit_hover.png</file>
+    <file>resource/next_button.png</file>
+    <file>resource/next_button2.png</file>
+    <file>resource/save_button2.png</file>
+    <file>resource/save_hover.png</file>
     <file>resource/qload.png</file>
     <file>resource/load.png</file>
     <file>resource/qload2.png</file>

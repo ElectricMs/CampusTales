@@ -4,6 +4,8 @@ from PySide6.QtWidgets import QApplication,QWidget,QMainWindow,QPushButton,QLabe
 from PySide6.QtMultimedia import QSoundEffect
 from Animation.Ui_yinru import Ui_Page1
 import Animation.resoure_main_rc
+
+
 #gender=1:男，gender=2:女
 gender=0
 

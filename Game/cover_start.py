@@ -2,7 +2,7 @@ from PySide6.QtCore import Qt,QEvent,QTimer, QEasingCurve, QPropertyAnimation, Q
 from PySide6.QtGui import QMouseEvent,QFont
 from PySide6.QtWidgets import QApplication, QWidget, QMainWindow, QPushButton, QStackedLayout, QGraphicsOpacityEffect, QGraphicsBlurEffect, QFrame,QLabel, QVBoxLayout
 from UI_resource.Ui_cover import Ui_cover
-from UI_resource.Ui_Agent_choose import Ui_Agent_choose
+from UI_resource.Ui_agent_choose import Ui_Agent_choose
 from UI_resource.Ui_choose_model_1 import Ui_MainWindow as Ui_choose_model_1
 from UI_resource.Ui_allocateEnergy import Ui_allocateEnergy
 from Animation.yinru_start import MyWindow as GameLayout_initialAnimation
@@ -120,8 +120,6 @@ class GameLayout_allocateEnergy(QMainWindow, Ui_allocateEnergy):
 
 
 
-
-
 class GameLayout_Agent(QMainWindow, Ui_Agent_choose):
     def __init__(self):
         super().__init__()
@@ -197,7 +195,7 @@ class MyWindow(QMainWindow):
         from main import Game
         self.game = Game(self)
         self.game.start()
-        # 这里首先应该是黑屏的过场动画和基本选项选择 暂时先跳过
+
         
         def bind_afterGame():
             self.game_layout_allocateEnergy.pushButton_nextPage.clicked.connect(lambda: self.game.pageTuning(1))

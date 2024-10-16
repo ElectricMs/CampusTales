@@ -13,6 +13,7 @@ class event(ABC):
         self.description=description 
         self.game=Game
         self.agent_mode=agent_mode
+        self.input_mode=False
 
         # self.ui=None
         # self.setting=None

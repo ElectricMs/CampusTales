@@ -30,27 +30,77 @@ class event_crush_atFirstBlush(Event.event):
         pass
 
 
-    def next(self):
+    def next(self,pos = None):
+        if self.input_mode:
+            input_text: str
+            if pos == 0:
+                if self.layout.plainTextEdit_input.toPlainText() == None or self.layout.plainTextEdit_input.toPlainText() == "":
+                    return
+                input_text = self.layout.plainTextEdit_input.toPlainText()
+            # 将内容发送给agent
+            pass
+
+
         self.step += 1
         if self.step >= len(self.dialogue_list):
             self.event_end()
             return
-        
+
+        self.set_art()
         self.layout.label_name.setText(self.dialogue_list[self.step][0])
         self.layout.set_stream_text(self.dialogue_list[self.step][1])
+
         
-        self.set_art()
+
+
+
+
+        
 
         pass
 
 
     def set_art(self):
+        def user_input(*args):
+            self.layout.pushButton_option1.show()
+            self.layout.pushButton_option2.show()
+            self.layout.pushButton_option3.show()
+            self.layout.plainTextEdit_input.show()
+            self.layout.plainTextEdit_input.setPlaceholderText("在上方选择你喜欢的选项（如果有的话），或在此输入你想说的吧！\n你还有5次对话机会！")
+            count = 0
+            for arg in args:
+                if isinstance(arg, str):
+                    count += 1
+                    if count == 1:
+                        self.layout.pushButton_option1.setText(arg)
+                    elif count == 2:
+                        self.layout.pushButton_option2.setText(arg)
+                    elif count == 3:
+                        self.layout.pushButton_option3.setText(arg)
+
+
+        def user_input_end(text:str = ""):
+            self.layout.pushButton_option1.hide()
+            self.layout.pushButton_option2.hide()
+            self.layout.pushButton_option3.hide()
+            self.layout.plainTextEdit_input.hide()
+
+
+        # if self.input_mode:
+        #     self.input_mode = False
+
+
+
         if self.step == 0:
             self.layout.label_img_left.hide()
         elif self.step == 3:
             self.layout.label_img_left.show()
+        elif self.step == 5:
+            pass
+            
         elif self.step == 6:
-            self.layout.plainTextEdit_input.show()
+            self.input_mode = True
+            user_input("你好！", "我喜欢你！", "")
 
 
     def event_end(self):

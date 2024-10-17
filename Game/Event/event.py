@@ -52,7 +52,7 @@ class event(ABC):
 
     # 点击next按钮触发
     @abstractmethod
-    def next(self):
+    def next(self, pos = None):
         pass
 
 

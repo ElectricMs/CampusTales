@@ -177,8 +177,12 @@ class MyWindow(QMainWindow):
         self.game_layout_allocateEnergy.pushButton_exit.clicked.connect(self.back)
         self.game_layout_allocateEnergy.pushButton_next.clicked.connect(self.nextWeek)
         self.game_layout_Agent.pushButton.clicked.connect(self.agent_girlfriend)
-        self.game_layout_allocateEnergy.pushButton_yes.clicked.connect(self.event_true)
-        self.game_layout_allocateEnergy.pushButton_no.clicked.connect(self.event_false)
+        self.game_layout_allocateEnergy.pushButton_yes.clicked.connect(lambda: self.game.event_true())
+        self.game_layout_allocateEnergy.pushButton_no.clicked.connect(lambda: self.game.event_false())
+        self.game_layout_choose_model_1.pushButton_next.clicked.connect(lambda: self.agent_next(pos = 0))
+        self.game_layout_choose_model_1.pushButton_option1.clicked.connect(lambda: self.agent_next(pos = 1))
+        self.game_layout_choose_model_1.pushButton_option2.clicked.connect(lambda: self.agent_next(pos = 2))
+        self.game_layout_choose_model_1.pushButton_option3.clicked.connect(lambda: self.agent_next(pos = 3))
 
 
     def Agent_choose(self):
@@ -193,7 +197,11 @@ class MyWindow(QMainWindow):
         # self.stacked_layout.setCurrentIndex(3) # allocateEnergy
         self.game_layout_initialAnimation.start_flow_text()
         from main import Game
-        self.game = Game(self)
+        if hasattr(self, 'game'):
+            if isinstance(self.game, Game):
+                pass
+        else:
+            self.game = Game(self)
         self.game.start()
 
         
@@ -213,17 +221,12 @@ class MyWindow(QMainWindow):
             self.game_layout_allocateEnergy.pushButton_plus5.clicked.connect(lambda: self.game.modifyEnergy(1,5))
 
             self.game_layout_allocateEnergy.pushButton_diary_next.clicked.connect(self.game.next)
-            self.game_layout_choose_model_1.pushButton_next.clicked.connect(self.game.currentEvent.next) # type: ignore
-
+            
         bind_afterGame()
 
 
-
-    def event_true(self):
-        self.game.event_true()
-
-    def event_false(self):
-        self.game.event_false()
+    def agent_next(self, pos=None):
+        self.game.currentEvent.next(pos=pos)
 
 
     def nextWeek(self):
@@ -236,7 +239,15 @@ class MyWindow(QMainWindow):
 
     def agent_girlfriend(self):
         from Event.crush_atFirstBlush import event_crush_atFirstBlush
-        self.event_crush_atFirstBlush = event_crush_atFirstBlush(self.game)
+         # 这里的处理不太好，只是为了调试方便
+        from main import Game
+        if hasattr(self, 'game'):
+            if isinstance(self.game, Game):
+                self.event_crush_atFirstBlush = event_crush_atFirstBlush(self.game)
+        else:
+            self.game = Game(self)
+            self.event_crush_atFirstBlush = event_crush_atFirstBlush(Game(self), agent_mode=True)
+            self.game.currentEvent = self.event_crush_atFirstBlush
         self.event_crush_atFirstBlush.event_start()
         
    

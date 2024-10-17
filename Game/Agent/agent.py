@@ -2,7 +2,7 @@
 import os
 import json
 import re
-
+import asyncio
 from langchain.chains.llm import LLMChain
 from langchain.prompts import PromptTemplate
 from langchain_community.chat_models import ChatZhipuAI
@@ -14,14 +14,14 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 os.environ["ZHIPUAI_API_KEY"] = "798c6766d89022735623c294ee28216c.stDi9j8OcRNp9f5L"  # 替换为新的智谱 AI API 密钥
 
 # 初始化 ChatZhipuAI
-zhipuai_chat_model = ChatZhipuAI(model="glm-4-plus", temperature=0.2)
+
 
 class Agent:
-    def __init__(self, name, personality_traits, context, chat_model, initial_emotion=200):
+    def __init__(self, name, personality_traits, context, initial_emotion=0):
         self.name = name
         self.personality_traits = personality_traits
         self.emotion_level = initial_emotion  # 范围: -100 到 +100
-        self.chat_model = chat_model
+        self.chat_model = ChatZhipuAI(model="glm-4-plus", temperature=0.2)
         self.context = context
         # Define the prompt template
         self.prompt_template = PromptTemplate(
@@ -33,7 +33,7 @@ class Agent:
             """
         )
 
-    def generate_response(self, context):
+    async def generate_response(self, context):
         # 构建消息列表
         chat_prompt = self.prompt_template.format(
             emotion_level=self.emotion_level,
@@ -41,16 +41,47 @@ class Agent:
         )
         messages = [
             SystemMessage(content=chat_prompt),
-            # SystemMessage(
-            #     content=f"目前的好感度: {self.emotion_level}"),
             HumanMessage(content=context)
         ]
-        # chat_chain = LLMChain(llm=self.chat_model, prompt=chat_prompt)
-        response = self.chat_model.invoke(messages)  # 使用 invoke 方法
-        return response.content.strip()  # 提取 content 并调用 strip()
+        response =await self.chat_model.ainvoke(messages)  # 使用 invoke 方法
+        return response.content.strip()  # type: ignore # 提取 content 并调用 strip()
+    
 
-    def update_state(self, emotion_change=0, trust_change=0, interest_change=0): 
-        self.emotion_level = max(-100, min(100, self.emotion_level + emotion_change))
+    async def user_interact_with_agent(self, user_input):
+
+        context = f"用户对你说: {user_input}"
+        response =await self.generate_response(context)
+        # 提取问候语
+        greeting_start = 0
+        greeting_end = response.find("\n\n")
+        greeting = response[greeting_start:greeting_end].strip()
+
+        goodness_match = re.search(r'当前好感度：(\d+)', response)
+        if goodness_match:
+            goodness = int(goodness_match.group(1))
+        else:
+            goodness = None
+
+        # 使用正则表达式提取关系
+        relationship_match = re.search(r'当前关系：(.+)', response)
+        if relationship_match:
+            relationship = relationship_match.group(1)
+        else:
+            relationship = None
+        print(f"好感度: {goodness}")
+        print(f"关系: {relationship}")
+        self.emotion_level = goodness
+        # 构建 JSON 响应
+        json_response = {
+            "agent_name": self.name,
+            "emotion_level": self.emotion_level,
+            "response": greeting,
+            "relationship": relationship
+        }
+        return json_response
+
+
+
 
 def user_interact_with_agent(user_input, agent):
 
@@ -175,7 +206,7 @@ def game_test():
 
         当前关系：恋人
        """
-    Xiaoxiaoxiao = Agent(chat_model=zhipuai_chat_model,name="萧小小",personality_traits="温柔善良",context=context1)
+    Xiaoxiaoxiao = Agent(name="萧小小",personality_traits="温柔善良",context=context1)
 
     # 用户与Agent的对话
     while True:
@@ -185,7 +216,8 @@ def game_test():
             break
 
         # 用户与 Crush 对话
-        crush_response = user_interact_with_agent(user_input, Xiaoxiaoxiao)
+        # crush_response = user_interact_with_agent(user_input, Xiaoxiaoxiao)
+        crush_response = Xiaoxiaoxiao.user_interact_with_agent(user_input)
 
         # 打印 JSON 响应
         print(json.dumps(crush_response, ensure_ascii=False, indent=4))

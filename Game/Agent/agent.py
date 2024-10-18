@@ -8,7 +8,6 @@ from langchain.prompts import PromptTemplate
 from langchain_community.chat_models import ChatZhipuAI
 from langchain.schema import SystemMessage, HumanMessage, AIMessage
 from langchain_core.prompts import StringPromptTemplate
-from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 # 设置环境变量（确保通过环境变量或安全方式管理）
 os.environ["ZHIPUAI_API_KEY"] = "798c6766d89022735623c294ee28216c.stDi9j8OcRNp9f5L"  # 替换为新的智谱 AI API 密钥

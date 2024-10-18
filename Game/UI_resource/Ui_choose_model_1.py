@@ -96,45 +96,45 @@ class Ui_MainWindow(object):
         font3.setFamilies([u"\u5fae\u8f6f\u96c5\u9ed1"])
         font3.setPointSize(15)
         self.pushButton_option1.setFont(font3)
-        self.pushButton_option1.setStyleSheet(u"#pushButton{\n"
+        self.pushButton_option1.setStyleSheet(u"#pushButton_option1{\n"
 "    image: url(:/image1/resource/button.png);\n"
 "    background-color:transparent;\n"
 "    border:None;\n"
 "    }\n"
-"    #pushButton:hover{\n"
+"    #pushButton_option1:hover{\n"
 "        image: url(:/image1/resource/button2.png);\n"
 "    }\n"
-"    #pushButton:pressed{\n"
+"    #pushButton_option1:pressed{\n"
 "        image:url(:/image1/resource/button3.png);\n"
 "    }")
         self.pushButton_option2 = QPushButton(self.centralwidget)
         self.pushButton_option2.setObjectName(u"pushButton_option2")
         self.pushButton_option2.setGeometry(QRect(360, 170, 581, 81))
         self.pushButton_option2.setFont(font3)
-        self.pushButton_option2.setStyleSheet(u"#pushButton_2{\n"
+        self.pushButton_option2.setStyleSheet(u"#pushButton_option2{\n"
 "    image: url(:/image1/resource/button.png);\n"
 "    background-color:transparent;\n"
 "    border:None;\n"
 "    }\n"
-"    #pushButton_2:hover{\n"
+"    #pushButton_option2:hover{\n"
 "        image: url(:/image1/resource/button2.png);\n"
 "    }\n"
-"    #pushButton_2:pressed{\n"
+"    #pushButton_option2:pressed{\n"
 "        image:url(:/image1/resource/button3.png);\n"
 "    }")
         self.pushButton_option3 = QPushButton(self.centralwidget)
         self.pushButton_option3.setObjectName(u"pushButton_option3")
         self.pushButton_option3.setGeometry(QRect(360, 240, 581, 81))
         self.pushButton_option3.setFont(font2)
-        self.pushButton_option3.setStyleSheet(u"#pushButton_3{\n"
+        self.pushButton_option3.setStyleSheet(u"#pushButton_option3{\n"
 "    image: url(:/image1/resource/button.png);\n"
 "    background-color:transparent;\n"
 "    border:None;\n"
 "    }\n"
-"    #pushButton_3:hover{\n"
+"    #pushButton_option3:hover{\n"
 "        image: url(:/image1/resource/button2.png);\n"
 "    }\n"
-"    #pushButton_3:pressed{\n"
+"    #pushButton_option3:pressed{\n"
 "        image:url(:/image1/resource/button3.png);\n"
 "    }")
         self.label_img_left = QLabel(self.centralwidget)

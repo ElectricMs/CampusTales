@@ -192,15 +192,15 @@ border:None;
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">#pushButton{
+     <string notr="true">#pushButton_option1{
     image: url(:/image1/resource/button.png);
     background-color:transparent;
     border:None;
     }
-    #pushButton:hover{
+    #pushButton_option1:hover{
         image: url(:/image1/resource/button2.png);
     }
-    #pushButton:pressed{
+    #pushButton_option1:pressed{
         image:url(:/image1/resource/button3.png);
     }</string>
     </property>
@@ -224,15 +224,15 @@ border:None;
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">#pushButton_2{
+     <string notr="true">#pushButton_option2{
     image: url(:/image1/resource/button.png);
     background-color:transparent;
     border:None;
     }
-    #pushButton_2:hover{
+    #pushButton_option2:hover{
         image: url(:/image1/resource/button2.png);
     }
-    #pushButton_2:pressed{
+    #pushButton_option2:pressed{
         image:url(:/image1/resource/button3.png);
     }</string>
     </property>
@@ -255,15 +255,15 @@ border:None;
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">#pushButton_3{
+     <string notr="true">#pushButton_option3{
     image: url(:/image1/resource/button.png);
     background-color:transparent;
     border:None;
     }
-    #pushButton_3:hover{
+    #pushButton_option3:hover{
         image: url(:/image1/resource/button2.png);
     }
-    #pushButton_3:pressed{
+    #pushButton_option3:pressed{
         image:url(:/image1/resource/button3.png);
     }</string>
     </property>

@@ -2,7 +2,7 @@ from PySide6.QtCore import Qt,QEvent,QTimer, QEasingCurve, QPropertyAnimation, Q
 from PySide6.QtGui import QMouseEvent,QFont
 from PySide6.QtWidgets import QApplication, QWidget, QMainWindow, QPushButton, QStackedLayout, QGraphicsOpacityEffect, QGraphicsBlurEffect, QFrame,QLabel, QVBoxLayout
 from UI_resource.Ui_cover import Ui_cover
-from UI_resource.Ui_Agent_choose import Ui_Agent_choose
+from UI_resource.Ui_agent_choose import Ui_Agent_choose
 from UI_resource.Ui_choose_model_1 import Ui_MainWindow as Ui_choose_model_1
 from UI_resource.Ui_allocateEnergy import Ui_allocateEnergy
 from Animation.yinru_start import MyWindow as GameLayout_initialAnimation
@@ -154,12 +154,9 @@ class MyWindow(QMainWindow):
         self.stacked_layout.addWidget(self.game_layout_allocateEnergy) # 3
         self.stacked_layout.addWidget(self.game_layout_initialAnimation) # 4
 
-          
         central_widget = QWidget()
         central_widget.setLayout(self.stacked_layout)
         self.setCentralWidget(central_widget)
-
-        
         
         self.bind()
         # 设置当前显示的布局为主菜单
@@ -171,10 +168,10 @@ class MyWindow(QMainWindow):
 
     def bind(self):
         self.game_layout_main_menu.pushButton.clicked.connect(self.game_start)
-        self.game_layout_main_menu.pushButton_4.clicked.connect(self.Agent_choose)
+        self.game_layout_main_menu.pushButton_4.clicked.connect(lambda: self.stacked_layout.setCurrentIndex(1))
         self.game_layout_main_menu.pushButton_5.clicked.connect(self.close)
-        self.game_layout_Agent.exit_button.clicked.connect(self.back)
-        self.game_layout_allocateEnergy.pushButton_exit.clicked.connect(self.back)
+        self.game_layout_Agent.exit_button.clicked.connect(lambda: self.stacked_layout.setCurrentIndex(0))
+        self.game_layout_allocateEnergy.pushButton_exit.clicked.connect(lambda: self.stacked_layout.setCurrentIndex(0))
         self.game_layout_allocateEnergy.pushButton_next.clicked.connect(self.nextWeek)
         self.game_layout_Agent.pushButton.clicked.connect(self.agent_girlfriend)
         self.game_layout_allocateEnergy.pushButton_yes.clicked.connect(lambda: self.game.event_true())
@@ -184,13 +181,6 @@ class MyWindow(QMainWindow):
         self.game_layout_choose_model_1.pushButton_option2.clicked.connect(lambda: self.agent_next(pos = 2))
         self.game_layout_choose_model_1.pushButton_option3.clicked.connect(lambda: self.agent_next(pos = 3))
 
-
-    def Agent_choose(self):
-        self.stacked_layout.setCurrentIndex(1)
-
-
-    def choose_model_1(self):
-        self.stacked_layout.setCurrentIndex(2)
 
     def game_start(self):
         self.stacked_layout.setCurrentIndex(4) # Animation
@@ -233,9 +223,6 @@ class MyWindow(QMainWindow):
         print("next week")
         self.game.nextWeek()
 
-
-    def back(self):
-        self.stacked_layout.setCurrentIndex(0)
 
     def agent_girlfriend(self):
         from Event.crush_atFirstBlush import event_crush_atFirstBlush

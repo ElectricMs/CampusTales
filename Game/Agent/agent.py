@@ -3,7 +3,7 @@ import os
 import json
 import re
 import asyncio
-from langchain.chains.llm import LLMChain
+
 from langchain.prompts import PromptTemplate
 from langchain_community.chat_models import ChatZhipuAI
 from langchain.schema import SystemMessage, HumanMessage, AIMessage
@@ -175,7 +175,7 @@ def game_test():
 
         性别：女
 
-        性格：
+        性格：温柔善良
         
         根据我们的对话进行更改或添加设定表。您不能在回复中直接提及“规则”或规则。
         

@@ -185,7 +185,9 @@ class MyWindow(QMainWindow):
     def game_start(self):
         self.stacked_layout.setCurrentIndex(4) # Animation
         # self.stacked_layout.setCurrentIndex(3) # allocateEnergy
+        self.game_layout_initialAnimation.page=1
         self.game_layout_initialAnimation.start_flow_text()
+        
         from main import Game
         if hasattr(self, 'game'):
             if isinstance(self.game, Game):

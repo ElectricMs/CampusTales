@@ -15,14 +15,15 @@ class CustomPlainTextEdit(QPlainTextEdit):
         self.read_only = False  # 初始化为非只读状态
 
     def keyPressEvent(self, event: QKeyEvent):
-        print("文本编辑框keyPressEvent被执行")
+        # print("文本编辑框keyPressEvent被执行")
         
         if event.key() == Qt.Key.Key_Enter or event.key() == Qt.Key.Key_Return:
             
-            print("Enter 键被按下，设置为只读")
+            #print("Enter 键被按下，设置为只读")
             self.setVisible(False)
             self.setReadOnly(True)
             self.read_only = True  # 记录当前状态
+            print("名字是"+self.toPlainText())
         else:
            
             super().keyPressEvent(event)
@@ -36,7 +37,7 @@ class MyWindow(QMainWindow):
         super().__init__()
         self.ui=Ui_Page1()
         self.ui.setupUi(self)
-        self.page=1
+        self.page=-1
         self.current_index = 0
         self.callback_setCurrentIndex_allocateEnergy = callback
         # 创建一个QSoundEffect实例来播放音效
@@ -50,7 +51,7 @@ class MyWindow(QMainWindow):
             self.label_list.append(label)
             self.text_list.append(label.text())
             label.setText("")
-        print(self.text_list)
+        # print(self.text_list)
         self.count=0
         self.plainTextEdit = CustomPlainTextEdit(self)
         self.plainTextEdit.setObjectName(u"plainTextEdit")
@@ -69,7 +70,7 @@ class MyWindow(QMainWindow):
         
           
     def keyPressEvent(self,event):
-        print("yinru页面的keyPressEvent被执行")
+        #print("yinru页面的keyPressEvent被执行")
         
         # 当按下键时，此方法被调用
         #self.setGeometry(300, 300, 300, 300)
@@ -83,10 +84,14 @@ class MyWindow(QMainWindow):
         if self.page==1:
             self.change1()
         if self.page==3 and key==Qt.Key.Key_S:
-            print("S键被按下")
+            # print("S键被按下")
             self.callback_setCurrentIndex_allocateEnergy()
+            self.page=-1
+            self.stop_sound()
         if self.page==4:
             self.callback_setCurrentIndex_allocateEnergy()
+            self.page=-1
+            self.stop_sound()
     
         
     def play_sound(self):
@@ -95,15 +100,53 @@ class MyWindow(QMainWindow):
         # 可以更新界面或其他操作
     def stop_sound(self):
         self.sound_effect.stop()
-    def start_flow_text(self):
-        self.play_sound()
-        if not hasattr(self, 'timer'):
 
+    def start_flow_text(self):
+        self.count=0
+        self.current_index=0
+        self.play_sound()
+        def update_text():
+            if self.current_index < len(self.text_list[self.count]):
+                self.label_list[self.count].setText(self.text_list[self.count][:self.current_index + 1])
+                self.current_index += 1
+            else:
+                self.count+=1
+                self.current_index=0
+            if self.count==len(self.text_list):
+                
+                self.stop_sound()
+                self.timer.stop()
+                if self.page==2:
+                    self.Page2_button()
+        if not hasattr(self, 'timer'):
             self.timer = QTimer(self)
+            self.timer.timeout.connect(update_text)
+            self.timer.start(100)
+        else:
+            self.timer.stop()
+            self.timer = QTimer(self)
+            self.timer.timeout.connect(update_text)
+            self.timer.start(100)
+    # def update_text(self):
+        
+        
+    #     if self.current_index < len(self.text_list[self.count]):
+    #         self.label_list[self.count].setText(self.text_list[self.count][:self.current_index + 1])
+    #         self.current_index += 1
+    #     else:
+    #         self.count+=1
+    #         self.current_index=0
             
-            self.timer.timeout.connect(self.update_text)
-        self.timer.setInterval(100)
-        self.timer.start()  # 每100毫秒更新一次
+
+    #     if self.count==len(self.text_list):
+    #         self.count=0
+    #         self.stop_sound()
+    #         self.timer.stop()
+    #         if self.page==2:
+    #             self.Page2_button()
+
+
+
     def name_page(self):
         self.page=5
         name_label = QLabel("请为您的角色起一个名字",self.ui.centralwidget)
@@ -134,7 +177,7 @@ class MyWindow(QMainWindow):
             self.label_list.append(label)
             self.text_list.append(label.text())
             label.setText("")
-        print(self.text_list)
+        #print(self.text_list)
         
         self.start_flow_text()
         
@@ -143,6 +186,7 @@ class MyWindow(QMainWindow):
    
 
     def change1(self):
+        self.stop_sound()
         self.label_list=[]
         self.text_list=[]
         #遍历所有子控件并删除它们
@@ -157,8 +201,9 @@ class MyWindow(QMainWindow):
         # self.ui.centralwidget.setStyleSheet("background-color: rgb(0, 0, 0);")
         # self.setWindowTitle("Page1")
         self.name_page()
-        print("change1结束")
+        # print("change1结束")
     def change_namepage(self):
+        self.stop_sound()
         self.label_list=[]
         self.text_list=[]
         #遍历所有子控件并删除它们
@@ -173,25 +218,8 @@ class MyWindow(QMainWindow):
         self.plainTextEdit.setVisible(False)
         
         self.Page2_label()
-        print("change_name结束")
-    def update_text(self):
-        
-        
-        if self.current_index < len(self.text_list[self.count]):
-            self.label_list[self.count].setText(self.text_list[self.count][:self.current_index + 1])
-            self.current_index += 1
-        else:
-            self.count+=1
-            self.current_index=0
-            print(self.count)
-
-        if self.count==len(self.text_list):
-            self.count=0
-            self.stop_sound()
-            self.timer.stop()
-            if self.page==2:
-                self.Page2_button()
-
+        # print("change_name结束")
+    
             
     def Page2_label(self):
         self.page=2
@@ -209,7 +237,7 @@ class MyWindow(QMainWindow):
             self.label_list.append(label)
             self.text_list.append(label.text())
             label.setText("")
-        print(self.text_list)
+        #print(self.text_list)
         label.show()
         self.start_flow_text()
     def Page2_button(self):
@@ -236,6 +264,7 @@ class MyWindow(QMainWindow):
         pushButton_2.clicked.connect(self.woman)
         pushButton_2.clicked.connect(self.change2)
     def change2(self):
+        self.stop_sound()
         self.label_list=[]
         self.text_list=[]
         #遍历所有子控件并删除它们
@@ -285,12 +314,13 @@ class MyWindow(QMainWindow):
             self.label_list.append(label)
             self.text_list.append(label.text())
             label.setText("")
-        print(self.text_list)
+        #print(self.text_list)
         
         self.start_flow_text()
         start_button.show()
         
     def change3(self):
+        self.stop_sound()
         self.label_list=[]
         self.text_list=[]
         #遍历所有子控件并删除它们
@@ -367,7 +397,7 @@ class MyWindow(QMainWindow):
             self.label_list.append(label)
             self.text_list.append(label.text())
             label.setText("")
-        print(self.text_list)
+        #print(self.text_list)
         
         self.start_flow_text()
         label_1.show()

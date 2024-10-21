@@ -24,7 +24,7 @@ class Ui_cover(object):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(1280, 720)
-        MainWindow.setStyleSheet(u"#centralwidget{border-image: url(:/image/resource/cover.png);}")
+        
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.pushButton = QPushButton(self.centralwidget)

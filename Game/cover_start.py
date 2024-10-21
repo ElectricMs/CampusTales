@@ -1,20 +1,28 @@
 from PySide6.QtCore import Qt,QEvent,QTimer, QEasingCurve, QPropertyAnimation, QVariantAnimation,QRect,QCoreApplication
 from PySide6.QtGui import QMouseEvent,QFont
 from PySide6.QtWidgets import QApplication, QWidget, QMainWindow, QPushButton, QStackedLayout, QGraphicsOpacityEffect, QGraphicsBlurEffect, QFrame,QLabel, QVBoxLayout
-from UI_resource.Ui_cover import Ui_cover
+# from UI_resource.Ui_cover import Ui_cover
 from UI_resource.Ui_Agent_choose import Ui_Agent_choose
 from UI_resource.Ui_choose_model_1 import Ui_MainWindow as Ui_choose_model_1
 from UI_resource.Ui_allocateEnergy import Ui_allocateEnergy
 from Animation.yinru_start import MyWindow as GameLayout_initialAnimation
-
-
+from UI_resource.new_cover import MyWindow as GameLayout_MainMenu
 
 # Agent对话事件界面
 class GameLayout_choose_model_1(QMainWindow, Ui_choose_model_1):
+    
+
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        #目前的三张人物图片，都存放在resource1_rc中
+        self.img_path_list=["url(:/people/resource/boy_normal_-removebg-preview.png)","url(:/people/resource/girl_shy-removebg-preview (2).png)","url(:/people/resource/girl_smile-removebg-preview.png)"]
+        self.change_background_img_left(self.img_path_list[1])
 
+        test_button=QPushButton("换图",self)
+        test_button.clicked.connect(lambda:self.change_background_img_left(self.img_path_list[0]))
+        test_button.show()
+        
         #给这两个label设置透明度
         self.opacity_effect_6 = QGraphicsOpacityEffect()
         self.opacity_effect_8 = QGraphicsOpacityEffect()
@@ -23,7 +31,10 @@ class GameLayout_choose_model_1(QMainWindow, Ui_choose_model_1):
         self.label_8.setGraphicsEffect(self.opacity_effect_8)
         self.opacity_effect_8.setOpacity(0)
         self.opacity_effect_6.setOpacity(1)
-        
+    #更换self.label_img_left背景图片的函数
+    def change_background_img_left(self,img_path):
+        self.label_img_left.setStyleSheet(f'border-image: {img_path};')
+    
         
     def set_stream_text(self, text):
         if not isinstance(text, str):
@@ -60,6 +71,15 @@ class GameLayout_allocateEnergy(QMainWindow, Ui_allocateEnergy):
         #self.frame_selectArea.setLayout(self.frame_selectArea_layout)
         self.frame_selectArea.setGeometry(QRect(0,120,500,500))
         #self.frame_selectArea.setStyleSheet(u"background-color: black;\n")
+
+
+        #目前的三张人物图片，都存放在resource1_rc中
+        self.img_path_list=["url(:/people/resource/boy_normal_-removebg-preview.png)","url(:/people/resource/girl_shy-removebg-preview (2).png)","url(:/people/resource/girl_smile-removebg-preview.png)"]
+        ###此处是用来更换主人公头像的,性别选女用女生图，性别男用男生图
+        self.change_graphicsView(self.img_path_list[1])
+
+    def change_graphicsView(self,img_path):
+        self.graphicsView.setStyleSheet(f'border-image: {img_path};'"background-color:grey;")
     def add_diary_widget(self):
         #每周展示diary的widget，包含许多组件
         self.widget_diary = QWidget(self)
@@ -127,10 +147,10 @@ class GameLayout_Agent(QMainWindow, Ui_Agent_choose):
      
     
 
-class GameLayout_MainMenu(QMainWindow, Ui_cover):
-    def __init__(self):
-        super().__init__()
-        self.setupUi(self)
+# class GameLayout_MainMenu(QMainWindow, Ui_cover):
+#     def __init__(self):
+#         super().__init__()
+#         self.setupUi(self)
 
 
 
@@ -185,7 +205,9 @@ class MyWindow(QMainWindow):
     def game_start(self):
         self.stacked_layout.setCurrentIndex(4) # Animation
         # self.stacked_layout.setCurrentIndex(3) # allocateEnergy
+        self.game_layout_initialAnimation.page=1
         self.game_layout_initialAnimation.start_flow_text()
+        
         from main import Game
         if hasattr(self, 'game'):
             if isinstance(self.game, Game):

@@ -20,9 +20,9 @@ else:
 
 # 透明度参数取值范围
 alphas = np.linspace(0, 1, 50)
+total_image=[]
+# 暂停5秒?
 
-# 暂停5秒
-plt.pause(5)
 
 for im1, im2 in zip(images[:-1], images[1:]):
     # 暂停1秒后切换图片
@@ -31,6 +31,10 @@ for im1, im2 in zip(images[:-1], images[1:]):
         # 渐变，过渡到下一张图片
         # 合成图像，计算过程为: im1 * (1 - alpha) + im2 * alpha
         image.set_data(np.array(Image.blend(im1, im2, alpha)))
+        
+       
+        total_image.append(image)
+        print(len(total_image))
         plt.pause(0.1)
-
+    
 plt.show()

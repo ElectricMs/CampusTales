@@ -2,7 +2,7 @@ from PySide6.QtCore import Qt,QEvent,QTimer, QEasingCurve, QPropertyAnimation, Q
 from PySide6.QtGui import QMouseEvent,QFont
 from PySide6.QtWidgets import QApplication, QWidget, QMainWindow, QPushButton, QStackedLayout, QGraphicsOpacityEffect, QGraphicsBlurEffect, QFrame,QLabel, QVBoxLayout
 # from UI_resource.Ui_cover import Ui_cover
-from UI_resource.Ui_Agent_choose import Ui_Agent_choose
+from UI_resource.Ui_agent_choose import Ui_Agent_choose
 from UI_resource.Ui_choose_model_1 import Ui_MainWindow as Ui_choose_model_1
 from UI_resource.Ui_allocateEnergy import Ui_allocateEnergy
 from Animation.yinru_start import MyWindow as GameLayout_initialAnimation

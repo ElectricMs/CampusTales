@@ -15,7 +15,7 @@ class DynamicBackgroundLabel(QLabel):
         
         # 设置初始大小
         self.setFixedSize(1280, 720)
-        self.time_reversal=False
+        
         # 图片列表
         self.img_pixmap= total_img_pixmap
         self.current_image_index = 0
@@ -34,20 +34,13 @@ class DynamicBackgroundLabel(QLabel):
     def update_background_image(self):
         # 设置背景图片
         self.setPixmap(self.img_pixmap[self.current_image_index])
-        
-        
-        
-        if self.time_reversal==False:
-            self.current_image_index+=1
-        else:
-            self.current_image_index-=1
 
         # 时间循环
-        if self.current_image_index>=299:
-            self.time_reversal=True
+        if self.current_image_index>=399:
+            self.current_image_index=0
             
-        elif self.current_image_index<=0:
-            self.time_reversal=False
+        else:
+            self.current_image_index+=1
 
 class MyWindow(QMainWindow):
     def __init__(self):
@@ -70,9 +63,11 @@ class MyWindow(QMainWindow):
                 image=Image.blend(im1, im2, alpha)
                 pixmap = ImageQt.toqpixmap(image)
                 total_image.append(pixmap)
-
+        for alpha in self.alphas:
+            image=Image.blend(self.images[3],self.images[0],alpha)
+            pixmap = ImageQt.toqpixmap(image)
+            total_image.append(pixmap)
         # 创建主窗口
-       
         label = DynamicBackgroundLabel(total_image)
        
         label.setParent(central_widget)
@@ -82,13 +77,15 @@ class MyWindow(QMainWindow):
         self.pushButton.setObjectName(u"pushButton")
         self.pushButton.setGeometry(QRect(0, 180, 480, 45))
         font = QFont()
-        font.setPointSize(11)
+        font.setFamilies([u"\u7ad9\u9177\u5c0f\u8587LOGO\u4f53"])
+        font.setPointSize(18)
         font.setBold(True)
         self.pushButton.setFont(font)
         self.pushButton.setStyleSheet(u"\n"
 "#pushButton{\n"
 "background-color:transparent;\n"
 "border:None;\n"
+"color:white;\n"
 "text-align:left;\n"
 "}\n"
 "#pushButton:hover{\n"
@@ -104,6 +101,7 @@ class MyWindow(QMainWindow):
 "#pushButton_2{\n"
 "background-color:transparent;\n"
 "border:None;\n"
+"color:white;\n"
 "text-align:left;\n"
 "}\n"
 "#pushButton_2:hover{\n"
@@ -119,6 +117,7 @@ class MyWindow(QMainWindow):
 "#pushButton_3{\n"
 "background-color:transparent;\n"
 "border:None;\n"
+"color:white;\n"
 "text-align:left;\n"
 "}\n"
 "#pushButton_3:hover{\n"
@@ -134,6 +133,7 @@ class MyWindow(QMainWindow):
 "background-color:transparent;\n"
 "border:None;\n"
 "text-align:left;\n"
+"color:white;\n"
 "}\n"
 "#pushButton_4:hover{\n"
 "border-image: url(:/image/resource/new_button.png);\n"
@@ -149,18 +149,23 @@ class MyWindow(QMainWindow):
 "background-color:transparent;\n"
 "border:None;\n"
 "text-align:left;\n"
+"color:white;\n"
 "}\n"
 "#pushButton_5:hover{\n"
 "border-image: url(:/image/resource/new_button.png);\n"
 "color:white;\n"
 "text-align:left;\n"
 "}")
-
-        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"                                    \u5f00\u59cb\u6e38\u620f                  START GAME", None))
-        self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"                                    \u8bfb\u53d6\u5b58\u6863                  LOAD GAME", None))
-        self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"                                    \u6e38\u620f\u8bbe\u7f6e                  CONFIGS", None))
-        self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"                                    \u89d2\u8272\u4ea4\u6d41                  ACTOR INTERACT", None))
-        self.pushButton_5.setText(QCoreApplication.translate("MainWindow", u"                                    \u9000\u51fa\u6e38\u620f                  EXIT", None))
+        # self.pushButton.setText(QCoreApplication.translate("MainWindow", u"                             \u5f00\u59cb\u6e38\u620f                  ", None))
+        # self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"                             \u8bfb\u53d6\u5b58\u6863                  ", None))
+        # self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"                             \u6e38\u620f\u8bbe\u7f6e                  ", None))
+        # self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"                             \u89d2\u8272\u4ea4\u6d41                  ", None))
+        # self.pushButton_5.setText(QCoreApplication.translate("MainWindow", u"                             \u9000\u51fa\u6e38\u620f                  ", None))
+        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"                       \u5f00\u59cb\u6e38\u620f           START", None))
+        self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"                       \u8bfb\u53d6\u5b58\u6863           REVIEW", None))
+        self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"                       \u6e38\u620f\u8bbe\u7f6e          CONFIGS", None))
+        self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"                       \u89d2\u8272\u4ea4\u6d41          INTERACT", None))
+        self.pushButton_5.setText(QCoreApplication.translate("MainWindow", u"                       \u9000\u51fa\u6e38\u620f              EXIT", None))
 
 
         self.setCentralWidget(central_widget)

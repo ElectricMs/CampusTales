@@ -7,7 +7,7 @@ import random
 conn = sqlite3.connect('./activity/university_life.db')
 cursor = conn.cursor()
 
-def get_random_activity(category, energy_level):
+def get_random_activity(category, energy_level)->str:
     # 执行查询
     cursor.execute(
         "SELECT description FROM activities WHERE category = ? AND energy_level = ?",
@@ -30,5 +30,5 @@ print("随机抽取的数据：", activity)
 cursor.close()
 conn.close()
 
-# 休息放松  认真学习  体育运动  打游戏娱乐  广泛交友  学习技能  
-# 兼职赚钱  社团活动  组织活动  参与竞赛  参与科研  谈情说爱（女生版）  谈情说爱（男生版）
+# 休息放松  认真学习  体育运动  打游戏娱乐  广泛交友    
+# 学习技能  兼职赚钱  社团活动  组织活动  参与竞赛  参与科研  谈情说爱（女生版）  谈情说爱（男生版）

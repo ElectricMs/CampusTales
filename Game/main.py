@@ -4,15 +4,23 @@ from cover_start import MyWindow
 from PySide6.QtWidgets import QPushButton,QLabel
 from PySide6.QtCore import QRect,Qt,Signal
 from PySide6.QtGui import QFont
+from activity.randoan_read_io import get_random_activity
+
+
+
 class ClickableLabel(QLabel):
     clicked = Signal()  # 定义一个点击信号
     def __init__(self, text="", parent=None):
         super().__init__(text, parent)
         self.setMouseTracking(True)  # 启用鼠标跟踪
+
     def mousePressEvent(self, event):
         if event.button() == Qt.MouseButton.LeftButton:
             self.clicked.emit()  # 发送点击信号
         super().mousePressEvent(event)
+
+
+
 class Game:
     def __init__(self,Ui:MyWindow):
         from Event.event import event
@@ -189,12 +197,58 @@ class Game:
     def nextWeek(self):
         self.week+=1
         # 首先保存分配结果，清空精力分配
-        self.allocateResults.append(self.mainlineEvents)
+        week_result = self.mainlineEvents.copy()
+        week_result.append(["休息",self.energy])
+        self.allocateResults.append(week_result)
+        # 重新更新精力
         self.energy=10
         for mission in self.mainlineEvents:
             mission[1]=0
         self.refreshMissionList()
+
+        def returnDiaryText() -> str:
+            # 一个基于近3周的事件结果生成日记的算法
+            # [["学习",0], ["锻炼",0], ["社交",0],["娱乐",0]]
+            allocate_count={}
+            for i in range(max(0,len(self.allocateResults)-3),self.week):
+                for event in self.allocateResults[i]:
+                    if event[1]>0:
+                        allocate_count[event[0]]=allocate_count.get(event[0],0)+1
+            compensate=3 if len(self.allocateResults)>=3 else 3-len(self.allocateResults)
+
+            def escape_get_random_activity(category, energy_level)->str:
+                if energy_level==0:
+                    return get_random_activity(category, "0~20")
+                elif energy_level==1:
+                    return get_random_activity(category, "20~40")
+                elif energy_level==2:
+                    return get_random_activity(category, "40~60")
+                elif energy_level==3:
+                    return get_random_activity(category, "60~80")
+                elif energy_level>=4:
+                    return get_random_activity(category, "80~100")
+                else:
+                    return f"Error: {category} {energy_level}"
+
+            text=""
+            for key, value in allocate_count.items():
+                if key == "学习":
+                    text += escape_get_random_activity("认真学习", value+compensate) + "\n"
+                elif key == "锻炼":
+                    text += escape_get_random_activity("体育运动", value+compensate) + "\n"
+                elif key == "社交":
+                    text += escape_get_random_activity("广泛交友", value+compensate) + "\n"
+                elif key == "娱乐":
+                    text += escape_get_random_activity("打游戏娱乐", value+compensate) + "\n"
+                elif key == "休息":
+                    text += escape_get_random_activity("休息放松", value+compensate) + "\n"
+                elif key == "陪npy":
+                    # 这种事件调用事件的判断函数
+                    pass
+            return text
         
+
+
         # 模糊效果，出现日记本
         # 日记本中点击next按钮出现事件modal和能量分配按钮
         self.Ui.game_layout_allocateEnergy.blur()
@@ -210,6 +264,7 @@ class Game:
 
         randomEvent = self.randomEvents.get_random_event()
         diary_text = ui.label_diary_content.text() + "\n" + randomEvent.description
+        diary_text += "\n" + returnDiaryText()
         ui.label_diary_content.setText(diary_text)
 
 

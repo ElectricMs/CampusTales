@@ -2,12 +2,12 @@ from PySide6.QtCore import Qt,QEvent,QTimer, QEasingCurve, QPropertyAnimation, Q
 from PySide6.QtGui import QMouseEvent,QFont
 from PySide6.QtWidgets import QApplication, QWidget, QMainWindow, QPushButton, QStackedLayout, QGraphicsOpacityEffect, QGraphicsBlurEffect, QFrame,QLabel, QVBoxLayout
 # from UI_resource.Ui_cover import Ui_cover
-from UI_resource.Ui_agent_choose import Ui_Agent_choose
+from UI_resource.Ui_Agent_choose import Ui_Agent_choose
 from UI_resource.Ui_choose_model_1 import Ui_MainWindow as Ui_choose_model_1
 from UI_resource.Ui_allocateEnergy import Ui_allocateEnergy
 from Animation.yinru_start import MyWindow as GameLayout_initialAnimation
 from UI_resource.new_cover import MyWindow as GameLayout_MainMenu
-
+from Animation.write_widget import TypewriterEffectWidget as new_widget
 # Agent对话事件界面
 class GameLayout_choose_model_1(QMainWindow, Ui_choose_model_1):
     
@@ -69,12 +69,8 @@ class GameLayout_allocateEnergy(QMainWindow, Ui_allocateEnergy):
         self.setupUi(self)
         self.frame_modal.setVisible(False)
         self.add_diary_widget()
-        #self.frame_selectArea_layout = QVBoxLayout()
-        #self.frame_selectArea.setLayout(self.frame_selectArea_layout)
+        
         self.frame_selectArea.setGeometry(QRect(0,120,500,500))
-        #self.frame_selectArea.setStyleSheet(u"background-color: black;\n")
-
-
         #目前的三张人物图片，都存放在resource1_rc中
         self.img_path_list=["url(:/people/resource/boy_normal_-removebg-preview.png)","url(:/people/resource/girl_shy-removebg-preview (2).png)","url(:/people/resource/girl_smile-removebg-preview.png)"]
         ###此处是用来更换主人公头像的,性别选女用女生图，性别男用男生图
@@ -84,31 +80,10 @@ class GameLayout_allocateEnergy(QMainWindow, Ui_allocateEnergy):
         self.graphicsView.setStyleSheet(f'border-image: {img_path};'"background-color:grey;")
     def add_diary_widget(self):
         #每周展示diary的widget，包含许多组件
-        self.widget_diary = QWidget(self)
+        self.widget_diary = new_widget(self)
         self.widget_diary.setVisible(False)
         self.widget_diary.setGeometry(0, 0, 1280, 720)
-        # 背景图片
-        self.label_diary_img = QLabel(self.widget_diary)
-        self.label_diary_img.setObjectName(u"label_diary_img")
-        self.label_diary_img.setGeometry(QRect(270, 30, 621, 661))
-        self.label_diary_img.setStyleSheet(u"#label_diary_img{border-image: url(:/image/resource/Strength_assign/paper2_yellow_l.png);}")
-        # 内容
-        self.label_diary_content = QLabel(self.widget_diary)
-        self.label_diary_content.setObjectName(u"label_diary_content")
-        self.label_diary_content.setGeometry(QRect(290, 50, 581, 561))
-        # 字体 后面要重命名
-        font_diaryWidget = QFont()
-        font_diaryWidget.setFamilies([u"\u5343\u56fe\u7b14\u950b\u624b\u5199\u4f53"])
-        font_diaryWidget.setPointSize(20)
-        font_diaryWidget.setBold(True)
-        self.label_diary_content.setFont(font_diaryWidget)
-        self.label_diary_content.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignTop)
-        # self.widget_diary.label_content.setText(QCoreApplication.translate("strength_assignment", u"\u661f\u671f\u4e00      5\u670828\u65e5     \u6674", None))
-        self.label_diary_content.setWordWrap(True)
-        self.label_diary_content.setText("Test")
-
-        
-        #每周执行任务的内容widget,模糊背景
+       #每周执行任务的内容widget,模糊背景
         self.pushButton_diary_next = QPushButton(self.widget_diary)
         self.pushButton_diary_next.setObjectName(u"pushButton_diary_next")
         self.pushButton_diary_next.setGeometry(QRect(700, 620, 171, 41))
@@ -133,7 +108,16 @@ class GameLayout_allocateEnergy(QMainWindow, Ui_allocateEnergy):
         self.blur_effect.setBlurHints(QGraphicsBlurEffect.BlurHint.PerformanceHint)
         self.centralwidget.setGraphicsEffect(self.blur_effect)
         self.widget_diary.setVisible(True) # diary widget显示
+        #在此处向label_diary_content传入文字，并start_animate()
+        text="""你好你好今年春节你此刻才能看见从
+哈哈哈哈哈哈哈哈哈
 
+能促进大脑产出尽可能靠近超牛卡承诺捐款
+那就按擦几次卡机才能看查看残存看水水水水水水水水水水水水水水水水水
+哈哈哈哈哈哈哈哈哈"""
+        
+        # self.widget_diary.label_diary_content.setTextToDraw(text)
+        self.widget_diary.label_diary_content.start_animate()
 
     # 展示完最后一张日记后diary页面消失，显示能量分配界面
     def blur_recover(self):

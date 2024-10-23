@@ -298,7 +298,8 @@ class Game:
         diary_text += "\n" + randomEvent.description
         # print("diary text2:",diary_text)
         diary_text += "\n" + returnDiaryText()
-        ui.label_diary_content.setText(diary_text)
+        ui.widget_diary.label_diary_content.setTextToDraw(diary_text)
+        # ui.label_diary_content.setText(diary_text)
         # test
         for k,v in self.displaySetting.items():
             print(k,":",v,end=" ")
@@ -317,13 +318,7 @@ class Game:
             item.setParent(None)
             item.deleteLater()
             item = None
-        # 左侧罗列所有事件并供选择
-        # 删除 QFrame 布局中的所有子部件
-        # while self.Ui.game_layout_allocateEnergy.frame_selectArea_layout.count():
-        #     item = self.Ui.game_layout_allocateEnergy.frame_selectArea_layout.takeAt(0)
-        #     widget = item.widget()
-        #     if widget:
-        #         widget.deleteLater()
+        
                 
         #初始y的偏移量
         y_offset = 0
@@ -333,21 +328,8 @@ class Game:
             # 还没加
             
             tmp_str=str(num)+"、"+mission[0]
-#             button = QPushButton(tmp_str,self.Ui.game_layout_allocateEnergy)
-#             font1 = QFont()
-#             font1.setFamilies([u"\u5343\u56fe\u7b14\u950b\u624b\u5199\u4f53"])
-#             font1.setPointSize(17)
-#             font1.setBold(True)
-#             button.setGeometry(QRect(330, 120, 100, 31))
-#             button.setFont(font1)
-#             button.setStyleSheet(u"background-color: transparent;\n"
-# "border:None;\n"
-# "")
-#             button.move(310,y_offset)
-#             y_offset+=28
+
             
-#             button.show()
-            #上方是按钮的解决方法，但是存在缺点，所以改用ClickableLabel，不过不知道这个ClickableLabel好不好用
             label=ClickableLabel(tmp_str,self.Ui.game_layout_allocateEnergy.frame_selectArea)
             font1 = QFont()
             font1.setFamilies([u"\u5343\u56fe\u7b14\u950b\u624b\u5199\u4f53"])

@@ -31,6 +31,8 @@ class GameLayout_choose_model_1(QMainWindow, Ui_choose_model_1):
         self.label_8.setGraphicsEffect(self.opacity_effect_8)
         self.opacity_effect_8.setOpacity(0)
         self.opacity_effect_6.setOpacity(1)
+
+        
     #更换self.label_img_left背景图片的函数
     def change_background_img_left(self,img_path):
         self.label_img_left.setStyleSheet(f'border-image: {img_path};')
@@ -177,6 +179,9 @@ class MyWindow(QMainWindow):
         central_widget = QWidget()
         central_widget.setLayout(self.stacked_layout)
         self.setCentralWidget(central_widget)
+
+        self.first_start_game=True
+        self.game: Game
         
         self.bind()
         # 设置当前显示的布局为主菜单
@@ -203,19 +208,12 @@ class MyWindow(QMainWindow):
 
 
     def game_start(self):
-        self.stacked_layout.setCurrentIndex(4) # Animation
-        # self.stacked_layout.setCurrentIndex(3) # allocateEnergy
-        self.game_layout_initialAnimation.page=1
-        self.game_layout_initialAnimation.start_flow_text()
-        
-        from main import Game
-        if hasattr(self, 'game'):
-            if isinstance(self.game, Game):
-                pass
+        if self.first_start_game:
+            self.game.start()
+            self.game_layout_main_menu.pushButton.setText("继续")
+            self.first_start_game=False
         else:
-            self.game = Game(self)
-        self.game.start()
-
+            self.game.reload()
         
         def bind_afterGame():
             self.game_layout_allocateEnergy.pushButton_nextPage.clicked.connect(lambda: self.game.pageTuning(1))
@@ -248,21 +246,37 @@ class MyWindow(QMainWindow):
 
     def agent_girlfriend(self):
         from Event.crush_atFirstBlush import event_crush_atFirstBlush
-         # 这里的处理不太好，只是为了调试方便
-        from main import Game
-        if hasattr(self, 'game'):
-            if isinstance(self.game, Game):
-                self.event_crush_atFirstBlush = event_crush_atFirstBlush(self.game)
+        # 这里的处理不太好，只是为了调试方便
+        # from main import Game
+        # if hasattr(self, 'game'):
+        #     if isinstance(self.game, Game):
+        #         self.event_crush_atFirstBlush = event_crush_atFirstBlush(self.game)
+        # else:
+        #     self.game = Game(self)
+        #     self.event_crush_atFirstBlush = event_crush_atFirstBlush(Game(self), agent_mode=True)
+        #     self.game.currentEvent = self.event_crush_atFirstBlush
+        # self.event_crush_atFirstBlush.event_start()
+
+        if 'crush_atFirstBlush' in self.game.allEvents:
+            event_crush_atFirstBlush=self.game.allEvents['crush_atFirstBlush']
+            event_crush_atFirstBlush.event_start(agent_mode=True)
         else:
-            self.game = Game(self)
-            self.event_crush_atFirstBlush = event_crush_atFirstBlush(Game(self), agent_mode=True)
-            self.game.currentEvent = self.event_crush_atFirstBlush
-        self.event_crush_atFirstBlush.event_start()
+            print("event_crush_atFirstBlush not found")
         
    
 
 if __name__=="__main__":
     app=QApplication([])
     window=MyWindow()
+    from main import Game
+    if hasattr(window, 'game'):
+        if isinstance(window.game, Game):
+            pass
+        else:
+            window.game = Game(window)
+            print(window.game)      
+    else:
+        window.game = Game(window)     
+        print(window.game)
     window.show()
     app.exec()

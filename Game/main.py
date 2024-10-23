@@ -26,11 +26,15 @@ class Game:
         # 存放游戏重载时间
         self.reloadTime=time.time()
 
+        # 存放游戏进度
+        self.progress={"layout":-1}
+
         # 存放所有事件，包括目前的可选事件和不可选事件，格式为 {事件名:事件实例}
         self.allEvents=event.get_all_subEvents(self)
 
         # 当前正在进行的事件
         self.currentEvent:event
+        
         # 存放所有可选事件的概率，格式为 {事件名:概率}
         self.eventProbablity={}
         
@@ -41,7 +45,7 @@ class Game:
         self.loadEventProbability()
         
         # 存放已加入主线的事件，格式为 [事件名（字符串）]
-        self.mainlineEvents=[["学习",0], ["锻炼",0], ["社交",0],["娱乐",0],["Test1",0],["Test2",0],["Test3",0],["Test4",0],["Test5",0],["Test6",0]]
+        self.mainlineEvents=[["学习",0], ["锻炼",0], ["社交",0],["娱乐",0]]
         
         # 存放每周精力，结束后重新设置为10
         self.energy=10
@@ -69,9 +73,14 @@ class Game:
 
     # 开始游戏
     def start(self):
-        # 添加黑屏过场动画
+        # 黑屏过场动画
+        self.Ui.stacked_layout.setCurrentIndex(4) # Animation
+        # self.Ui.stacked_layout.setCurrentIndex(3) # allocateEnergy
+        self.Ui.game_layout_initialAnimation.page=1
+        self.Ui.game_layout_initialAnimation.start_flow_text()
         # ============================
         self.loadEvent()
+        self.progress["layout"]=3
         self.Ui.game_layout_allocateEnergy.label_content.setText(self.currentEvent.if_join()[0] + "," + self.currentEvent.if_join()[1]) 
         self.Ui.game_layout_allocateEnergy.frame_modal.setVisible(True)
         
@@ -96,11 +105,16 @@ class Game:
     # 重新加载游戏
     def reload(self):
         self.reloadTime=time.time()
+        if self.progress["layout"]!=-1:
+            self.Ui.stacked_layout.setCurrentIndex(self.progress["layout"])
+        else:
+            print("self.progress['layout']=-1, cannot reload game")
 
 
     # 选择True的事件
     def event_true(self):
         self.Ui.game_layout_allocateEnergy.frame_modal.setVisible(False)
+        self.progress["layout"]=2
         self.currentEvent.event_start()
 
         def enablePushButton():
@@ -173,7 +187,7 @@ class Game:
 
     # 点击下一周时触发
     def nextWeek(self):
-        self.week+=3
+        self.week+=1
         # 首先保存分配结果，清空精力分配
         self.allocateResults.append(self.mainlineEvents)
         self.energy=10
@@ -182,22 +196,21 @@ class Game:
         self.refreshMissionList()
         
         # 模糊效果，出现日记本
-        # 日记本中点击next按钮显示下一页（暂缓），直到点击next出现事件modal和能量分配按钮
-        # 记录能量分配情况（待完善）
+        # 日记本中点击next按钮出现事件modal和能量分配按钮
         self.Ui.game_layout_allocateEnergy.blur()
         
-        
         ui = self.Ui.game_layout_allocateEnergy
+        diary_text = ""
         if self.week == 1:
-            ui.label_diary_content.setText(dialogue.get_random_welcoming())
+            diary_text += dialogue.get_random_welcoming()
         elif self.week >= 16:
-            ui.label_diary_content.setText(dialogue.get_random_talk_terminal())
+            diary_text += dialogue.get_random_talk_terminal()
         else:
-            ui.label_diary_content.setText(dialogue.get_random_talk())
+            diary_text += dialogue.get_random_talk()
 
         randomEvent = self.randomEvents.get_random_event()
-        text = ui.label_diary_content.text() + "\n" + randomEvent.description
-        ui.label_diary_content.setText(text)
+        diary_text = ui.label_diary_content.text() + "\n" + randomEvent.description
+        ui.label_diary_content.setText(diary_text)
 
 
     # 分配能量

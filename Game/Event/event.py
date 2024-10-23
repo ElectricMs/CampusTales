@@ -7,13 +7,13 @@ from main import Game
 
 
 class event(ABC):
-    def __init__(self, name:str, description:str, Game:Game, time=time.time(), agent_mode=False):
+    def __init__(self, name:str, description:str, Game:Game, time=time.time()):
         self.name=name
         self.time=time
         self.description=description 
         self.game=Game
-        self.agent_mode=agent_mode
         self.input_mode=False
+        self.agent_mode=False
 
         # self.ui=None
         # self.setting=None
@@ -23,7 +23,7 @@ class event(ABC):
     @classmethod
     def get_all_subEvents(cls, Game):
 
-        from .studentsUnion import event_studentsUnion
+        # from .studentsUnion import event_studentsUnion
         from .crush_atFirstBlush import event_crush_atFirstBlush
         subEvents={}
 

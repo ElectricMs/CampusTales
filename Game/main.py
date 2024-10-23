@@ -1,10 +1,11 @@
 import random
 import time
+import copy
 from cover_start import MyWindow
 from PySide6.QtWidgets import QPushButton,QLabel
 from PySide6.QtCore import QRect,Qt,Signal
 from PySide6.QtGui import QFont
-from activity.randoan_read_io import get_random_activity
+from activity.randoan_read_io import db_connection
 
 
 
@@ -62,7 +63,7 @@ class Game:
         self.week = 0
 
         # 存放显示属性
-        self.displaySetting={"gender":0, "study":60, "health": 60, "mood":60 , "social":60, "ability":60, "money":0}
+        self.displaySetting={"gender":0, "study":10, "health": 60, "mood":60 , "social":40, "ability":60, "money":12000, "club":0, "organization":0, "lecture":0, "beloved":0}
 
         # 初始化内嵌函数
         self.allocateEnergy()
@@ -197,15 +198,23 @@ class Game:
     def nextWeek(self):
         self.week+=1
         # 首先保存分配结果，清空精力分配
-        week_result = self.mainlineEvents.copy()
+        week_result = copy.deepcopy(self.mainlineEvents)
         week_result.append(["休息",self.energy])
         self.allocateResults.append(week_result)
+        # test
+        for result in week_result:
+            print(result[0],":",result[1],end=" ")
+        print()
+
+
         # 重新更新精力
         self.energy=10
         for mission in self.mainlineEvents:
             mission[1]=0
         self.refreshMissionList()
 
+
+        # 返回diary文字
         def returnDiaryText() -> str:
             # 一个基于近3周的事件结果生成日记的算法
             # [["学习",0], ["锻炼",0], ["社交",0],["娱乐",0]]
@@ -213,20 +222,21 @@ class Game:
             for i in range(max(0,len(self.allocateResults)-3),self.week):
                 for event in self.allocateResults[i]:
                     if event[1]>0:
-                        allocate_count[event[0]]=allocate_count.get(event[0],0)+1
+                        allocate_count[event[0]]=allocate_count.get(event[0],0)+event[1]
             compensate=3 if len(self.allocateResults)>=3 else 3-len(self.allocateResults)
+        
 
             def escape_get_random_activity(category, energy_level)->str:
                 if energy_level==0:
-                    return get_random_activity(category, "0~20")
+                    return db_connection.get_random_activity(category, "0~20")
                 elif energy_level==1:
-                    return get_random_activity(category, "20~40")
+                    return db_connection.get_random_activity(category, "20~40")
                 elif energy_level==2:
-                    return get_random_activity(category, "40~60")
+                    return db_connection.get_random_activity(category, "40~60")
                 elif energy_level==3:
-                    return get_random_activity(category, "60~80")
+                    return db_connection.get_random_activity(category, "60~80")
                 elif energy_level>=4:
-                    return get_random_activity(category, "80~100")
+                    return db_connection.get_random_activity(category, "80~100")
                 else:
                     return f"Error: {category} {energy_level}"
 
@@ -248,6 +258,28 @@ class Game:
             return text
         
 
+        # 调整属性
+        def adjustSetting(week_result: list[list]) -> None:
+            for result in week_result:
+                if result[0] == "学习":
+                    self.displaySetting["study"]+=result[1]*0.5
+                    self.displaySetting["mood"]-=result[1]*0.25
+                    self.displaySetting["health"]-=result[1]*0.25
+                elif result[0] == "锻炼":
+                    self.displaySetting["health"]+=result[1]*1.25
+                    self.displaySetting["mood"]+=result[1]*0.75
+                elif result[0] == "社交":
+                    self.displaySetting["social"]+=result[1]*1
+                    self.displaySetting["money"]-=result[1]*100
+                elif result[0] == "娱乐":
+                    self.displaySetting["mood"]+=result[1]*0.75
+                    self.displaySetting["health"]-=result[1]*0.25
+                    self.displaySetting["money"]-=result[1]*100
+                elif result[0] == "休息":
+                    self.displaySetting["health"]+=result[1]*0.5
+                    self.displaySetting["mood"]+=result[1]*0.75
+
+        adjustSetting(week_result)
 
         # 模糊效果，出现日记本
         # 日记本中点击next按钮出现事件modal和能量分配按钮
@@ -261,11 +293,16 @@ class Game:
             diary_text += dialogue.get_random_talk_terminal()
         else:
             diary_text += dialogue.get_random_talk()
-
+        # print("diary text1:",diary_text)
         randomEvent = self.randomEvents.get_random_event()
-        diary_text = ui.label_diary_content.text() + "\n" + randomEvent.description
+        diary_text += "\n" + randomEvent.description
+        # print("diary text2:",diary_text)
         diary_text += "\n" + returnDiaryText()
         ui.label_diary_content.setText(diary_text)
+        # test
+        for k,v in self.displaySetting.items():
+            print(k,":",v,end=" ")
+        print()
 
 
     # 分配能量
@@ -324,7 +361,7 @@ class Game:
             y_offset+=28
             label.show()
             num+=1
-        print("nihao")
+        # print("nihao")
            
 
 
@@ -371,23 +408,39 @@ class Game:
             self.Ui.game_layout_allocateEnergy.label_mission1_listed.setText(missionList[0][0]+' '+str(missionList[0][1]))
             if len(missionList)>4:
                 self.Ui.game_layout_allocateEnergy.label_mission5_listed.setText(missionList[4][0]+' '+str(missionList[4][1]))
+                self.Ui.game_layout_allocateEnergy.pushButton_plus5.show()
+                self.Ui.game_layout_allocateEnergy.pushButton_minus5.show()
             else:
                 self.Ui.game_layout_allocateEnergy.label_mission5_listed.setText("")
+                self.Ui.game_layout_allocateEnergy.pushButton_plus5.hide()
+                self.Ui.game_layout_allocateEnergy.pushButton_minus5.hide()
             
             if len(missionList)>3:
                 self.Ui.game_layout_allocateEnergy.label_mission4_listed.setText(missionList[3][0]+' '+str(missionList[3][1]))
+                self.Ui.game_layout_allocateEnergy.pushButton_plus4.show()
+                self.Ui.game_layout_allocateEnergy.pushButton_minus4.show()
             else:
                 self.Ui.game_layout_allocateEnergy.label_mission4_listed.setText("")
+                self.Ui.game_layout_allocateEnergy.pushButton_plus4.hide()
+                self.Ui.game_layout_allocateEnergy.pushButton_minus4.hide()
           
             if len(missionList)>2:
                 self.Ui.game_layout_allocateEnergy.label_mission3_listed.setText(missionList[2][0]+' '+str(missionList[2][1]))
+                self.Ui.game_layout_allocateEnergy.pushButton_plus3.show()
+                self.Ui.game_layout_allocateEnergy.pushButton_minus3.show()
             else:
                 self.Ui.game_layout_allocateEnergy.label_mission3_listed.setText("")
+                self.Ui.game_layout_allocateEnergy.pushButton_plus3.hide()
+                self.Ui.game_layout_allocateEnergy.pushButton_minus3.hide()
 
             if len(missionList)>1:
                 self.Ui.game_layout_allocateEnergy.label_mission2_listed.setText(missionList[1][0]+' '+str(missionList[1][1]))
+                self.Ui.game_layout_allocateEnergy.pushButton_plus2.show()
+                self.Ui.game_layout_allocateEnergy.pushButton_minus2.show()
             else:
                 self.Ui.game_layout_allocateEnergy.label_mission2_listed.setText("")
+                self.Ui.game_layout_allocateEnergy.pushButton_plus2.hide()
+                self.Ui.game_layout_allocateEnergy.pushButton_minus2.hide()
 
         refreshMissionList()
         self.pageTuning = pageTuning

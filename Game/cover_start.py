@@ -2,7 +2,7 @@ from PySide6.QtCore import Qt,QEvent,QTimer, QEasingCurve, QPropertyAnimation, Q
 from PySide6.QtGui import QMouseEvent,QFont
 from PySide6.QtWidgets import QApplication, QWidget, QMainWindow, QPushButton, QStackedLayout, QGraphicsOpacityEffect, QGraphicsBlurEffect, QFrame,QLabel, QVBoxLayout
 # from UI_resource.Ui_cover import Ui_cover
-from UI_resource.Ui_agent_choose import Ui_Agent_choose
+from UI_resource.Ui_Agent_choose import Ui_Agent_choose
 from UI_resource.Ui_choose_model_1 import Ui_MainWindow as Ui_choose_model_1
 from UI_resource.Ui_allocateEnergy import Ui_allocateEnergy
 from Animation.yinru_start import MyWindow as GameLayout_initialAnimation
@@ -18,10 +18,11 @@ class GameLayout_choose_model_1(QMainWindow, Ui_choose_model_1):
         #目前的三张人物图片，都存放在resource1_rc中
         self.img_path_list=["url(:/people/resource/boy_normal_-removebg-preview.png)","url(:/people/resource/girl_shy-removebg-preview (2).png)","url(:/people/resource/girl_smile-removebg-preview.png)"]
         self.change_background_img_left(self.img_path_list[1])
-
-        test_button=QPushButton("换图",self)
-        test_button.clicked.connect(lambda:self.change_background_img_left(self.img_path_list[0]))
-        test_button.show()
+        
+        self.islock = True
+        #初始好感度为0
+        self.progressBar_second.setVisible(False)
+        self.progressBar.setVisible(False)
         
         #给这两个label设置透明度
         self.opacity_effect_6 = QGraphicsOpacityEffect()
@@ -31,7 +32,22 @@ class GameLayout_choose_model_1(QMainWindow, Ui_choose_model_1):
         self.label_8.setGraphicsEffect(self.opacity_effect_8)
         self.opacity_effect_8.setOpacity(0)
         self.opacity_effect_6.setOpacity(1)
-
+        
+        
+#此处参考zly上周五的人物解锁思想，如果好感度小于60，则未解锁人物，此时展示好感度条progressBar(这个条比较短，最大范围100）；
+#如果好感度大于等于60，则解锁人物，此时展示好感度条progressBar_second(这个条更长，最大范围600）。
+    def favorite_level_change(self,favorite_level):
+        num=favorite_level
+        if favorite_level>=60:
+            self.islock=False
+            self.progressBar_second.setValue(num)
+            self.progressBar_second.setVisible(True)
+            self.progressBar.setVisible(False)
+        else:
+            self.islock=True
+            self.progressBar.setValue(num)
+            self.progressBar_second.setVisible(False)
+            self.progressBar.setVisible(True)
         
     #更换self.label_img_left背景图片的函数
     def change_background_img_left(self,img_path):
@@ -109,12 +125,6 @@ class GameLayout_allocateEnergy(QMainWindow, Ui_allocateEnergy):
         self.centralwidget.setGraphicsEffect(self.blur_effect)
         self.widget_diary.setVisible(True) # diary widget显示
         #在此处向label_diary_content传入文字，并start_animate()
-        text="""你好你好今年春节你此刻才能看见从
-哈哈哈哈哈哈哈哈哈
-
-能促进大脑产出尽可能靠近超牛卡承诺捐款
-那就按擦几次卡机才能看查看残存看水水水水水水水水水水水水水水水水水
-哈哈哈哈哈哈哈哈哈"""
         
         # self.widget_diary.label_diary_content.setTextToDraw(text)
         self.widget_diary.label_diary_content.start_animate()
@@ -237,7 +247,7 @@ class MyWindow(QMainWindow):
         #     self.event_crush_atFirstBlush = event_crush_atFirstBlush(Game(self), agent_mode=True)
         #     self.game.currentEvent = self.event_crush_atFirstBlush
         # self.event_crush_atFirstBlush.event_start()
-
+        
         if 'crush_atFirstBlush' in self.game.allEvents:
             event_crush_atFirstBlush=self.game.allEvents['crush_atFirstBlush']
             event_crush_atFirstBlush.event_start(agent_mode=True)

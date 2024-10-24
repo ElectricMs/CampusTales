@@ -115,6 +115,8 @@ class event_crush_atFirstBlush(Event.event):
 
     def event_start(self, **kwargs):
         print("event_crush_atFirstBlush start")
+        
+        
         self.step = 0
         for key, value in kwargs.items():
             if key == "agent_mode" and value==True:
@@ -148,6 +150,10 @@ class event_crush_atFirstBlush(Event.event):
 
         
         if self.input_mode:
+            #一开始好感度应该为0
+            #当前传入30只是为了测试
+            #要把每次对话返回的好感度，传入这个函数
+            self.layout.favorite_level_change(30)
             # 用户自选回答阶段，step不自增，结束用户回答阶段时再自增
             input_text: str
             assert pos in [0, 1, 2, 3], "pos should be 0, 1, 2, 3"

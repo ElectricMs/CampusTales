@@ -221,21 +221,20 @@ class Game:
             allocate_count={}
             for i in range(max(0,len(self.allocateResults)-3),self.week):
                 for event in self.allocateResults[i]:
-                    if event[1]>0:
-                        allocate_count[event[0]]=allocate_count.get(event[0],0)+event[1]
-            compensate=3 if len(self.allocateResults)>=3 else 3-len(self.allocateResults)
+                    allocate_count[event[0]]=allocate_count.get(event[0],0)+event[1]
+            compensate = 0 if len(self.allocateResults)>=3 else 3-len(self.allocateResults)
         
 
             def escape_get_random_activity(category, energy_level)->str:
-                if energy_level==0:
+                if energy_level==0 or energy_level==1:
                     return db_connection.get_random_activity(category, "0~20")
-                elif energy_level==1:
+                elif energy_level==2 or energy_level==3:
                     return db_connection.get_random_activity(category, "20~40")
-                elif energy_level==2:
+                elif energy_level==4 or energy_level==5:
                     return db_connection.get_random_activity(category, "40~60")
-                elif energy_level==3:
+                elif energy_level==6 or energy_level==7:
                     return db_connection.get_random_activity(category, "60~80")
-                elif energy_level>=4:
+                elif energy_level>=8:
                     return db_connection.get_random_activity(category, "80~100")
                 else:
                     return f"Error: {category} {energy_level}"
@@ -244,14 +243,19 @@ class Game:
             for key, value in allocate_count.items():
                 if key == "学习":
                     text += escape_get_random_activity("认真学习", value+compensate) + "\n"
+                    print(text)
                 elif key == "锻炼":
                     text += escape_get_random_activity("体育运动", value+compensate) + "\n"
+                    print(text)
                 elif key == "社交":
                     text += escape_get_random_activity("广泛交友", value+compensate) + "\n"
+                    print(text)
                 elif key == "娱乐":
                     text += escape_get_random_activity("打游戏娱乐", value+compensate) + "\n"
+                    print(text)
                 elif key == "休息":
                     text += escape_get_random_activity("休息放松", value+compensate) + "\n"
+                    print(text)
                 elif key == "陪npy":
                     # 这种事件调用事件的判断函数
                     pass
@@ -345,7 +349,6 @@ class Game:
             num+=1
         # print("nihao")
            
-
 
         def pageTuning(value):
             assert value in [1, -1], "Value must be either 1 or -1"
@@ -595,7 +598,7 @@ class RandomEvents:
             self.RandomEvent("外卖被偷", 0.1, "期待的美食被偷走，心情大受打击，感到非常失落。", mood=-5),
             self.RandomEvent("崴脚", 0.05, "不小心崴到脚，影响了日常活动，身体状况明显下降，去医院看病花费200。", health=-15, money=-200),
             self.RandomEvent("参加志愿活动", 0.2, "参与志愿活动不仅帮助了他人，还结识了志同道合的新朋友。", social=10),
-            self.RandomEvent("遇到难以相处的室友", 0.15, "室友情侣生活习惯不合，造成矛盾，影响了居住环境的舒适度。", social=-10, mood=-5),
+            self.RandomEvent("遇到难以相处的室友", 0.15, "和室友生活习惯不合，造成矛盾，影响了居住环境的舒适度。", social=-10, mood=-5),
             self.RandomEvent("偶遇校园流浪猫", 0.1, "在校园里遇到一只可爱的流浪猫，瞬间治愈了烦躁的心情。", mood=5),
             self.RandomEvent("完成重要作业", 0.2, "按时完成了一项重要的作业，感到非常有成就感和轻松。", study=10, mood=5),
             self.RandomEvent("旷课点上名", 0.1, "原本打算请假，没想到被点名，感到既尴尬又懊恼。", study=-5, mood=-5),

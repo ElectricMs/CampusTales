@@ -2,7 +2,7 @@ from PySide6.QtCore import Qt,QEvent,QTimer, QEasingCurve, QPropertyAnimation, Q
 from PySide6.QtGui import QMouseEvent,QFont
 from PySide6.QtWidgets import QApplication, QWidget, QMainWindow, QPushButton, QStackedLayout, QGraphicsOpacityEffect, QGraphicsBlurEffect, QFrame,QLabel, QVBoxLayout
 # from UI_resource.Ui_cover import Ui_cover
-from UI_resource.Ui_Agent_choose import Ui_Agent_choose
+from UI_resource.Ui_agent_choose import Ui_Agent_choose
 from UI_resource.Ui_choose_model_1 import Ui_MainWindow as Ui_choose_model_1
 from UI_resource.Ui_allocateEnergy import Ui_allocateEnergy
 from Animation.yinru_start import MyWindow as GameLayout_initialAnimation
@@ -190,33 +190,30 @@ class MyWindow(QMainWindow):
         self.game_layout_choose_model_1.pushButton_option2.clicked.connect(lambda: self.agent_next(pos = 2))
         self.game_layout_choose_model_1.pushButton_option3.clicked.connect(lambda: self.agent_next(pos = 3))
 
+        self.game_layout_allocateEnergy.pushButton_nextPage.clicked.connect(lambda: self.game.pageTuning(1))
+        self.game_layout_allocateEnergy.pushButton_previousPage.clicked.connect(lambda: self.game.pageTuning(-1))
+            
+        self.game_layout_allocateEnergy.pushButton_minus1.clicked.connect(lambda: self.game.modifyEnergy(-1,1))
+        self.game_layout_allocateEnergy.pushButton_minus2.clicked.connect(lambda: self.game.modifyEnergy(-1,2))
+        self.game_layout_allocateEnergy.pushButton_minus3.clicked.connect(lambda: self.game.modifyEnergy(-1,3))
+        self.game_layout_allocateEnergy.pushButton_minus4.clicked.connect(lambda: self.game.modifyEnergy(-1,4))
+        self.game_layout_allocateEnergy.pushButton_minus5.clicked.connect(lambda: self.game.modifyEnergy(-1,5))
+        self.game_layout_allocateEnergy.pushButton_plus1.clicked.connect(lambda: self.game.modifyEnergy(1,1))
+        self.game_layout_allocateEnergy.pushButton_plus2.clicked.connect(lambda: self.game.modifyEnergy(1,2))
+        self.game_layout_allocateEnergy.pushButton_plus3.clicked.connect(lambda: self.game.modifyEnergy(1,3))
+        self.game_layout_allocateEnergy.pushButton_plus4.clicked.connect(lambda: self.game.modifyEnergy(1,4))
+        self.game_layout_allocateEnergy.pushButton_plus5.clicked.connect(lambda: self.game.modifyEnergy(1,5))
+
+        self.game_layout_allocateEnergy.pushButton_diary_next.clicked.connect(lambda: self.game.next())
+
 
     def game_start(self):
         if self.first_start_game:
             self.game.start()
-            self.game_layout_main_menu.pushButton.setText("继续")
+            self.game_layout_main_menu.pushButton.setText("                       继续游戏          CONTINUE")
             self.first_start_game=False
         else:
             self.game.reload()
-        
-        def bind_afterGame():
-            self.game_layout_allocateEnergy.pushButton_nextPage.clicked.connect(lambda: self.game.pageTuning(1))
-            self.game_layout_allocateEnergy.pushButton_previousPage.clicked.connect(lambda: self.game.pageTuning(-1))
-            
-            self.game_layout_allocateEnergy.pushButton_minus1.clicked.connect(lambda: self.game.modifyEnergy(-1,1))
-            self.game_layout_allocateEnergy.pushButton_minus2.clicked.connect(lambda: self.game.modifyEnergy(-1,2))
-            self.game_layout_allocateEnergy.pushButton_minus3.clicked.connect(lambda: self.game.modifyEnergy(-1,3))
-            self.game_layout_allocateEnergy.pushButton_minus4.clicked.connect(lambda: self.game.modifyEnergy(-1,4))
-            self.game_layout_allocateEnergy.pushButton_minus5.clicked.connect(lambda: self.game.modifyEnergy(-1,5))
-            self.game_layout_allocateEnergy.pushButton_plus1.clicked.connect(lambda: self.game.modifyEnergy(1,1))
-            self.game_layout_allocateEnergy.pushButton_plus2.clicked.connect(lambda: self.game.modifyEnergy(1,2))
-            self.game_layout_allocateEnergy.pushButton_plus3.clicked.connect(lambda: self.game.modifyEnergy(1,3))
-            self.game_layout_allocateEnergy.pushButton_plus4.clicked.connect(lambda: self.game.modifyEnergy(1,4))
-            self.game_layout_allocateEnergy.pushButton_plus5.clicked.connect(lambda: self.game.modifyEnergy(1,5))
-
-            self.game_layout_allocateEnergy.pushButton_diary_next.clicked.connect(self.game.next)
-            
-        bind_afterGame()
 
 
     def agent_next(self, pos=None):

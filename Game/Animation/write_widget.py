@@ -39,10 +39,7 @@ class CustomLabel(QLabel):
         self.timer.timeout.connect(self.updateText)
         self.rotate_timer = QTimer(self)
         self.rotate_timer.timeout.connect(self.updateAngle)
-        # 创建一个QSoundEffect实例来播放音效
-        # self.sound_effect = QSoundEffect(self)
-        # self.sound_effect.setSource(QUrl.fromLocalFile(r'Game\UI_resource\写字音效.wav'))# type: ignore  # 替换为你的音频文件路径
-        # 创建媒体播放器对象
+       
         self.player = QMediaPlayer()
         # 创建音频输出对象
         self.audio_output = QAudioOutput()
@@ -65,12 +62,7 @@ class CustomLabel(QLabel):
     def play_sound(self):
         self.player.play()
         
-        # 播放音效
-        # self.sound_effect.play()
-        # 可以更新界面或其他操作
-    # def stop_sound(self):
-    #     self.player.stop()
-        # self.sound_effect.stop()
+        
     def updateText(self):
         
         self.current_index += 1
@@ -99,6 +91,7 @@ class CustomLabel(QLabel):
         """更新文本并重置相关状态"""
         self.current_index = 0  # 重置当前显示字符的索引
         self.list = []  # 清空列表
+        self.list2=[]
         self.flag = True  # 重置旋转方向
         self.angle = 0  # 重置旋转角度
         self.flag=True#旋转方向
@@ -121,7 +114,8 @@ class CustomLabel(QLabel):
       
             
         lines = current_text.split('\n')  # 将文本按照换行符分割成多行
-        
+        for i in range(len(lines)):
+            self.list2.append(False)
 
         for i in range(len(lines)):
             self.list.append(False)
@@ -133,8 +127,6 @@ class CustomLabel(QLabel):
         
         image_x=0
         image_y=0
-        
-        
          # 创建旋转变换
         transform = QTransform().translate(self.image.width() / 2, self.image.height() / 2).rotate(self.angle).translate(-self.image.width() / 2, -self.image.height() / 2)
         rotated_image = self.image.transformed(transform, Qt.TransformationMode.SmoothTransformation)
@@ -145,21 +137,17 @@ class CustomLabel(QLabel):
             # 计算当前行的绘制位置
             text_x = 10  # 文本的x轴起始位置
             text_y = last_line_bottom + line_height  # 每行的y轴位置，基于上一行底部位置加一行的高度
-            painter.drawText(text_x, text_y, line)
-            
-            # 如果有图片且不是最后一行，则绘制图片
             if not self.image.isNull():
                 image_x = text_x + font_metrics.horizontalAdvance(line)  # 图片的x轴位置，基于当前行文本的宽度
                 image_y = text_y - 120+ font_metrics.height()  # 图片的y轴位置，在当前行的底部位置
                 if self.list[i]:
                     painter.drawImage(2000,image_y,rotated_image)
-                else:
+                elif i==0 or self.list2[i]==True:
                     painter.drawImage(image_x,image_y,rotated_image)
-                
+            self.list2[i]=True
             # 更新上一行的底部位置
+            painter.drawText(text_x, text_y, line)
             last_line_bottom = text_y
-
-       # painter.drawText(self.rect(),Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignTop, self.text_to_draw)
 class TypewriterEffectWidget(QWidget):
     def __init__(self,parent=None):
         super().__init__(parent)
@@ -194,27 +182,22 @@ class TypewriterEffectWidget(QWidget):
         # self.widget_diary.label_content.setText(QCoreApplication.translate("strength_assignment", u"\u661f\u671f\u4e00      5\u670828\u65e5     \u6674", None))
         
         self.label_diary_content.setText("")
-        text="""你好你好今年春节你此刻才能看见从
-哈哈哈哈哈哈哈哈哈
+        text="""你好
+哈哈哈
 
-能促进大脑产出尽可能靠近超牛卡承诺捐款
-那就按擦几次卡机才能看查看残存看水水水水水水水水水水水水水水水水水
-哈哈哈哈哈哈哈哈哈
+能促
+那就
+哈哈
 
-哈哈哈哈哈哈哈哈哈
-哈哈哈哈哈哈哈哈哈
+哈哈
+哈哈
 
-能促进大脑产出尽可能靠近超牛卡承诺捐款
-哈哈哈哈哈哈哈"""
+能促
+哈"""
         
         self.label_diary_content.setTextToDraw(text)
         self.list=[]
         
-
- 
-        
-
-
       
 if __name__ == '__main__':
     app = QApplication(sys.argv)

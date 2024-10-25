@@ -16,7 +16,7 @@ class GameLayout_choose_model_1(QMainWindow, Ui_choose_model_1):
         super().__init__()
         self.setupUi(self)
         #目前的三张人物图片，都存放在resource1_rc中
-        self.img_path_list=["url(:/people/resource/boy_normal_-removebg-preview.png)","url(:/people/resource/girl_shy-removebg-preview (2).png)","url(:/people/resource/girl_smile-removebg-preview.png)"]
+        self.img_path_list=["url(:/people/resource/girl_smile-removebg-preview.png)","url(:/people/resource/girl_shy-removebg-preview (2).png)","url(:/people/resource/boy_normal_-removebg-preview.png)"]
         self.change_background_img_left(self.img_path_list[1])
 
         test_button=QPushButton("换图",self)

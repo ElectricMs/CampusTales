@@ -2,12 +2,12 @@ from PySide6.QtCore import Qt,QEvent,QTimer, QEasingCurve, QPropertyAnimation, Q
 from PySide6.QtGui import QMouseEvent,QFont
 from PySide6.QtWidgets import QApplication, QWidget, QMainWindow, QPushButton, QStackedLayout, QGraphicsOpacityEffect, QGraphicsBlurEffect, QFrame,QLabel, QVBoxLayout
 # from UI_resource.Ui_cover import Ui_cover
-from UI_resource.Ui_agent_choose import Ui_Agent_choose
+from UI_resource.Ui_Agent_choose import Ui_Agent_choose
 from UI_resource.Ui_choose_model_1 import Ui_MainWindow as Ui_choose_model_1
 from UI_resource.Ui_allocateEnergy import Ui_allocateEnergy
 from Animation.yinru_start import MyWindow as GameLayout_initialAnimation
 from UI_resource.new_cover import MyWindow as GameLayout_MainMenu
-
+from Animation.write_widget import TypewriterEffectWidget as new_widget
 # Agent对话事件界面
 class GameLayout_choose_model_1(QMainWindow, Ui_choose_model_1):
     
@@ -18,10 +18,11 @@ class GameLayout_choose_model_1(QMainWindow, Ui_choose_model_1):
         #目前的三张人物图片，都存放在resource1_rc中
         self.img_path_list=["url(:/people/resource/girl_smile-removebg-preview.png)","url(:/people/resource/girl_shy-removebg-preview (2).png)","url(:/people/resource/boy_normal_-removebg-preview.png)"]
         self.change_background_img_left(self.img_path_list[1])
-
-        test_button=QPushButton("换图",self)
-        test_button.clicked.connect(lambda:self.change_background_img_left(self.img_path_list[0]))
-        test_button.show()
+        
+        self.islock = True
+        #初始好感度为0
+        self.progressBar_second.setVisible(False)
+        self.progressBar.setVisible(False)
         
         #给这两个label设置透明度
         self.opacity_effect_6 = QGraphicsOpacityEffect()
@@ -31,6 +32,23 @@ class GameLayout_choose_model_1(QMainWindow, Ui_choose_model_1):
         self.label_8.setGraphicsEffect(self.opacity_effect_8)
         self.opacity_effect_8.setOpacity(0)
         self.opacity_effect_6.setOpacity(1)
+        
+        
+#此处参考zly上周五的人物解锁思想，如果好感度小于60，则未解锁人物，此时展示好感度条progressBar(这个条比较短，最大范围100）；
+#如果好感度大于等于60，则解锁人物，此时展示好感度条progressBar_second(这个条更长，最大范围600）。
+    def favorite_level_change(self,favorite_level):
+        num=favorite_level
+        if favorite_level>=60:
+            self.islock=False
+            self.progressBar_second.setValue(num)
+            self.progressBar_second.setVisible(True)
+            self.progressBar.setVisible(False)
+        else:
+            self.islock=True
+            self.progressBar.setValue(num)
+            self.progressBar_second.setVisible(False)
+            self.progressBar.setVisible(True)
+        
     #更换self.label_img_left背景图片的函数
     def change_background_img_left(self,img_path):
         self.label_img_left.setStyleSheet(f'border-image: {img_path};')
@@ -67,12 +85,8 @@ class GameLayout_allocateEnergy(QMainWindow, Ui_allocateEnergy):
         self.setupUi(self)
         self.frame_modal.setVisible(False)
         self.add_diary_widget()
-        #self.frame_selectArea_layout = QVBoxLayout()
-        #self.frame_selectArea.setLayout(self.frame_selectArea_layout)
+        
         self.frame_selectArea.setGeometry(QRect(0,120,500,500))
-        #self.frame_selectArea.setStyleSheet(u"background-color: black;\n")
-
-
         #目前的三张人物图片，都存放在resource1_rc中
         self.img_path_list=["url(:/people/resource/boy_normal_-removebg-preview.png)","url(:/people/resource/girl_shy-removebg-preview (2).png)","url(:/people/resource/girl_smile-removebg-preview.png)"]
         ###此处是用来更换主人公头像的,性别选女用女生图，性别男用男生图
@@ -82,31 +96,10 @@ class GameLayout_allocateEnergy(QMainWindow, Ui_allocateEnergy):
         self.graphicsView.setStyleSheet(f'border-image: {img_path};'"background-color:grey;")
     def add_diary_widget(self):
         #每周展示diary的widget，包含许多组件
-        self.widget_diary = QWidget(self)
+        self.widget_diary = new_widget(self)
         self.widget_diary.setVisible(False)
         self.widget_diary.setGeometry(0, 0, 1280, 720)
-        # 背景图片
-        self.label_diary_img = QLabel(self.widget_diary)
-        self.label_diary_img.setObjectName(u"label_diary_img")
-        self.label_diary_img.setGeometry(QRect(270, 30, 621, 661))
-        self.label_diary_img.setStyleSheet(u"#label_diary_img{border-image: url(:/image/resource/Strength_assign/paper2_yellow_l.png);}")
-        # 内容
-        self.label_diary_content = QLabel(self.widget_diary)
-        self.label_diary_content.setObjectName(u"label_diary_content")
-        self.label_diary_content.setGeometry(QRect(290, 50, 581, 561))
-        # 字体 后面要重命名
-        font_diaryWidget = QFont()
-        font_diaryWidget.setFamilies([u"\u5343\u56fe\u7b14\u950b\u624b\u5199\u4f53"])
-        font_diaryWidget.setPointSize(20)
-        font_diaryWidget.setBold(True)
-        self.label_diary_content.setFont(font_diaryWidget)
-        self.label_diary_content.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignTop)
-        # self.widget_diary.label_content.setText(QCoreApplication.translate("strength_assignment", u"\u661f\u671f\u4e00      5\u670828\u65e5     \u6674", None))
-        self.label_diary_content.setWordWrap(True)
-        self.label_diary_content.setText("Test")
-
-        
-        #每周执行任务的内容widget,模糊背景
+       #每周执行任务的内容widget,模糊背景
         self.pushButton_diary_next = QPushButton(self.widget_diary)
         self.pushButton_diary_next.setObjectName(u"pushButton_diary_next")
         self.pushButton_diary_next.setGeometry(QRect(700, 620, 171, 41))
@@ -131,7 +124,10 @@ class GameLayout_allocateEnergy(QMainWindow, Ui_allocateEnergy):
         self.blur_effect.setBlurHints(QGraphicsBlurEffect.BlurHint.PerformanceHint)
         self.centralwidget.setGraphicsEffect(self.blur_effect)
         self.widget_diary.setVisible(True) # diary widget显示
-
+        #在此处向label_diary_content传入文字，并start_animate()
+        
+        # self.widget_diary.label_diary_content.setTextToDraw(text)
+        self.widget_diary.label_diary_content.start_animate()
 
     # 展示完最后一张日记后diary页面消失，显示能量分配界面
     def blur_recover(self):
@@ -177,6 +173,9 @@ class MyWindow(QMainWindow):
         central_widget = QWidget()
         central_widget.setLayout(self.stacked_layout)
         self.setCentralWidget(central_widget)
+
+        self.first_start_game=True
+        self.game: Game
         
         self.bind()
         # 设置当前显示的布局为主菜单
@@ -201,40 +200,30 @@ class MyWindow(QMainWindow):
         self.game_layout_choose_model_1.pushButton_option2.clicked.connect(lambda: self.agent_next(pos = 2))
         self.game_layout_choose_model_1.pushButton_option3.clicked.connect(lambda: self.agent_next(pos = 3))
 
+        self.game_layout_allocateEnergy.pushButton_nextPage.clicked.connect(lambda: self.game.pageTuning(1))
+        self.game_layout_allocateEnergy.pushButton_previousPage.clicked.connect(lambda: self.game.pageTuning(-1))
+            
+        self.game_layout_allocateEnergy.pushButton_minus1.clicked.connect(lambda: self.game.modifyEnergy(-1,1))
+        self.game_layout_allocateEnergy.pushButton_minus2.clicked.connect(lambda: self.game.modifyEnergy(-1,2))
+        self.game_layout_allocateEnergy.pushButton_minus3.clicked.connect(lambda: self.game.modifyEnergy(-1,3))
+        self.game_layout_allocateEnergy.pushButton_minus4.clicked.connect(lambda: self.game.modifyEnergy(-1,4))
+        self.game_layout_allocateEnergy.pushButton_minus5.clicked.connect(lambda: self.game.modifyEnergy(-1,5))
+        self.game_layout_allocateEnergy.pushButton_plus1.clicked.connect(lambda: self.game.modifyEnergy(1,1))
+        self.game_layout_allocateEnergy.pushButton_plus2.clicked.connect(lambda: self.game.modifyEnergy(1,2))
+        self.game_layout_allocateEnergy.pushButton_plus3.clicked.connect(lambda: self.game.modifyEnergy(1,3))
+        self.game_layout_allocateEnergy.pushButton_plus4.clicked.connect(lambda: self.game.modifyEnergy(1,4))
+        self.game_layout_allocateEnergy.pushButton_plus5.clicked.connect(lambda: self.game.modifyEnergy(1,5))
+
+        self.game_layout_allocateEnergy.pushButton_diary_next.clicked.connect(lambda: self.game.next())
+
 
     def game_start(self):
-        self.stacked_layout.setCurrentIndex(4) # Animation
-        # self.stacked_layout.setCurrentIndex(3) # allocateEnergy
-        self.game_layout_initialAnimation.page=1
-        self.game_layout_initialAnimation.start_flow_text()
-        
-        from main import Game
-        if hasattr(self, 'game'):
-            if isinstance(self.game, Game):
-                pass
+        if self.first_start_game:
+            self.game.start()
+            self.game_layout_main_menu.pushButton.setText("                       继续游戏          CONTINUE")
+            self.first_start_game=False
         else:
-            self.game = Game(self)
-        self.game.start()
-
-        
-        def bind_afterGame():
-            self.game_layout_allocateEnergy.pushButton_nextPage.clicked.connect(lambda: self.game.pageTuning(1))
-            self.game_layout_allocateEnergy.pushButton_previousPage.clicked.connect(lambda: self.game.pageTuning(-1))
-            
-            self.game_layout_allocateEnergy.pushButton_minus1.clicked.connect(lambda: self.game.modifyEnergy(-1,1))
-            self.game_layout_allocateEnergy.pushButton_minus2.clicked.connect(lambda: self.game.modifyEnergy(-1,2))
-            self.game_layout_allocateEnergy.pushButton_minus3.clicked.connect(lambda: self.game.modifyEnergy(-1,3))
-            self.game_layout_allocateEnergy.pushButton_minus4.clicked.connect(lambda: self.game.modifyEnergy(-1,4))
-            self.game_layout_allocateEnergy.pushButton_minus5.clicked.connect(lambda: self.game.modifyEnergy(-1,5))
-            self.game_layout_allocateEnergy.pushButton_plus1.clicked.connect(lambda: self.game.modifyEnergy(1,1))
-            self.game_layout_allocateEnergy.pushButton_plus2.clicked.connect(lambda: self.game.modifyEnergy(1,2))
-            self.game_layout_allocateEnergy.pushButton_plus3.clicked.connect(lambda: self.game.modifyEnergy(1,3))
-            self.game_layout_allocateEnergy.pushButton_plus4.clicked.connect(lambda: self.game.modifyEnergy(1,4))
-            self.game_layout_allocateEnergy.pushButton_plus5.clicked.connect(lambda: self.game.modifyEnergy(1,5))
-
-            self.game_layout_allocateEnergy.pushButton_diary_next.clicked.connect(self.game.next)
-            
-        bind_afterGame()
+            self.game.reload()
 
 
     def agent_next(self, pos=None):
@@ -248,21 +237,37 @@ class MyWindow(QMainWindow):
 
     def agent_girlfriend(self):
         from Event.crush_atFirstBlush import event_crush_atFirstBlush
-         # 这里的处理不太好，只是为了调试方便
-        from main import Game
-        if hasattr(self, 'game'):
-            if isinstance(self.game, Game):
-                self.event_crush_atFirstBlush = event_crush_atFirstBlush(self.game)
+        # 这里的处理不太好，只是为了调试方便
+        # from main import Game
+        # if hasattr(self, 'game'):
+        #     if isinstance(self.game, Game):
+        #         self.event_crush_atFirstBlush = event_crush_atFirstBlush(self.game)
+        # else:
+        #     self.game = Game(self)
+        #     self.event_crush_atFirstBlush = event_crush_atFirstBlush(Game(self), agent_mode=True)
+        #     self.game.currentEvent = self.event_crush_atFirstBlush
+        # self.event_crush_atFirstBlush.event_start()
+        
+        if 'crush_atFirstBlush' in self.game.allEvents:
+            event_crush_atFirstBlush=self.game.allEvents['crush_atFirstBlush']
+            event_crush_atFirstBlush.event_start(agent_mode=True)
         else:
-            self.game = Game(self)
-            self.event_crush_atFirstBlush = event_crush_atFirstBlush(Game(self), agent_mode=True)
-            self.game.currentEvent = self.event_crush_atFirstBlush
-        self.event_crush_atFirstBlush.event_start()
+            print("event_crush_atFirstBlush not found")
         
    
 
 if __name__=="__main__":
     app=QApplication([])
     window=MyWindow()
+    from main import Game
+    if hasattr(window, 'game'):
+        if isinstance(window.game, Game):
+            pass
+        else:
+            window.game = Game(window)
+            print(window.game)      
+    else:
+        window.game = Game(window)     
+        print(window.game)
     window.show()
     app.exec()

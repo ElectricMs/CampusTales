@@ -324,6 +324,95 @@ border:None;
      <string/>
     </property>
    </widget>
+   <widget class="QProgressBar" name="progressBar">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>30</y>
+      <width>571</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>400</width>
+      <height>40</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>站酷小薇LOGO体</family>
+      <pointsize>17</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QProgressBar#progressBar{
+
+height:22px;
+text-align:center;
+color:white;
+border-radius:20px;
+background: #1D5573 ;
+}
+QProgressBar::chunk{
+border:2px solid  #1D5573;
+border-radius:20px;
+background:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #FFC0CB,stop:1 #fb1890);}
+</string>
+    </property>
+    <property name="value">
+     <number>60</number>
+    </property>
+    <property name="format">
+     <string>好感度：%v</string>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="progressBar_second">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>30</y>
+      <width>831</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>400</width>
+      <height>40</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>站酷小薇LOGO体</family>
+      <pointsize>17</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QProgressBar#progressBar_second{
+
+height:22px;
+text-align:center;
+color:white;
+border-radius:20px;
+background: #1D5573 ;
+}
+QProgressBar::chunk{
+border:2px solid  #1D5573;
+border-radius:20px;
+background:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #FFC0CB,stop:1 #fb1890);}
+</string>
+    </property>
+    <property name="maximum">
+     <number>600</number>
+    </property>
+    <property name="value">
+     <number>60</number>
+    </property>
+    <property name="format">
+     <string>好感度：%v</string>
+    </property>
+   </widget>
    <zorder>label_img_left</zorder>
    <zorder>label_8</zorder>
    <zorder>label_img_right</zorder>
@@ -331,6 +420,8 @@ border:None;
    <zorder>pushButton_option1</zorder>
    <zorder>pushButton_option2</zorder>
    <zorder>pushButton_option3</zorder>
+   <zorder>progressBar</zorder>
+   <zorder>progressBar_second</zorder>
   </widget>
  </widget>
  <resources>

@@ -16,7 +16,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QLabel, QMainWindow,
-    QPlainTextEdit, QPushButton, QSizePolicy, QWidget)
+    QPlainTextEdit, QProgressBar, QPushButton, QSizePolicy,
+    QWidget)
 import resource.resource1_rc
 
 class Ui_MainWindow(object):
@@ -150,6 +151,48 @@ class Ui_MainWindow(object):
         self.label_img_right.setGeometry(QRect(860, 200, 500, 500))
         self.label_img_right.setFont(font2)
         self.label_img_right.setStyleSheet(u"border-image: url(:/people/resource/boy_normal_-removebg-preview.png);")
+        self.progressBar = QProgressBar(self.centralwidget)
+        self.progressBar.setObjectName(u"progressBar")
+        self.progressBar.setGeometry(QRect(370, 30, 571, 40))
+        self.progressBar.setMinimumSize(QSize(400, 40))
+        font4 = QFont()
+        font4.setFamilies([u"\u7ad9\u9177\u5c0f\u8587LOGO\u4f53"])
+        font4.setPointSize(17)
+        self.progressBar.setFont(font4)
+        self.progressBar.setStyleSheet(u"QProgressBar#progressBar{\n"
+"\n"
+"height:22px;\n"
+"text-align:center;\n"
+"color:white;\n"
+"border-radius:20px;\n"
+"background: #1D5573 ;\n"
+"}\n"
+"QProgressBar::chunk{\n"
+"border:2px solid  #1D5573;\n"
+"border-radius:20px;\n"
+"background:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #FFC0CB,stop:1 #fb1890);}\n"
+"")
+        self.progressBar.setValue(60)
+        self.progressBar_second = QProgressBar(self.centralwidget)
+        self.progressBar_second.setObjectName(u"progressBar_second")
+        self.progressBar_second.setGeometry(QRect(240, 30, 831, 40))
+        self.progressBar_second.setMinimumSize(QSize(400, 40))
+        self.progressBar_second.setFont(font4)
+        self.progressBar_second.setStyleSheet(u"QProgressBar#progressBar_second{\n"
+"\n"
+"height:22px;\n"
+"text-align:center;\n"
+"color:white;\n"
+"border-radius:20px;\n"
+"background: #1D5573 ;\n"
+"}\n"
+"QProgressBar::chunk{\n"
+"border:2px solid  #1D5573;\n"
+"border-radius:20px;\n"
+"background:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #FFC0CB,stop:1 #fb1890);}\n"
+"")
+        self.progressBar_second.setMaximum(600)
+        self.progressBar_second.setValue(60)
         MainWindow.setCentralWidget(self.centralwidget)
         self.label_img_left.raise_()
         self.label_8.raise_()
@@ -158,6 +201,8 @@ class Ui_MainWindow(object):
         self.pushButton_option1.raise_()
         self.pushButton_option2.raise_()
         self.pushButton_option3.raise_()
+        self.progressBar.raise_()
+        self.progressBar_second.raise_()
 
         self.retranslateUi(MainWindow)
 
@@ -178,5 +223,7 @@ class Ui_MainWindow(object):
         self.label_img_left.setText("")
         self.label_8.setText("")
         self.label_img_right.setText("")
+        self.progressBar.setFormat(QCoreApplication.translate("MainWindow", u"\u597d\u611f\u5ea6\uff1a%v", None))
+        self.progressBar_second.setFormat(QCoreApplication.translate("MainWindow", u"\u597d\u611f\u5ea6\uff1a%v", None))
     # retranslateUi
 

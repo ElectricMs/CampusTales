@@ -1,18 +1,27 @@
 import random
 import time
+import copy
 from cover_start import MyWindow
 from PySide6.QtWidgets import QPushButton,QLabel
 from PySide6.QtCore import QRect,Qt,Signal
 from PySide6.QtGui import QFont
+from activity.randoan_read_io import db_connection
+
+
+
 class ClickableLabel(QLabel):
     clicked = Signal()  # 定义一个点击信号
     def __init__(self, text="", parent=None):
         super().__init__(text, parent)
         self.setMouseTracking(True)  # 启用鼠标跟踪
+
     def mousePressEvent(self, event):
         if event.button() == Qt.MouseButton.LeftButton:
             self.clicked.emit()  # 发送点击信号
         super().mousePressEvent(event)
+
+
+
 class Game:
     def __init__(self,Ui:MyWindow):
         from Event.event import event
@@ -26,11 +35,15 @@ class Game:
         # 存放游戏重载时间
         self.reloadTime=time.time()
 
+        # 存放游戏进度
+        self.progress={"layout":-1}
+
         # 存放所有事件，包括目前的可选事件和不可选事件，格式为 {事件名:事件实例}
         self.allEvents=event.get_all_subEvents(self)
 
         # 当前正在进行的事件
         self.currentEvent:event
+        
         # 存放所有可选事件的概率，格式为 {事件名:概率}
         self.eventProbablity={}
         
@@ -41,7 +54,7 @@ class Game:
         self.loadEventProbability()
         
         # 存放已加入主线的事件，格式为 [事件名（字符串）]
-        self.mainlineEvents=[["学习",0], ["锻炼",0], ["社交",0],["娱乐",0],["Test1",0],["Test2",0],["Test3",0],["Test4",0],["Test5",0],["Test6",0]]
+        self.mainlineEvents=[["学习",0], ["锻炼",0], ["社交",0],["娱乐",0]]
         
         # 存放每周精力，结束后重新设置为10
         self.energy=10
@@ -50,7 +63,7 @@ class Game:
         self.week = 0
 
         # 存放显示属性
-        self.displaySetting={"gender":0, "study":60, "health": 60, "mood":60 , "social":60, "ability":60, "money":0}
+        self.displaySetting={"gender":0, "study":10, "health": 60, "mood":60 , "social":40, "ability":60, "money":12000, "club":0, "organization":0, "lecture":0, "beloved":0}
 
         # 初始化内嵌函数
         self.allocateEnergy()
@@ -69,9 +82,14 @@ class Game:
 
     # 开始游戏
     def start(self):
-        # 添加黑屏过场动画
+        # 黑屏过场动画
+        self.Ui.stacked_layout.setCurrentIndex(4) # Animation
+        # self.Ui.stacked_layout.setCurrentIndex(3) # allocateEnergy
+        self.Ui.game_layout_initialAnimation.page=1
+        self.Ui.game_layout_initialAnimation.start_flow_text()
         # ============================
         self.loadEvent()
+        self.progress["layout"]=3
         self.Ui.game_layout_allocateEnergy.label_content.setText(self.currentEvent.if_join()[0] + "," + self.currentEvent.if_join()[1]) 
         self.Ui.game_layout_allocateEnergy.frame_modal.setVisible(True)
         
@@ -96,11 +114,16 @@ class Game:
     # 重新加载游戏
     def reload(self):
         self.reloadTime=time.time()
+        if self.progress["layout"]!=-1:
+            self.Ui.stacked_layout.setCurrentIndex(self.progress["layout"])
+        else:
+            print("self.progress['layout']=-1, cannot reload game")
 
 
     # 选择True的事件
     def event_true(self):
         self.Ui.game_layout_allocateEnergy.frame_modal.setVisible(False)
+        self.progress["layout"]=2
         self.currentEvent.event_start()
 
         def enablePushButton():
@@ -173,31 +196,118 @@ class Game:
 
     # 点击下一周时触发
     def nextWeek(self):
-        self.week+=3
+        self.week+=1
         # 首先保存分配结果，清空精力分配
-        self.allocateResults.append(self.mainlineEvents)
+        week_result = copy.deepcopy(self.mainlineEvents)
+        week_result.append(["休息",self.energy])
+        self.allocateResults.append(week_result)
+        # test
+        for result in week_result:
+            print(result[0],":",result[1],end=" ")
+        print()
+
+
+        # 重新更新精力
         self.energy=10
         for mission in self.mainlineEvents:
             mission[1]=0
         self.refreshMissionList()
+
+
+        # 返回diary文字
+        def returnDiaryText() -> str:
+            # 一个基于近3周的事件结果生成日记的算法
+            # [["学习",0], ["锻炼",0], ["社交",0],["娱乐",0]]
+            allocate_count={}
+            for i in range(max(0,len(self.allocateResults)-3),self.week):
+                for event in self.allocateResults[i]:
+                    allocate_count[event[0]]=allocate_count.get(event[0],0)+event[1]
+            compensate = 0 if len(self.allocateResults)>=3 else 3-len(self.allocateResults)
         
+
+            def escape_get_random_activity(category, energy_level)->str:
+                if energy_level==0 or energy_level==1:
+                    return db_connection.get_random_activity(category, "0~20")
+                elif energy_level==2 or energy_level==3:
+                    return db_connection.get_random_activity(category, "20~40")
+                elif energy_level==4 or energy_level==5:
+                    return db_connection.get_random_activity(category, "40~60")
+                elif energy_level==6 or energy_level==7:
+                    return db_connection.get_random_activity(category, "60~80")
+                elif energy_level>=8:
+                    return db_connection.get_random_activity(category, "80~100")
+                else:
+                    return f"Error: {category} {energy_level}"
+
+            text=""
+            for key, value in allocate_count.items():
+                if key == "学习":
+                    text += escape_get_random_activity("认真学习", value+compensate) + "\n"
+                    print(text)
+                elif key == "锻炼":
+                    text += escape_get_random_activity("体育运动", value+compensate) + "\n"
+                    print(text)
+                elif key == "社交":
+                    text += escape_get_random_activity("广泛交友", value+compensate) + "\n"
+                    print(text)
+                elif key == "娱乐":
+                    text += escape_get_random_activity("打游戏娱乐", value+compensate) + "\n"
+                    print(text)
+                elif key == "休息":
+                    text += escape_get_random_activity("休息放松", value+compensate) + "\n"
+                    print(text)
+                elif key == "陪npy":
+                    # 这种事件调用事件的判断函数
+                    pass
+            return text
+        
+
+        # 调整属性
+        def adjustSetting(week_result: list[list]) -> None:
+            for result in week_result:
+                if result[0] == "学习":
+                    self.displaySetting["study"]+=result[1]*0.5
+                    self.displaySetting["mood"]-=result[1]*0.25
+                    self.displaySetting["health"]-=result[1]*0.25
+                elif result[0] == "锻炼":
+                    self.displaySetting["health"]+=result[1]*1.25
+                    self.displaySetting["mood"]+=result[1]*0.75
+                elif result[0] == "社交":
+                    self.displaySetting["social"]+=result[1]*1
+                    self.displaySetting["money"]-=result[1]*100
+                elif result[0] == "娱乐":
+                    self.displaySetting["mood"]+=result[1]*0.75
+                    self.displaySetting["health"]-=result[1]*0.25
+                    self.displaySetting["money"]-=result[1]*100
+                elif result[0] == "休息":
+                    self.displaySetting["health"]+=result[1]*0.5
+                    self.displaySetting["mood"]+=result[1]*0.75
+
+        adjustSetting(week_result)
+
         # 模糊效果，出现日记本
-        # 日记本中点击next按钮显示下一页（暂缓），直到点击next出现事件modal和能量分配按钮
-        # 记录能量分配情况（待完善）
+        # 日记本中点击next按钮出现事件modal和能量分配按钮
         self.Ui.game_layout_allocateEnergy.blur()
         
-        
         ui = self.Ui.game_layout_allocateEnergy
+        diary_text = ""
         if self.week == 1:
-            ui.label_diary_content.setText(dialogue.get_random_welcoming())
+            diary_text += dialogue.get_random_welcoming()
         elif self.week >= 16:
-            ui.label_diary_content.setText(dialogue.get_random_talk_terminal())
+            diary_text += dialogue.get_random_talk_terminal()
         else:
-            ui.label_diary_content.setText(dialogue.get_random_talk())
-
+            diary_text += dialogue.get_random_talk()
+        # print("diary text1:",diary_text)
         randomEvent = self.randomEvents.get_random_event()
-        text = ui.label_diary_content.text() + "\n" + randomEvent.description
-        ui.label_diary_content.setText(text)
+        diary_text += "\n" + randomEvent.description
+        # print("diary text2:",diary_text)
+        diary_text += "\n" + returnDiaryText()
+        ui.widget_diary.label_diary_content.setTextToDraw(diary_text)
+        # ui.label_diary_content.setText(diary_text)
+        # test
+        for k,v in self.displaySetting.items():
+            print(k,":",v,end=" ")
+        print()
 
 
     # 分配能量
@@ -212,13 +322,7 @@ class Game:
             item.setParent(None)
             item.deleteLater()
             item = None
-        # 左侧罗列所有事件并供选择
-        # 删除 QFrame 布局中的所有子部件
-        # while self.Ui.game_layout_allocateEnergy.frame_selectArea_layout.count():
-        #     item = self.Ui.game_layout_allocateEnergy.frame_selectArea_layout.takeAt(0)
-        #     widget = item.widget()
-        #     if widget:
-        #         widget.deleteLater()
+        
                 
         #初始y的偏移量
         y_offset = 0
@@ -228,21 +332,8 @@ class Game:
             # 还没加
             
             tmp_str=str(num)+"、"+mission[0]
-#             button = QPushButton(tmp_str,self.Ui.game_layout_allocateEnergy)
-#             font1 = QFont()
-#             font1.setFamilies([u"\u5343\u56fe\u7b14\u950b\u624b\u5199\u4f53"])
-#             font1.setPointSize(17)
-#             font1.setBold(True)
-#             button.setGeometry(QRect(330, 120, 100, 31))
-#             button.setFont(font1)
-#             button.setStyleSheet(u"background-color: transparent;\n"
-# "border:None;\n"
-# "")
-#             button.move(310,y_offset)
-#             y_offset+=28
+
             
-#             button.show()
-            #上方是按钮的解决方法，但是存在缺点，所以改用ClickableLabel，不过不知道这个ClickableLabel好不好用
             label=ClickableLabel(tmp_str,self.Ui.game_layout_allocateEnergy.frame_selectArea)
             font1 = QFont()
             font1.setFamilies([u"\u5343\u56fe\u7b14\u950b\u624b\u5199\u4f53"])
@@ -256,9 +347,8 @@ class Game:
             y_offset+=28
             label.show()
             num+=1
-        print("nihao")
+        # print("nihao")
            
-
 
         def pageTuning(value):
             assert value in [1, -1], "Value must be either 1 or -1"
@@ -303,23 +393,39 @@ class Game:
             self.Ui.game_layout_allocateEnergy.label_mission1_listed.setText(missionList[0][0]+' '+str(missionList[0][1]))
             if len(missionList)>4:
                 self.Ui.game_layout_allocateEnergy.label_mission5_listed.setText(missionList[4][0]+' '+str(missionList[4][1]))
+                self.Ui.game_layout_allocateEnergy.pushButton_plus5.show()
+                self.Ui.game_layout_allocateEnergy.pushButton_minus5.show()
             else:
                 self.Ui.game_layout_allocateEnergy.label_mission5_listed.setText("")
+                self.Ui.game_layout_allocateEnergy.pushButton_plus5.hide()
+                self.Ui.game_layout_allocateEnergy.pushButton_minus5.hide()
             
             if len(missionList)>3:
                 self.Ui.game_layout_allocateEnergy.label_mission4_listed.setText(missionList[3][0]+' '+str(missionList[3][1]))
+                self.Ui.game_layout_allocateEnergy.pushButton_plus4.show()
+                self.Ui.game_layout_allocateEnergy.pushButton_minus4.show()
             else:
                 self.Ui.game_layout_allocateEnergy.label_mission4_listed.setText("")
+                self.Ui.game_layout_allocateEnergy.pushButton_plus4.hide()
+                self.Ui.game_layout_allocateEnergy.pushButton_minus4.hide()
           
             if len(missionList)>2:
                 self.Ui.game_layout_allocateEnergy.label_mission3_listed.setText(missionList[2][0]+' '+str(missionList[2][1]))
+                self.Ui.game_layout_allocateEnergy.pushButton_plus3.show()
+                self.Ui.game_layout_allocateEnergy.pushButton_minus3.show()
             else:
                 self.Ui.game_layout_allocateEnergy.label_mission3_listed.setText("")
+                self.Ui.game_layout_allocateEnergy.pushButton_plus3.hide()
+                self.Ui.game_layout_allocateEnergy.pushButton_minus3.hide()
 
             if len(missionList)>1:
                 self.Ui.game_layout_allocateEnergy.label_mission2_listed.setText(missionList[1][0]+' '+str(missionList[1][1]))
+                self.Ui.game_layout_allocateEnergy.pushButton_plus2.show()
+                self.Ui.game_layout_allocateEnergy.pushButton_minus2.show()
             else:
                 self.Ui.game_layout_allocateEnergy.label_mission2_listed.setText("")
+                self.Ui.game_layout_allocateEnergy.pushButton_plus2.hide()
+                self.Ui.game_layout_allocateEnergy.pushButton_minus2.hide()
 
         refreshMissionList()
         self.pageTuning = pageTuning
@@ -492,7 +598,7 @@ class RandomEvents:
             self.RandomEvent("外卖被偷", 0.1, "期待的美食被偷走，心情大受打击，感到非常失落。", mood=-5),
             self.RandomEvent("崴脚", 0.05, "不小心崴到脚，影响了日常活动，身体状况明显下降，去医院看病花费200。", health=-15, money=-200),
             self.RandomEvent("参加志愿活动", 0.2, "参与志愿活动不仅帮助了他人，还结识了志同道合的新朋友。", social=10),
-            self.RandomEvent("遇到难以相处的室友", 0.15, "室友情侣生活习惯不合，造成矛盾，影响了居住环境的舒适度。", social=-10, mood=-5),
+            self.RandomEvent("遇到难以相处的室友", 0.15, "和室友生活习惯不合，造成矛盾，影响了居住环境的舒适度。", social=-10, mood=-5),
             self.RandomEvent("偶遇校园流浪猫", 0.1, "在校园里遇到一只可爱的流浪猫，瞬间治愈了烦躁的心情。", mood=5),
             self.RandomEvent("完成重要作业", 0.2, "按时完成了一项重要的作业，感到非常有成就感和轻松。", study=10, mood=5),
             self.RandomEvent("旷课点上名", 0.1, "原本打算请假，没想到被点名，感到既尴尬又懊恼。", study=-5, mood=-5),

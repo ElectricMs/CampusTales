@@ -23,6 +23,7 @@ def init_db():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS conversation (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+            agent_name TEXT,
             user_input TEXT,
             ai_response TEXT
         )
@@ -33,12 +34,12 @@ def init_db():
 
 
 class Agent:
-    def __init__(self, name, context, chat_model, initial_emotion:int=0):
+    def __init__(self, name, context, chat_model=ChatZhipuAI(model="glm-4-plus", temperature=0.2), initial_emotion:int=0):
         self.name = name
         self.emotion_level:int = initial_emotion  # 范围: 0 到 +100
         self.chat_model:ChatZhipuAI = chat_model
         self.context = context
-        init_db()
+        # init_db()
         # 初始化内存
         self.memory = ConversationBufferMemory(return_messages=True)
         # 定义prompt模板
@@ -78,8 +79,8 @@ class Agent:
         return response.content.strip() # type: ignore
 
 
-    def update_state(self, emotion_change=0):
-        self.emotion_level = max(0, min(100, self.emotion_level + emotion_change))
+    # def update_state(self, emotion_change=0):
+    #     self.emotion_level = max(0, min(100, self.emotion_level + emotion_change))
 
 
     async def user_interact_with_agent(self, user_input):
@@ -117,12 +118,12 @@ class Agent:
         def save_conversation_to_db(user_input, ai_response):
             conn = sqlite3.connect('conversation_history.db')
             cursor = conn.cursor()
-            cursor.execute('INSERT INTO conversation (user_input, ai_response) VALUES (?, ?)', (user_input, ai_response))
+            cursor.execute('INSERT INTO conversation (agent_name, user_input, ai_response) VALUES (?, ?)', (self.name,user_input, ai_response))
             conn.commit()
             conn.close()
 
         # 保存到数据库
-        save_conversation_to_db(user_input, greeting)
+        # save_conversation_to_db(user_input, greeting)
 
         return json_response
 

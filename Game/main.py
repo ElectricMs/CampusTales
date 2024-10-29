@@ -92,7 +92,8 @@ class Game:
         self.progress["layout"]=3
         self.Ui.game_layout_allocateEnergy.label_content.setText(self.currentEvent.if_join()[0] + "," + self.currentEvent.if_join()[1]) 
         self.Ui.game_layout_allocateEnergy.frame_modal.setVisible(True)
-        
+        self.Ui.game_layout_allocateEnergy.label_money_value.setText(str(self.displaySetting["money"]))
+
         def disablePushButton():
             self.Ui.game_layout_allocateEnergy.pushButton_minus1.setEnabled(False)
             self.Ui.game_layout_allocateEnergy.pushButton_minus2.setEnabled(False)
@@ -175,6 +176,7 @@ class Game:
         self.loadEvent()
         self.Ui.game_layout_allocateEnergy.label_content.setText(self.currentEvent.if_join()[0] + "," + self.currentEvent.if_join()[1]) 
         self.Ui.game_layout_allocateEnergy.frame_modal.setVisible(True)
+        self.Ui.game_layout_allocateEnergy.label_money_value.setText(str(self.displaySetting["money"]))
         
         def disablePushButton():
             self.Ui.game_layout_allocateEnergy.pushButton_minus1.setEnabled(False)

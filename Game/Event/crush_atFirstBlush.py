@@ -105,19 +105,22 @@ class event_crush_atFirstBlush(Event.event):
         当前关系：恋人
        """
         
-        #self.agent = Agent(name="crush", personality_traits="温柔善良", context=context1)
-        self.agent = Agent2(name=self.name, context=context1)
+        self.agent = Agent(name="crush", personality_traits="温柔善良", context=context1)
+        #self.agent = Agent2(name=self.name, context=context1)
         self.loop = asyncio.new_event_loop() # 创建一个新的事件循环 用于跑agent
         threading.Thread(target=self.loop.run_forever, daemon=True).start() # 在一个单独的线程中启动事件循环，确保它一直在运行
         self.talk_remaining = 5
-
-
+        self.emotion_level = 0
+        self.first_start = True
+        
+        
     def if_join(self)-> Tuple[str, str]:
         return "学院将举办一场迎新晚会","是否要参加呢？"
 
 
     def event_start(self, **kwargs):
         print("event_crush_atFirstBlush start")
+        
         
         
         self.step = 0
@@ -153,10 +156,7 @@ class event_crush_atFirstBlush(Event.event):
 
         
         if self.input_mode:
-            #一开始好感度应该为0
-            #当前传入30只是为了测试
-            #要把每次对话返回的好感度，传入这个函数
-            self.layout.favorite_level_change(30)
+           
             # 用户自选回答阶段，step不自增，结束用户回答阶段时再自增
             input_text: str
             assert pos in [0, 1, 2, 3], "pos should be 0, 1, 2, 3"
@@ -181,6 +181,10 @@ class event_crush_atFirstBlush(Event.event):
                 response = await self.agent.user_interact_with_agent(input_text)
                 response_text = response["response"]
                 self.dialogue_list[self.step+1][1] = response_text
+                # 一开始好感度应该为0
+                # 要把每次对话返回的好感度，传入这个函数
+                self.layout.favorite_level_change(response["emotion_level"])
+                self.emotion_level = response["emotion_level"]
                 self.layout.pushButton_next.show()
             asyncio.run_coroutine_threadsafe(get_response(), self.loop)
             
@@ -246,7 +250,12 @@ class event_crush_atFirstBlush(Event.event):
         
     def event_end(self):
         self.refreshProbability()
-        self.affection()
+        if self.first_start:
+            if self.emotion_level < 60:
+                pass
+            else:
+                self.game.mainlineEvents.append(["陪Crush", 0])
+                self.game.refreshMissionList()
         if self.agent_mode:
             self.game.Ui.stacked_layout.setCurrentIndex(1)
         else:
@@ -260,7 +269,10 @@ class event_crush_atFirstBlush(Event.event):
 
 
     def affection(self,*args):
-        pass
+        if self.emotion_level < 60:
+            return "上周去参加了一个迎新晚会，我遇到了一个很漂亮的女生，但我们聊的并不算是顺利，不知道还有没有机会再见面了。"
+        else:
+            return "上周去参加了一个迎新晚会，我遇到了一个很漂亮的女生，我们聊的很愉快，我也很开心。我们互换了联系方式，我已经准备邀请她出去吃饭了。"
 
 
     dialogue_list = [

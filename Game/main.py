@@ -390,6 +390,8 @@ class Game:
             nonlocal pageNow
             maxMission = count if count < pageNow * 5 else pageNow * 5
             missionList = self.mainlineEvents[(pageNow-1)*5:maxMission]
+            for  item in missionList:
+                print(item[0], ' ', item[1])
             self.Ui.game_layout_allocateEnergy.label_energy_value.setText(str(self.energy))
 
             self.Ui.game_layout_allocateEnergy.label_mission1_listed.setText(missionList[0][0]+' '+str(missionList[0][1]))
@@ -476,7 +478,7 @@ class Game:
     def loadEvent(self):
         if self.week==0:
             # 第零周的事件
-            self.currentEvent=self.allEvents["crush_atFirstBlush"]
+            self.currentEvent=self.allEvents["lecture_ACM"]
             return True
         # elif self.week==1:
         #     # 第一周的事件

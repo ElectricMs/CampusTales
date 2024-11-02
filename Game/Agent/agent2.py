@@ -8,7 +8,6 @@ from langchain.prompts import PromptTemplate
 from langchain_community.chat_models import ChatZhipuAI
 from langchain.schema import SystemMessage, HumanMessage
 from langchain.memory import ConversationBufferMemory
-from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 # 设置环境变量（确保通过环境变量或安全方式管理）
 os.environ["ZHIPUAI_API_KEY"] = "798c6766d89022735623c294ee28216c.stDi9j8OcRNp9f5L"  # 替换为你的智谱 AI API 密钥
@@ -69,7 +68,7 @@ class Agent:
 
         messages = [
             SystemMessage(content=chat_prompt),
-            HumanMessage(content=context)
+            HumanMessage(content=context)  
         ]
         response = await self.chat_model.ainvoke(messages)
 
@@ -80,7 +79,7 @@ class Agent:
 
 
     # def update_state(self, emotion_change=0):
-    #     self.emotion_level = max(0, min(100, self.emotion_level + emotion_change))
+    #     self.emotion_level = max(0, min(100,   self.emotion_level + emotion_change))
 
 
     async def user_interact_with_agent(self, user_input):

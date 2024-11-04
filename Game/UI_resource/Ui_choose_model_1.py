@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'choose_model_1.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.2
+## Created by: Qt User Interface Compiler version 6.8.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -49,7 +49,7 @@ class Ui_MainWindow(object):
         self.label_name.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.label_content = QLabel(self.frame)
         self.label_content.setObjectName(u"label_content")
-        self.label_content.setGeometry(QRect(30, 70, 711, 71))
+        self.label_content.setGeometry(QRect(30, 70, 761, 131))
         font1 = QFont()
         font1.setFamilies([u"\u5fae\u8f6f\u96c5\u9ed1"])
         font1.setPointSize(15)
@@ -82,7 +82,7 @@ class Ui_MainWindow(object):
 "}")
         self.plainTextEdit_input = QPlainTextEdit(self.frame)
         self.plainTextEdit_input.setObjectName(u"plainTextEdit_input")
-        self.plainTextEdit_input.setGeometry(QRect(30, 70, 711, 71))
+        self.plainTextEdit_input.setGeometry(QRect(30, 70, 761, 131))
         font2 = QFont()
         font2.setPointSize(15)
         self.plainTextEdit_input.setFont(font2)

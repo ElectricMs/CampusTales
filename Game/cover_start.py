@@ -1,4 +1,4 @@
-from PySide6.QtCore import Qt,QEvent,QTimer, QEasingCurve, QPropertyAnimation, QVariantAnimation,QRect,QCoreApplication
+from PySide6.QtCore import Qt,QEvent,QTimer, QEasingCurve, QPropertyAnimation, QVariantAnimation,QRect,QCoreApplication,QUrl
 from PySide6.QtGui import QMouseEvent,QFont
 from PySide6.QtWidgets import QApplication, QWidget, QMainWindow, QPushButton, QStackedLayout, QGraphicsOpacityEffect, QGraphicsBlurEffect, QFrame,QLabel, QVBoxLayout
 # from UI_resource.Ui_cover import Ui_cover
@@ -8,7 +8,11 @@ from UI_resource.Ui_allocateEnergy import Ui_allocateEnergy
 from Animation.yinru_start import MyWindow as GameLayout_initialAnimation
 from UI_resource.new_cover import MyWindow as GameLayout_MainMenu
 from Animation.write_widget import TypewriterEffectWidget as new_widget
+from setting_start import MyWindow as GameLayout_setting
+from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
 # Agent对话事件界面
+
+
 class GameLayout_choose_model_1(QMainWindow, Ui_choose_model_1):
     
 
@@ -37,7 +41,7 @@ class GameLayout_choose_model_1(QMainWindow, Ui_choose_model_1):
 #此处参考zly上周五的人物解锁思想，如果好感度小于60，则未解锁人物，此时展示好感度条progressBar(这个条比较短，最大范围100）；
 #如果好感度大于等于60，则解锁人物，此时展示好感度条progressBar_second(这个条更长，最大范围600）。
     def favorite_level_change(self,favorite_level):
-        num=favorite_level
+        num=int(favorite_level)
         if favorite_level>=60:
             self.islock=False
             self.progressBar_second.setValue(num)
@@ -55,6 +59,7 @@ class GameLayout_choose_model_1(QMainWindow, Ui_choose_model_1):
     
         
     def set_stream_text(self, text):
+        from setting_start import InteractionTimerInterval
         if not isinstance(text, str):
             raise ValueError("text must be a string")
         current_index = 0
@@ -70,14 +75,16 @@ class GameLayout_choose_model_1(QMainWindow, Ui_choose_model_1):
         if not hasattr(self, 'timer'):
             self.timer = QTimer(self)
             self.timer.timeout.connect(update_text_stream)
-            self.timer.start(50)  # 每50毫秒更新一次
+            self.timer.setInterval(InteractionTimerInterval)
+            self.timer.start()  # 每50毫秒更新一次
         else:
             self.timer.stop()
             self.timer = QTimer(self)
             self.timer.timeout.connect(update_text_stream)
-            self.timer.start(50)
+            self.timer.setInterval(InteractionTimerInterval)
+            self.timer.start()
 
-
+    
   
 class GameLayout_allocateEnergy(QMainWindow, Ui_allocateEnergy):
     def __init__(self):
@@ -85,18 +92,24 @@ class GameLayout_allocateEnergy(QMainWindow, Ui_allocateEnergy):
         self.setupUi(self)
         self.frame_modal.setVisible(False)
         self.add_diary_widget()
-        
+        self.label_5.setText("你还没有给自己取名字哦~")
+        self.label_5.setWordWrap(True)
         self.frame_selectArea.setGeometry(QRect(0,120,500,500))
         #目前的三张人物图片，都存放在resource1_rc中
         self.img_path_list=["url(:/people/resource/boy_normal_-removebg-preview.png)","url(:/people/resource/girl_shy-removebg-preview (2).png)","url(:/people/resource/girl_smile-removebg-preview.png)"]
         ###此处是用来更换主人公头像的,性别选女用女生图，性别男用男生图
         self.change_graphicsView(self.img_path_list[1])
 
+    def change_name(self,new_name):
+        self.label_5.setText(new_name)
+
     def change_graphicsView(self,img_path):
         self.graphicsView.setStyleSheet(f'border-image: {img_path};'"background-color:grey;")
     def add_diary_widget(self):
         #每周展示diary的widget，包含许多组件
         self.widget_diary = new_widget(self)
+
+
         self.widget_diary.setVisible(False)
         self.widget_diary.setGeometry(0, 0, 1280, 720)
        #每周执行任务的内容widget,模糊背景
@@ -115,6 +128,7 @@ class GameLayout_allocateEnergy(QMainWindow, Ui_allocateEnergy):
                     "#pushButton_diary_next:pressed{color:brown;\n"
             "background-color: rgb(255, 170, 0);}"
         )
+
     
         
     # 点击nextWeek后，模糊背景，显示diary页面
@@ -136,17 +150,18 @@ class GameLayout_allocateEnergy(QMainWindow, Ui_allocateEnergy):
 
 
 
+
+
+
+
 class GameLayout_Agent(QMainWindow, Ui_Agent_choose):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
      
-    
 
-# class GameLayout_MainMenu(QMainWindow, Ui_cover):
-#     def __init__(self):
-#         super().__init__()
-#         self.setupUi(self)
+
+
 
 
 
@@ -156,20 +171,38 @@ class MyWindow(QMainWindow):
         super().__init__()
         
         self.resize(1280,720)
-        
+        self.player = QMediaPlayer()
+        # 创建音频输出对象
+        self.audio_output = QAudioOutput()
+        self.audio_output.setVolume(0.6)
+        # 将媒体播放器与音频输出连接起来
+        self.player.setAudioOutput(self.audio_output)
+         # 设置要播放的音频文件路径
+        audio_file_path = 'Game/Animation/水月陵 - Raised bed.flac'
+        self.player.setSource(QUrl.fromLocalFile(audio_file_path))
+
+        # 设置循环播放
+        self.player.setLoops(QMediaPlayer.Loops.Infinite)
+        self.player.play()
         self.stacked_layout = QStackedLayout()
         self.game_layout_main_menu = GameLayout_MainMenu()
         self.game_layout_Agent= GameLayout_Agent()
         self.game_layout_choose_model_1= GameLayout_choose_model_1()
         self.game_layout_allocateEnergy= GameLayout_allocateEnergy()
-        
+        self.game_layout_setting=GameLayout_setting()
+        self.game_layout_setting.set_mainWindow_instance(self)
+        self.game_layout_setting.set_allocateEnergy_instance(self.game_layout_allocateEnergy)
+
+
         self.game_layout_initialAnimation = GameLayout_initialAnimation(callback = lambda: self.stacked_layout.setCurrentIndex(3))
+        self.game_layout_initialAnimation.set_allocateEnergy_instance(self.game_layout_allocateEnergy)
+
         self.stacked_layout.addWidget(self.game_layout_main_menu) # 0
         self.stacked_layout.addWidget(self.game_layout_Agent) # 1
         self.stacked_layout.addWidget(self.game_layout_choose_model_1) # 2
         self.stacked_layout.addWidget(self.game_layout_allocateEnergy) # 3
         self.stacked_layout.addWidget(self.game_layout_initialAnimation) # 4
-
+        self.stacked_layout.addWidget(self.game_layout_setting)#5
         central_widget = QWidget()
         central_widget.setLayout(self.stacked_layout)
         self.setCentralWidget(central_widget)
@@ -187,9 +220,11 @@ class MyWindow(QMainWindow):
 
     def bind(self):
         self.game_layout_main_menu.pushButton.clicked.connect(self.game_start)
+        self.game_layout_main_menu.pushButton_3.clicked.connect(lambda: self.stacked_layout.setCurrentIndex(5))
         self.game_layout_main_menu.pushButton_4.clicked.connect(lambda: self.stacked_layout.setCurrentIndex(1))
         self.game_layout_main_menu.pushButton_5.clicked.connect(self.close)
         self.game_layout_Agent.exit_button.clicked.connect(lambda: self.stacked_layout.setCurrentIndex(0))
+        self.game_layout_setting.ui.exit_button.clicked.connect(lambda: self.stacked_layout.setCurrentIndex(0))
         self.game_layout_allocateEnergy.pushButton_exit.clicked.connect(lambda: self.stacked_layout.setCurrentIndex(0))
         self.game_layout_allocateEnergy.pushButton_next.clicked.connect(self.nextWeek)
         self.game_layout_Agent.pushButton.clicked.connect(self.agent_girlfriend)
@@ -213,7 +248,7 @@ class MyWindow(QMainWindow):
         self.game_layout_allocateEnergy.pushButton_plus3.clicked.connect(lambda: self.game.modifyEnergy(1,3))
         self.game_layout_allocateEnergy.pushButton_plus4.clicked.connect(lambda: self.game.modifyEnergy(1,4))
         self.game_layout_allocateEnergy.pushButton_plus5.clicked.connect(lambda: self.game.modifyEnergy(1,5))
-
+        #这里没太看明白
         self.game_layout_allocateEnergy.pushButton_diary_next.clicked.connect(lambda: self.game.next())
 
 
@@ -253,7 +288,10 @@ class MyWindow(QMainWindow):
             event_crush_atFirstBlush.event_start(agent_mode=True)
         else:
             print("event_crush_atFirstBlush not found")
-        
+    def change_sound(self,value):
+        self.audio_output.setVolume(value/100.0)
+        self.game_layout_initialAnimation.sound_effect.setVolume(value/100.0)
+        self.game_layout_allocateEnergy.widget_diary.label_diary_content.audio_output.setVolume(value/100.0)  
    
 
 if __name__=="__main__":

@@ -5,6 +5,7 @@ from PySide6.QtCore import QTimer, Qt,QRect,QUrl
 from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
 
 import resource.resource3_rc
+
 def insert_newline_every_21_chars(text):
     result = []
     current_length = 0
@@ -41,8 +42,10 @@ class CustomLabel(QLabel):
         self.rotate_timer.timeout.connect(self.updateAngle)
        
         self.player = QMediaPlayer()
+        
         # 创建音频输出对象
         self.audio_output = QAudioOutput()
+        self.audio_output.setVolume(0.6)
         # 将媒体播放器与音频输出连接起来
         self.player.setAudioOutput(self.audio_output)
 
@@ -54,10 +57,11 @@ class CustomLabel(QLabel):
         self.player.setLoops(QMediaPlayer.Loops.Infinite)
       
     def start_animate(self):
-        self.timer.start(100)
-        # 设置旋转定时器，每50毫秒触发一次
-        
-        self.rotate_timer.start(100)
+        from setting_start import TextTimerInterval
+        self.timer.setInterval(TextTimerInterval)
+        self.rotate_timer.setInterval(TextTimerInterval)
+        self.timer.start()
+        self.rotate_timer.start()
         self.play_sound()
     def play_sound(self):
         self.player.play()

@@ -177,7 +177,8 @@ class Game:
         self.Ui.game_layout_allocateEnergy.label_content.setText(self.currentEvent.if_join()[0] + "," + self.currentEvent.if_join()[1]) 
         self.Ui.game_layout_allocateEnergy.frame_modal.setVisible(True)
         self.Ui.game_layout_allocateEnergy.label_money_value.setText(str(self.displaySetting["money"]))
-        
+        #wyd加的用于暂停定时器
+        self.Ui.game_layout_allocateEnergy.widget_diary.label_diary_content.timer.stop()
         def disablePushButton():
             self.Ui.game_layout_allocateEnergy.pushButton_minus1.setEnabled(False)
             self.Ui.game_layout_allocateEnergy.pushButton_minus2.setEnabled(False)

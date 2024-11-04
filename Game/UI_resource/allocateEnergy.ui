@@ -199,7 +199,7 @@ background-color:grey;</string>
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>250</y>
+      <y>350</y>
       <width>171</width>
       <height>51</height>
      </rect>
@@ -218,7 +218,7 @@ background-color:grey;</string>
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>360</y>
+      <y>460</y>
       <width>171</width>
       <height>51</height>
      </rect>
@@ -618,7 +618,7 @@ background-color:grey;</string>
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>310</y>
+      <y>410</y>
       <width>131</width>
       <height>41</height>
      </rect>
@@ -637,7 +637,7 @@ background-color:grey;</string>
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>400</y>
+      <y>500</y>
       <width>151</width>
       <height>61</height>
      </rect>

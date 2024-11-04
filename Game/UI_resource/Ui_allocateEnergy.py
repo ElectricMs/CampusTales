@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'allocateEnergy.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.2
+## Created by: Qt User Interface Compiler version 6.8.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -98,14 +98,14 @@ class Ui_allocateEnergy(object):
 "background-color:grey;")
         self.label_energy = QLabel(self.centralwidget)
         self.label_energy.setObjectName(u"label_energy")
-        self.label_energy.setGeometry(QRect(30, 250, 171, 51))
+        self.label_energy.setGeometry(QRect(30, 350, 171, 51))
         font3 = QFont()
         font3.setPointSize(17)
         font3.setBold(True)
         self.label_energy.setFont(font3)
         self.label_money = QLabel(self.centralwidget)
         self.label_money.setObjectName(u"label_money")
-        self.label_money.setGeometry(QRect(30, 360, 171, 51))
+        self.label_money.setGeometry(QRect(30, 460, 171, 51))
         self.label_money.setFont(font3)
         self.label_moreEvents = QLabel(self.centralwidget)
         self.label_moreEvents.setObjectName(u"label_moreEvents")
@@ -214,14 +214,14 @@ class Ui_allocateEnergy(object):
         self.pushButton_nextPage.setStyleSheet(u"border-image: url(:/image/resource/\u53f3\u7bad\u5934.png);")
         self.label_energy_value = QLabel(self.centralwidget)
         self.label_energy_value.setObjectName(u"label_energy_value")
-        self.label_energy_value.setGeometry(QRect(50, 310, 131, 41))
+        self.label_energy_value.setGeometry(QRect(50, 410, 131, 41))
         font7 = QFont()
         font7.setPointSize(19)
         font7.setBold(True)
         self.label_energy_value.setFont(font7)
         self.label_money_value = QLabel(self.centralwidget)
         self.label_money_value.setObjectName(u"label_money_value")
-        self.label_money_value.setGeometry(QRect(50, 400, 151, 61))
+        self.label_money_value.setGeometry(QRect(50, 500, 151, 61))
         self.label_money_value.setFont(font7)
         self.frame_modal = QFrame(self.centralwidget)
         self.frame_modal.setObjectName(u"frame_modal")

@@ -6,14 +6,11 @@ from Animation.Ui_yinru import Ui_Page1
 import Animation.resoure_main_rc
 
 
-#gender=1:男，gender=2:女
-gender=0
-
 class CustomPlainTextEdit(QPlainTextEdit):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.read_only = False  # 初始化为非只读状态
-
+        
     def keyPressEvent(self, event: QKeyEvent):
         # print("文本编辑框keyPressEvent被执行")
         
@@ -23,7 +20,7 @@ class CustomPlainTextEdit(QPlainTextEdit):
             self.setVisible(False)
             self.setReadOnly(True)
             self.read_only = True  # 记录当前状态
-            print("名字是"+self.toPlainText())
+            #print("名字是"+self.toPlainText())
         else:
            
             super().keyPressEvent(event)
@@ -43,6 +40,7 @@ class MyWindow(QMainWindow):
         # 创建一个QSoundEffect实例来播放音效
         self.sound_effect = QSoundEffect(self)
         self.sound_effect.setSource(QUrl.fromLocalFile('Game\Animation\机械键盘打字音效.wav'))# type: ignore  # 替换为你的音频文件路径
+        self.sound_effect.setVolume(0.6)
         self.ui.test_pushButton.setVisible(False)
         self.ui.test_pushButton.clicked.connect(self.start_flow_text)
         self.label_list=[]
@@ -66,7 +64,18 @@ class MyWindow(QMainWindow):
 "                padding: 5px;               /* \u5185\u8fb9\u8ddd\uff0c\u53ef\u9009 */\n"
 " }")   
         self.plainTextEdit.setVisible(False)
-        
+        self.allocateEnergy=None
+    def set_allocateEnergy_instance(self,allocateEnergy_instance):
+        self.allocateEnergy=allocateEnergy_instance
+    def call_allocateEnergy_method(self):
+
+        if self.allocateEnergy:
+            if self.plainTextEdit.toPlainText()=="":
+                return
+            else:
+                self.allocateEnergy.change_name(self.plainTextEdit.toPlainText())
+        else:
+            print("allocateEnergy instance not set")
         
           
     def keyPressEvent(self,event):
@@ -102,6 +111,7 @@ class MyWindow(QMainWindow):
         self.sound_effect.stop()
 
     def start_flow_text(self):
+        from setting_start import AnimationTimerInterval
         self.count=0
         self.current_index=0
         self.play_sound()
@@ -116,34 +126,18 @@ class MyWindow(QMainWindow):
                 
                 self.stop_sound()
                 self.timer.stop()
-                if self.page==2:
-                    self.Page2_button()
+            
         if not hasattr(self, 'timer'):
             self.timer = QTimer(self)
             self.timer.timeout.connect(update_text)
-            self.timer.start(100)
+            self.timer.setInterval(AnimationTimerInterval)
+            self.timer.start()
         else:
             self.timer.stop()
             self.timer = QTimer(self)
             self.timer.timeout.connect(update_text)
-            self.timer.start(100)
-    # def update_text(self):
-        
-        
-    #     if self.current_index < len(self.text_list[self.count]):
-    #         self.label_list[self.count].setText(self.text_list[self.count][:self.current_index + 1])
-    #         self.current_index += 1
-    #     else:
-    #         self.count+=1
-    #         self.current_index=0
-            
-
-    #     if self.count==len(self.text_list):
-    #         self.count=0
-    #         self.stop_sound()
-    #         self.timer.stop()
-    #         if self.page==2:
-    #             self.Page2_button()
+            self.timer.setInterval(AnimationTimerInterval)
+            self.timer.start()
 
 
 
@@ -216,77 +210,70 @@ class MyWindow(QMainWindow):
             button.deleteLater()
             button=None
         self.plainTextEdit.setVisible(False)
+        self.call_allocateEnergy_method()
         
-        self.Page2_label()
+        self.Page3()
         # print("change_name结束")
     
             
-    def Page2_label(self):
-        self.page=2
+    # def Page2_label(self):
+    #     self.page=2
         
-        label1 = QLabel("请选择你的性别", self.ui.centralwidget)
-        label1.setGeometry(QRect(390, 210, 531, 141))
-        font = QFont()
-        font.setFamilies([u"\u7ad9\u9177\u5c0f\u8587LOGO\u4f53"])
-        font.setPointSize(54)
-        label1.setFont(font)
-        label1.setStyleSheet(u"color: rgb(255, 255, 255);")
-        #label.setText("请选择你的性别")
-        label1.show()
-        for label in self.ui.centralwidget.findChildren(QLabel):
-            self.label_list.append(label)
-            self.text_list.append(label.text())
-            label.setText("")
-        #print(self.text_list)
-        label.show()
-        self.start_flow_text()
-    def Page2_button(self):
-        font = QFont()
-        font.setFamilies([u"\u7ad9\u9177\u5c0f\u8587LOGO\u4f53"])
-        font.setPointSize(54)
-        pushButton = QPushButton("男",self.ui.centralwidget)
-        #pushButton.setObjectName(u"pushButton")
-        pushButton.setGeometry(QRect(500, 410, 75, 81))
-        pushButton.setFont(font)
-        pushButton.setStyleSheet(u"background-color: transparent;\n"
-        "color:rgb(255, 255, 255);")
+    #     label1 = QLabel("请选择你的性别", self.ui.centralwidget)
+    #     label1.setGeometry(QRect(390, 210, 531, 141))
+    #     font = QFont()
+    #     font.setFamilies([u"\u7ad9\u9177\u5c0f\u8587LOGO\u4f53"])
+    #     font.setPointSize(54)
+    #     label1.setFont(font)
+    #     label1.setStyleSheet(u"color: rgb(255, 255, 255);")
+    #     #label.setText("请选择你的性别")
+    #     label1.show()
+    #     for label in self.ui.centralwidget.findChildren(QLabel):
+    #         self.label_list.append(label)
+    #         self.text_list.append(label.text())
+    #         label.setText("")
+    #     #print(self.text_list)
+    #     label.show()
+    #     self.start_flow_text()
+    # def Page2_button(self):
+    #     font = QFont()
+    #     font.setFamilies([u"\u7ad9\u9177\u5c0f\u8587LOGO\u4f53"])
+    #     font.setPointSize(54)
+    #     pushButton = QPushButton("男",self.ui.centralwidget)
+    #     #pushButton.setObjectName(u"pushButton")
+    #     pushButton.setGeometry(QRect(500, 410, 75, 81))
+    #     pushButton.setFont(font)
+    #     pushButton.setStyleSheet(u"background-color: transparent;\n"
+    #     "color:rgb(255, 255, 255);")
         
-        pushButton.show()
-        pushButton.clicked.connect(self.man)
-        pushButton.clicked.connect(self.change2)
-        pushButton_2 = QPushButton("女",self.ui.centralwidget)
-        #pushButton_2.setObjectName(u"pushButton_2")
-        pushButton_2.setGeometry(QRect(720, 410, 75, 81))
-        pushButton_2.setFont(font)
-        pushButton_2.setStyleSheet(u"background-color: transparent;\n"
-        "color:rgb(255, 255, 255);")
-        pushButton_2.show()
-        pushButton_2.clicked.connect(self.woman)
-        pushButton_2.clicked.connect(self.change2)
-    def change2(self):
-        self.stop_sound()
-        self.label_list=[]
-        self.text_list=[]
-        #遍历所有子控件并删除它们
-        for label in self.ui.centralwidget.findChildren(QLabel):
-            label.setParent(None)
-            label.deleteLater()
-            label = None
-        for button in self.ui.centralwidget.findChildren(QPushButton):
-            button.setParent(None)
-            button.deleteLater()
-            button=None
-        self.Page3()
+    #     pushButton.show()
+    #     pushButton.clicked.connect(self.man)
+    #     pushButton.clicked.connect(self.change2)
+    #     pushButton_2 = QPushButton("女",self.ui.centralwidget)
+    #     #pushButton_2.setObjectName(u"pushButton_2")
+    #     pushButton_2.setGeometry(QRect(720, 410, 75, 81))
+    #     pushButton_2.setFont(font)
+    #     pushButton_2.setStyleSheet(u"background-color: transparent;\n"
+    #     "color:rgb(255, 255, 255);")
+    #     pushButton_2.show()
+    #     pushButton_2.clicked.connect(self.woman)
+    #     pushButton_2.clicked.connect(self.change2)
+    # def change2(self):
+    #     self.stop_sound()
+    #     self.label_list=[]
+    #     self.text_list=[]
+    #     #遍历所有子控件并删除它们
+    #     for label in self.ui.centralwidget.findChildren(QLabel):
+    #         label.setParent(None)
+    #         label.deleteLater()
+    #         label = None
+    #     for button in self.ui.centralwidget.findChildren(QPushButton):
+    #         button.setParent(None)
+    #         button.deleteLater()
+    #         button=None
+    #     self.Page3()
         
-    def man(self):
-        global gender
-        gender=1
-        print("男")
-        
-    def woman(self):
-        global gender
-        gender=2
-        print("女")
+
         
     def Page3(self):
         self.page=3

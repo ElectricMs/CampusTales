@@ -10,7 +10,7 @@ class CustomPlainTextEdit(QPlainTextEdit):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.read_only = False  # 初始化为非只读状态
-        
+        self.setPlaceholderText("给自己起个名字吧~")
     def keyPressEvent(self, event: QKeyEvent):
         # print("文本编辑框keyPressEvent被执行")
         
@@ -64,16 +64,16 @@ class MyWindow(QMainWindow):
 "                padding: 5px;               /* \u5185\u8fb9\u8ddd\uff0c\u53ef\u9009 */\n"
 " }")   
         self.plainTextEdit.setVisible(False)
-        self.allocateEnergy=None
-    def set_allocateEnergy_instance(self,allocateEnergy_instance):
-        self.allocateEnergy=allocateEnergy_instance
+        self.mainwindow=None
+    def set_mainwindow_instance(self,mainwindow_instance):
+        self.mainwindow=mainwindow_instance
     def call_allocateEnergy_method(self):
 
-        if self.allocateEnergy:
+        if self.mainwindow:
             if self.plainTextEdit.toPlainText()=="":
                 return
             else:
-                self.allocateEnergy.change_name(self.plainTextEdit.toPlainText())
+                self.mainwindow.change_name(self.plainTextEdit.toPlainText())
         else:
             print("allocateEnergy instance not set")
         

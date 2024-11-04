@@ -100,6 +100,7 @@ class GameLayout_allocateEnergy(QMainWindow, Ui_allocateEnergy):
         ###此处是用来更换主人公头像的,性别选女用女生图，性别男用男生图
         self.change_graphicsView(self.img_path_list[1])
 
+    
     def change_name(self,new_name):
         self.label_5.setText(new_name)
 
@@ -189,13 +190,15 @@ class MyWindow(QMainWindow):
         self.game_layout_Agent= GameLayout_Agent()
         self.game_layout_choose_model_1= GameLayout_choose_model_1()
         self.game_layout_allocateEnergy= GameLayout_allocateEnergy()
+
         self.game_layout_setting=GameLayout_setting()
         self.game_layout_setting.set_mainWindow_instance(self)
         self.game_layout_setting.set_allocateEnergy_instance(self.game_layout_allocateEnergy)
 
 
         self.game_layout_initialAnimation = GameLayout_initialAnimation(callback = lambda: self.stacked_layout.setCurrentIndex(3))
-        self.game_layout_initialAnimation.set_allocateEnergy_instance(self.game_layout_allocateEnergy)
+        self.game_layout_initialAnimation.set_mainwindow_instance(self)
+        
 
         self.stacked_layout.addWidget(self.game_layout_main_menu) # 0
         self.stacked_layout.addWidget(self.game_layout_Agent) # 1
@@ -214,6 +217,7 @@ class MyWindow(QMainWindow):
         # 设置当前显示的布局为主菜单
         self.current_layout_index = 0
         self.stacked_layout.setCurrentIndex(self.current_layout_index)
+    
     def keyPressEvent(self, event):
         # 将键盘事件传递给子窗口
         self.game_layout_initialAnimation.keyPressEvent(event)
@@ -292,7 +296,9 @@ class MyWindow(QMainWindow):
         self.audio_output.setVolume(value/100.0)
         self.game_layout_initialAnimation.sound_effect.setVolume(value/100.0)
         self.game_layout_allocateEnergy.widget_diary.label_diary_content.audio_output.setVolume(value/100.0)  
-   
+    def change_name(self,new_name):
+        self.game_layout_allocateEnergy.label_5.setText(new_name)
+        self.game_layout_setting.name_lineEdit.setText(new_name)
 
 if __name__=="__main__":
     app=QApplication([])

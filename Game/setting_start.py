@@ -33,7 +33,7 @@ def middle_speed():
 class lineEdit(QLineEdit):
     def __init__(self):
         super().__init__()
-        self.setPlaceholderText('请输入：')
+        self.setPlaceholderText('给自己起个名字吧~')
 
         font3 = QFont()
         font3.setFamilies([u"\u5fae\u8f6f\u96c5\u9ed1"])
@@ -41,7 +41,7 @@ class lineEdit(QLineEdit):
         self.setFont(font3)
         self.setReadOnly(True)  #设置只读
         self.resize(250,51)
-        self.setText("your name")
+        
         self.setContextMenuPolicy(Qt.ContextMenuPolicy.NoContextMenu)  #关闭右键上下菜单
         
     def mousePressEvent(self, arg__1: QMouseEvent) -> None:  #单击
@@ -69,7 +69,8 @@ class MyWindow(QMainWindow):
         self.name_lineEdit.setAlignment(Qt.AlignmentFlag.AlignCenter)  # 设置文字居中对齐
                                         #  "border: 2px solid #bcf0c4;")
         # self.label_2.setObjectName(u"label_2")
-        self.name_lineEdit.setGeometry(QRect(340, 170, 151, 41))
+        self.name_lineEdit.setGeometry(QRect(340, 170, 200, 41))
+        
         self.name_lineEdit.show()
         self.ui.label_2.setVisible(False)
         self.ui.horizontalSlider.setMaximum(100)
@@ -102,6 +103,7 @@ class MyWindow(QMainWindow):
             print("B instance not set")
         if self.allocateEnergy:
             if self.name_lineEdit.text()=="":
+
                 return
             else:
                 self.allocateEnergy.change_name(self.name_lineEdit.text())

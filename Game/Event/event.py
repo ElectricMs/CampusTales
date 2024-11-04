@@ -26,10 +26,12 @@ class event(ABC):
         # from .studentsUnion import event_studentsUnion
         from .crush_atFirstBlush import event_crush_atFirstBlush
         from .lecture_ACM import event_lecture_ACM
+        from .club_recruit import event_club_recruit
         subEvents={}
 
         subEvents.update({'crush_atFirstBlush':event_crush_atFirstBlush(Game)})
         subEvents.update({'lecture_ACM':event_lecture_ACM(Game)})
+        subEvents.update({'club_recruit':event_club_recruit(Game)})
         
         return subEvents
     

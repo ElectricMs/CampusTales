@@ -2,8 +2,6 @@ from. import event as Event
 from main import Game
 from typing import Tuple
 from abc import ABC, abstractmethod
-from Agent.agent import Agent
-from Agent.agent2 import Agent as Agent2
 import asyncio
 from PySide6.QtCore import QEventLoop
 import threading
@@ -11,11 +9,12 @@ import threading
 
 
 
-class club_recruit(Event.event):
+class event_club_recruit(Event.event):
     def __init__(self, Game:Game):
         super().__init__(name="club recruit", description="学生社团纳新，不用agent", Game=Game)
         self.probability=0
         self.layout=self.game.Ui.game_layout_choose_model_1
+        self.club_choosed = None
        
 
     def if_join(self)-> Tuple[str, str]:
@@ -27,10 +26,6 @@ class club_recruit(Event.event):
         
         
         self.step = 0
-        for key, value in kwargs.items():
-            if key == "agent_mode" and value==True:
-                self.agent_mode = True
-                self.step = 5
         self.game.Ui.stacked_layout.setCurrentIndex(2)
 
         self.layout.pushButton_option1.hide()
@@ -40,7 +35,6 @@ class club_recruit(Event.event):
 
         self.layout.label_name.setText(self.dialogue_list[self.step][0])
         self.layout.set_stream_text(self.dialogue_list[self.step][1])
-        print(self.agent)
         self.set_art()
 
         pass
@@ -52,69 +46,63 @@ class club_recruit(Event.event):
         if self.step >= len(self.dialogue_list):
             self.event_end()
             return
+        elif self.step == 4:
+            if pos == 1:
+                pass
+            elif pos == 2:
+                self.step += 1 # 5
+            elif pos == 3:
+                self.step += 2 # 6
+        elif self.step == 5: # 学术类社团做完选择
+            if pos == 1:
+                self.club_choosed = "数学探索社"
+            elif pos == 2:
+                self.club_choosed = "历史研习会"
+            elif pos == 3:
+                self.club_choosed = "经济学沙龙"
+            self.step = 7
+        elif self.step == 6: # 体育类社团做完选择
+            if pos == 1:
+                self.club_choosed = "篮球精英队"
+            elif pos == 2:
+                self.club_choosed = "足球联盟"
+            elif pos == 3:
+                self.club_choosed = "羽毛球飞扬社"
+            self.step = 7
+        elif self.step == 7: # 公益类社团做完选择
+            if pos == 1:
+                self.club_choosed = "志愿者行动团"
+            elif pos == 2:
+                self.club_choosed = "绿色地球环保社"
+            elif pos == 3:
+                self.club_choosed = "爱心传递协会"
+        elif self.step == 8:
+            if pos == 1:
+                pass
+            elif pos == 2:
+                self.step += 2 # 10
+            elif pos == 3:
+                self.step += 4 # 12
+        elif self.step == 10:
+            self.step = 14
+        elif self.step == 12:
+            self.step = 14
+
+
+
 
         self.set_art()
         self.layout.label_name.setText(self.dialogue_list[self.step][0])
-        self.layout.set_stream_text(self.dialogue_list[self.step][1])
+        if self.step != 7:
+            self.layout.set_stream_text(self.dialogue_list[self.step][1])
+        else:
+            self.layout.set_stream_text(self.dialogue_list[self.step][1].format(self.club_choosed))
 
         
-        if self.input_mode:
-            #一开始好感度应该为0
-            #当前传入30只是为了测试
-            #要把每次对话返回的好感度，传入这个函数
-            self.layout.favorite_level_change(30)
-            # 用户自选回答阶段，step不自增，结束用户回答阶段时再自增
-            input_text: str
-            assert pos in [0, 1, 2, 3], "pos should be 0, 1, 2, 3"
-            if pos == 0:
-                if self.layout.plainTextEdit_input.toPlainText().strip() == None or self.layout.plainTextEdit_input.toPlainText().strip() == "":
-                    self.step -= 1
-                    return # 输入内容为空时点击next不做任何操作
-                input_text = self.layout.plainTextEdit_input.toPlainText()
-            elif pos == 1:
-                input_text = self.layout.pushButton_option1.text()
-            elif pos == 2:
-                input_text = self.layout.pushButton_option2.text()
-            elif pos == 3:
-                input_text = self.layout.pushButton_option3.text()
-            self.talk_remaining -= 1
-
-            # 将内容发送给agent
-            self.layout.pushButton_next.hide()
-            # await
-            # 当收到回答后next显示，代表回答已经通过agent生成，准备完毕
-            async def get_response():
-                response = await self.agent.user_interact_with_agent(input_text)
-                response_text = response["response"]
-                self.dialogue_list[self.step+1][1] = response_text
-                self.layout.pushButton_next.show()
-            asyncio.run_coroutine_threadsafe(get_response(), self.loop)
-            
-            def user_input_end():
-                self.layout.pushButton_option1.hide()
-                self.layout.pushButton_option2.hide()
-                self.layout.pushButton_option3.hide()
-                self.layout.pushButton_option1.setText("")
-                self.layout.pushButton_option2.setText("")
-                self.layout.pushButton_option3.setText("")
-                self.layout.plainTextEdit_input.hide()
-                self.layout.plainTextEdit_input.clear()
-                
-
-            # 将用户回答流式打印
-            user_input_end()
-            self.layout.set_stream_text(input_text)
-            self.input_mode = False
-            return
-
+        
 
     def set_art(self):
-        def user_input(*args):
-            
-            self.layout.plainTextEdit_input.show()
-            self.layout.label_content.clear()
-            self.layout.plainTextEdit_input.setPlaceholderText(f"在上方选择你喜欢的选项（如果有的话），或在此输入你想说的吧！\n你还有{self.talk_remaining}次对话机会！")
-            
+        def user_choice(*args):
             count = 0
             for arg in args:
                 if isinstance(arg, str):
@@ -129,36 +117,42 @@ class club_recruit(Event.event):
                         self.layout.pushButton_option3.show()
                         self.layout.pushButton_option3.setText(arg)
         
+
+        # self.layout.pushButton_next.show()
+        self.layout.pushButton_option1.hide()
+        self.layout.pushButton_option2.hide()
+        self.layout.pushButton_option3.hide()
+
         if self.step == 0:
-            self.layout.label_img_left.hide()
+            # self.layout.label_img_left.hide()
+            pass
         elif self.step == 3:
-            self.layout.label_img_left.show()
+            user_choice("学术类社团", "体育类社团", "公益类社团")
+            self.layout.pushButton_next.hide()
+        elif self.step == 4:
+            user_choice("数学探索社", "历史研习会", "经济学沙龙")
+        elif self.step == 5:
+            user_choice("篮球精英队", "足球联盟", "羽毛球飞扬社")
         elif self.step == 6:
-            self.input_mode = True
-            user_input("你好！", "我喜欢你！")
+            user_choice("志愿者行动团", "绿色地球环保社", "爱心传递协会")
+        elif self.step == 7:
+            user_choice("我刚开始接触这方面，想多学习了解", "我已经接触一段时间了", "我只是想加入社团，了解一下")
+            self.layout.pushButton_next.hide()
         elif self.step == 8:
-            self.input_mode = True
-            user_input("你真漂亮", "我好喜欢你呀！", "你愿意和我出去吃饭吗？")
+            self.layout.pushButton_next.show()
         elif self.step == 10:
-            self.input_mode = True
-            user_input()
+            self.layout.pushButton_next.show()
         elif self.step == 12:
-            self.input_mode = True
-            user_input()
-        elif self.step == 14:
-            self.input_mode = True
-            user_input()
+            self.layout.pushButton_next.show()
 
         
     def event_end(self):
         self.refreshProbability()
         self.affection()
-        if self.agent_mode:
-            self.game.Ui.stacked_layout.setCurrentIndex(1)
-        else:
-            self.game.Ui.stacked_layout.setCurrentIndex(3)
-            self.game.progress["layout"]=3
-        self.agent_mode = False
+
+        self.game.Ui.stacked_layout.setCurrentIndex(3)
+        self.game.progress["layout"]=3
+
 
 
     def refreshProbability(self):
@@ -168,24 +162,29 @@ class club_recruit(Event.event):
     def affection(self,*args):
         pass
 
+    
+    club_list = [
+        "数学探索社", "历史研习会", "经济学沙龙",
+        "篮球精英队", "足球联盟", "羽毛球飞扬社",
+        "志愿者行动团", "绿色地球环保社", "爱心传递协会"
+    ]
 
     dialogue_list = [
-        ["Narrator", "\"各位大一新生还有学长学姐们，欢迎来到迎新晚会！\""], # 0
-        ["Narrator", "舞台上灯光璀璨，音乐欢快。学生会成员正在表演节目，观众席上坐满了新生和老生。你有些紧张而又有点期待地看着四周。"],
-        ["你", "\"好多人啊，我有点紧张……不过，听说今晚会有机会认识很多新朋友，我还是鼓起勇气来参加了。\""],
-        ["Narrator", "你四处张望，突然他的目光被一个人吸引住了——一位站在不远处，穿着一件简单的白色连衣裙，笑容甜美的女生。"],
-        ["你", "\"她好漂亮，感觉很亲切……我从来没有这么心动过。我要不要过去打个招呼？\""],
-        ["Narrator", "你深呼吸几下，鼓起勇气向她走去。"], # 5
-        ["你", ""],  # 6 这里要输入你自己的对话，发送给Agent
-        ["Crush", ""],
-        ["你", ""], # 8
-        ["Crush", ""],
-        ["你", ""], # 10
-        ["Crush", ""],
-        ["你", ""], # 12
-        ["Crush", ""],
-        ["你", ""], # 14
-        ["Crush", ""],
+        ["Narrator", "在一个洒满阳光的午后，校园广场汇聚了熙熙攘攘的学生群体，空气中洋溢着欢快与期待的气息。各个社团的展位上，色彩斑斓的海报如磁石般吸引着过往的同学驻足观看。此刻，学生会的社团负责人挺身而出，站在广场中央，满怀激情地向众人宣讲。"], # 0
+        ["Narrator", "\"欢迎大家参加我们每年一度的社团纳新活动！这是一个了解各类社团、结交新朋友的好机会。无论你是想在学术上提升自己，还是想在文艺、体育、科技等领域发挥特长，今天都有许多优秀的社团在这里等着你们！快来看看，找到属于你的社团吧！\""],
+        ["Narrator", "你在广场上四处浏览，看到各个社团的摊位，各具特色。你感到兴奋，这里有丰富的选择。"],
+        ["Narrator", "你在思考要不要选择一个感兴趣的社团加入。"], # 3
+        ["Narrator", "那具体选择哪个社团呢？"], # 4
+        ["Narrator", "那具体选择哪个社团呢？"], # 5
+        ["Narrator", "那具体选择哪个社团呢？"], # 6
+        ["社团负责人", "\"太好了！欢迎加入我们{}！请问你是新手还是有一定经验呢？\""], # 7
+        ["你", "\"我刚开始接触这方面，想多学习了解。\""], # 8
+        ["社团负责人", "\"没问题，我们会提供基础培训，帮助你掌握基本知识。下周我们有一次活动，你一定要参加！\""], # 9
+        ["你", "\"我已经接触一段时间了\""], # 10
+        ["社团负责人", "\"“那太棒了！我们每个月都会举办一次交流会，期待你的参与！\""], # 11
+        ["你", "\"我只是想加入社团，了解一下。\""], # 12
+        ["社团负责人", "\"欢迎你！加入社团不仅能学习到东西，还能结识到很多志同道合的朋友！\""], # 13
+        ["Narrator", "你与社团负责人进行了愉快的交流，感受到了社团的温暖与热情。这份体验无疑会让你的校园生活更加多彩多姿。"], # 14
         ["Narrator", "(End.)"],
     ]
     

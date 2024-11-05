@@ -1,5 +1,10 @@
 <RCC>
   <qresource prefix="image">
+    <file>resource/Strength_assign/002_07.png</file>
+    <file>resource/Strength_assign/002_07_click.png</file>
+    <file>resource/Strength_assign/002_07_hover.png</file>
+    <file>resource/弹窗.png</file>
+    <file>resource/弹窗2.png</file>
     <file>resource/Agent/paper_l.png</file>
     <file>resource/Agent/对话标签2.jpg</file>
     <file>resource/exit_hover.png</file>

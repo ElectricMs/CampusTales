@@ -12,11 +12,11 @@ from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
     QSize, QTime, QUrl, Qt)
 from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
+    QFont, QFontDatabase, QGradient, QIcon,QMouseEvent,QFocusEvent,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QLabel, QMainWindow, QPushButton,
-    QSizePolicy, QSlider, QWidget)
+from PySide6.QtWidgets import (QApplication, QFrame, QLabel, QMainWindow,
+    QPushButton, QSizePolicy, QSlider, QWidget,QLineEdit)
 import resource.resource2_rc
 
 class Ui_MainWindow(object):
@@ -52,6 +52,7 @@ class Ui_MainWindow(object):
         self.label_2 = QLabel(self.centralwidget)
         self.label_2.setObjectName(u"label_2")
         self.label_2.setGeometry(QRect(340, 170, 151, 41))
+        
         self.speed_label = QLabel(self.centralwidget)
         self.speed_label.setObjectName(u"speed_label")
         self.speed_label.setGeometry(QRect(80, 270, 201, 81))
@@ -99,6 +100,10 @@ class Ui_MainWindow(object):
 "border-radius:12px;}\n"
 "#high_speed_button:hover{\n"
 "background:#bcf0c4;\n"
+"border-radius:12px;}\n"
+"\n"
+"#high_speed_button:checked{\n"
+"background:#bcf0c4;\n"
 "border-radius:12px;}")
         self.middle_speed_button = QPushButton(self.centralwidget)
         self.middle_speed_button.setObjectName(u"middle_speed_button")
@@ -107,6 +112,10 @@ class Ui_MainWindow(object):
         self.middle_speed_button.setStyleSheet(u"#middle_speed_button{background:qlineargradient(spread:pad,x1:0,y1:1,x2:0,y2:0,stop:0 #e4f1f3,stop:1#bcf0c4);\n"
 "border-radius:12px;}\n"
 "#middle_speed_button:hover{\n"
+"background:#bcf0c4;\n"
+"border-radius:12px;}\n"
+"\n"
+"#middle_speed_button:checked{\n"
 "background:#bcf0c4;\n"
 "border-radius:12px;}")
         self.low_speed_button = QPushButton(self.centralwidget)
@@ -117,6 +126,10 @@ class Ui_MainWindow(object):
 "border-radius:12px;}\n"
 "#low_speed_button:hover{\n"
 "background:#bcf0c4;\n"
+"border-radius:12px;}\n"
+"\n"
+"#low_speed_button:checked{\n"
+"background:#bcf0c4;\n"
 "border-radius:12px;}")
         self.horizontalSlider = QSlider(self.centralwidget)
         self.horizontalSlider.setObjectName(u"horizontalSlider")
@@ -125,6 +138,7 @@ class Ui_MainWindow(object):
         self.label = QLabel(self.centralwidget)
         self.label.setObjectName(u"label")
         self.label.setGeometry(QRect(910, 400, 50, 51))
+ 
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -147,5 +161,6 @@ class Ui_MainWindow(object):
         self.middle_speed_button.setText(QCoreApplication.translate("MainWindow", u"\u4e2d\u901f", None))
         self.low_speed_button.setText(QCoreApplication.translate("MainWindow", u"\u6162\u901f", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"100", None))
+        
     # retranslateUi
 

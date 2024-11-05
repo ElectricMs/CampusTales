@@ -224,6 +224,10 @@ border-radius:12px;}</string>
 border-radius:12px;}
 #high_speed_button:hover{
 background:#bcf0c4;
+border-radius:12px;}
+
+#high_speed_button:checked{
+background:#bcf0c4;
 border-radius:12px;}</string>
     </property>
     <property name="text">
@@ -251,6 +255,10 @@ border-radius:12px;}</string>
 border-radius:12px;}
 #middle_speed_button:hover{
 background:#bcf0c4;
+border-radius:12px;}
+
+#middle_speed_button:checked{
+background:#bcf0c4;
 border-radius:12px;}</string>
     </property>
     <property name="text">
@@ -277,6 +285,10 @@ border-radius:12px;}</string>
      <string notr="true">#low_speed_button{background:qlineargradient(spread:pad,x1:0,y1:1,x2:0,y2:0,stop:0 #e4f1f3,stop:1#bcf0c4);
 border-radius:12px;}
 #low_speed_button:hover{
+background:#bcf0c4;
+border-radius:12px;}
+
+#low_speed_button:checked{
 background:#bcf0c4;
 border-radius:12px;}</string>
     </property>
@@ -309,6 +321,83 @@ border-radius:12px;}</string>
     <property name="text">
      <string>100</string>
     </property>
+   </widget>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>160</y>
+      <width>900</width>
+      <height>300</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>站酷小薇LOGO体</family>
+      <pointsize>10</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#frame{
+	border-image: url(:/image/resource/弹窗.png);}</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Shape::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Shadow::Raised</enum>
+    </property>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>440</x>
+       <y>50</y>
+       <width>361</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>站酷小薇LOGO体</family>
+       <pointsize>36</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="text">
+      <string>当前设置已保存</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton">
+     <property name="geometry">
+      <rect>
+       <x>530</x>
+       <y>180</y>
+       <width>161</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>微软雅黑</family>
+       <pointsize>22</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#pushButton{border-image: url(:/image/resource/Strength_assign/002_07.png);}
+#pushButton:hover{border-image: url(:/image/resource/Strength_assign/002_07_hover.png);}
+#pushButton:pressed{border-image: url(:/image/resource/Strength_assign/002_07_click.png);}
+
+</string>
+     </property>
+     <property name="text">
+      <string>确定</string>
+     </property>
+    </widget>
    </widget>
   </widget>
  </widget>

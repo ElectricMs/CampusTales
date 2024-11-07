@@ -28,12 +28,14 @@ class Event(ABC):
         from .lecture_ACM import LectureAcmEvent
         from .club_recruit import ClubRecruitEvent
         from .students_organization import StudentsOrganizationEvent
+        from .secondary_market import SecondaryMarketEvent
         subEvents={}
 
         subEvents.update({'crush_atFirstBlush':CrushAtFirstBlushEvent(Game)})
         subEvents.update({'lecture_ACM':LectureAcmEvent(Game)})
         subEvents.update({'club_recruit':ClubRecruitEvent(Game)})
         subEvents.update({'students_organization':StudentsOrganizationEvent(Game)})
+        subEvents.update({'secondary_market':SecondaryMarketEvent(Game)})
         
         return subEvents
     

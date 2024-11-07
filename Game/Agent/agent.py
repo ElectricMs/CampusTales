@@ -49,7 +49,7 @@ class Agent:
     async def user_interact_with_agent(self, user_input):
 
         context = f"用户对你说: {user_input}"
-        response =await self.generate_response(context)
+        response = await self.generate_response(context)
         # 提取问候语
         greeting_start = 0
         greeting_end = response.find("\n\n")

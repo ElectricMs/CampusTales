@@ -9,7 +9,7 @@ import threading
 
 
 
-class event_club_recruit(Event.event):
+class ClubRecruitEvent(Event.Event):
     def __init__(self, Game:Game):
         super().__init__(name="club recruit", description="学生社团纳新，不用agent", Game=Game)
         self.probability=0
@@ -181,7 +181,7 @@ class event_club_recruit(Event.event):
         ["你", "\"我刚开始接触这方面，想多学习了解。\""], # 8
         ["社团负责人", "\"没问题，我们会提供基础培训，帮助你掌握基本知识。下周我们有一次活动，你一定要参加！\""], # 9
         ["你", "\"我已经接触一段时间了\""], # 10
-        ["社团负责人", "\"“那太棒了！我们每个月都会举办一次交流会，期待你的参与！\""], # 11
+        ["社团负责人", "\"那太棒了！我们每个月都会举办一次交流会，期待你的参与！\""], # 11
         ["你", "\"我只是想加入社团，了解一下。\""], # 12
         ["社团负责人", "\"欢迎你！加入社团不仅能学习到东西，还能结识到很多志同道合的朋友！\""], # 13
         ["Narrator", "你与社团负责人进行了愉快的交流，感受到了社团的温暖与热情。这份体验无疑会让你的校园生活更加多彩多姿。"], # 14

@@ -24,7 +24,7 @@ class ClickableLabel(QLabel):
 
 class Game:
     def __init__(self,Ui:MyWindow):
-        from Event.event import event
+        from Event.event import Event
 
         print("class Game initiating...")
         self.Ui=Ui
@@ -39,10 +39,10 @@ class Game:
         self.progress={"layout":-1}
 
         # 存放所有事件，包括目前的可选事件和不可选事件，格式为 {事件名:事件实例}
-        self.allEvents=event.get_all_subEvents(self)
+        self.allEvents=Event.get_all_subEvents(self)
 
         # 当前正在进行的事件
-        self.currentEvent:event
+        self.currentEvent:Event
         
         # 存放所有可选事件的概率，格式为 {事件名:概率}
         self.eventProbablity={}

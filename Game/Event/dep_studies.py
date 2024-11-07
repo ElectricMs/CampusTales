@@ -1,7 +1,7 @@
 from. import event as Event
 from main import Game
 
-class event_studies(Event.event):
+class StudiesEvent(Event.Event):
     def __init__(self, Game:Game):
         super().__init__(name="学业", description="主线中最初就有的学业部分", Game=Game)
         self.probability=0

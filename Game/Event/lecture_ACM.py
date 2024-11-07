@@ -8,7 +8,7 @@ from .DirectedGraph import DirectedGraph
 
 
 
-class event_lecture_ACM(Event.event):
+class LectureAcmEvent(Event.Event):
     def __init__(self, Game:Game):
         super().__init__(name="lecture ACM", description="ACM竞赛讲座，不用agent", Game=Game)
         self.probability=0

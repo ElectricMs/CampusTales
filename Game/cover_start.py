@@ -275,7 +275,7 @@ class MyWindow(QMainWindow):
 
 
     def agent_girlfriend(self):
-        from Event.crush_atFirstBlush import event_crush_atFirstBlush
+        from Event.crush_atFirstBlush import CrushAtFirstBlushEvent
         # 这里的处理不太好，只是为了调试方便
         # from main import Game
         # if hasattr(self, 'game'):
@@ -288,8 +288,8 @@ class MyWindow(QMainWindow):
         # self.event_crush_atFirstBlush.event_start()
         
         if 'crush_atFirstBlush' in self.game.allEvents:
-            event_crush_atFirstBlush=self.game.allEvents['crush_atFirstBlush']
-            event_crush_atFirstBlush.event_start(agent_mode=True)
+            CrushAtFirstBlushEvent=self.game.allEvents['crush_atFirstBlush']
+            CrushAtFirstBlushEvent.event_start(agent_mode=True)
         else:
             print("event_crush_atFirstBlush not found")
     def change_sound(self,value):

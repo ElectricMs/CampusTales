@@ -2,7 +2,7 @@ from. import event as Event
 from main import Game
 from typing import Tuple
 
-class event_template(Event.event):
+class TemplateEvent(Event.Event):
     def __init__(self, Game:Game):
         super().__init__(name="the name of the event", description="the description of the event", Game=Game)
         self.probability=0

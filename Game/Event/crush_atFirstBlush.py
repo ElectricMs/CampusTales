@@ -11,7 +11,7 @@ import threading
 
 
 
-class event_crush_atFirstBlush(Event.event):
+class CrushAtFirstBlushEvent(Event.Event):
     def __init__(self, Game:Game):
         super().__init__(name="crush at first blush", description="在迎新晚会上遇到的crush", Game=Game)
         self.probability=0

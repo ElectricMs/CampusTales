@@ -10,7 +10,7 @@ import threading
 
 
 
-class event_internship(Event.event):
+class InternshipEvent(Event.Event):
     def __init__(self, Game:Game):
         super().__init__(name="internship", description="获得实习机会", Game=Game)
         self.probability=0

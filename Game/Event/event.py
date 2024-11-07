@@ -6,7 +6,7 @@ from main import Game
 
 
 
-class event(ABC):
+class Event(ABC):
     def __init__(self, name:str, description:str, Game:Game, time=time.time()):
         self.name=name
         self.time=time
@@ -24,14 +24,14 @@ class event(ABC):
     def get_all_subEvents(cls, Game):
 
         # from .studentsUnion import event_studentsUnion
-        from .crush_atFirstBlush import event_crush_atFirstBlush
-        from .lecture_ACM import event_lecture_ACM
-        from .club_recruit import event_club_recruit
+        from .crush_atFirstBlush import CrushAtFirstBlushEvent
+        from .lecture_ACM import LectureAcmEvent
+        from .club_recruit import ClubRecruitEvent
         subEvents={}
 
-        subEvents.update({'crush_atFirstBlush':event_crush_atFirstBlush(Game)})
-        subEvents.update({'lecture_ACM':event_lecture_ACM(Game)})
-        subEvents.update({'club_recruit':event_club_recruit(Game)})
+        subEvents.update({'crush_atFirstBlush':CrushAtFirstBlushEvent(Game)})
+        subEvents.update({'lecture_ACM':LectureAcmEvent(Game)})
+        subEvents.update({'club_recruit':ClubRecruitEvent(Game)})
         
         return subEvents
     
@@ -85,7 +85,7 @@ class event(ABC):
 
 
 # @deprecated
-class event_test(event):
+class event_test(Event):
     def __init__(self, Game:Game):
         super().__init__(name="测试事件", description="This is a test event", Game=Game)
 

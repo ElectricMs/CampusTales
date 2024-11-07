@@ -87,7 +87,7 @@ class Game:
         # self.Ui.stacked_layout.setCurrentIndex(3) # allocateEnergy
         self.Ui.game_layout_initialAnimation.page=1
         self.Ui.game_layout_initialAnimation.start_flow_text()
-        # ============================
+
         self.loadEvent()
         self.progress["layout"]=3
         self.Ui.game_layout_allocateEnergy.label_content.setText(self.currentEvent.if_join()[0] + "," + self.currentEvent.if_join()[1]) 
@@ -479,7 +479,7 @@ class Game:
     def loadEvent(self):
         if self.week==0:
             # 第零周的事件
-            self.currentEvent=self.allEvents["club_recruit"]
+            self.currentEvent=self.allEvents["students_organization"]
             return True
         elif self.week==1:
             # 第一周的事件

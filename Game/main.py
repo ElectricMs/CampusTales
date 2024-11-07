@@ -479,7 +479,7 @@ class Game:
     def loadEvent(self):
         if self.week==0:
             # 第零周的事件
-            self.currentEvent=self.allEvents["secondary_market"]
+            self.currentEvent=self.allEvents["internship"]
             return True
         elif self.week==1:
             # 第一周的事件

@@ -1,4 +1,4 @@
-from agent_class import Agent, init_db
+from Game.Agent.agent_history import Agent, init_db
 import os
 import json
 import sqlite3  # 引入SQLite

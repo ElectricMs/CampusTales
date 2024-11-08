@@ -37,12 +37,11 @@ def init_db():
 
 
 class Agent:
-    def __init__(self, name, personality_traits,relationship, context, chat_model, initial_emotion=30):
+    def __init__(self, name, context, initial_emotion=30):
         self.name = name
-        self.personality_traits = personality_traits
         self.emotion_level = initial_emotion  # 范围: -100 到 +100
-        self.relationship = relationship
-        self.chat_model = chat_model
+        self.relationship = "陌生人"
+        self.chat_model = ChatZhipuAI(model="glm-4-plus", temperature=0.2)
         self.context = context
         # Define the prompt template
         self.prompt_template = PromptTemplate(
@@ -55,7 +54,7 @@ class Agent:
             """
         )
 
-    def generate_response(self, context):
+    async def generate_response(self, context):
         # 结合历史会话
         history = self.get_conversation_history()
         chat_prompt = self.prompt_template.format(
@@ -67,18 +66,9 @@ class Agent:
             SystemMessage(content=chat_prompt),
             HumanMessage(content=context)
         ]
-        # chat_prompt = self.prompt_template.format(
-        #     emotion_level=self.emotion_level,
-        #     context=self.context,
-        #     relationship=self.relationship,
-        # )
-        # messages = []
-        # messages.append(SystemMessage(content=chat_prompt))
-        # messages.extend(new_his_message)
-        # messages.append(HumanMessage(content=context))
-        # print(messages)
-        response = self.chat_model.invoke(messages)  # 使用 invoke 方法
-        return response.content.strip()  # 提取 content 并调用 strip()
+
+        response = await self.chat_model.ainvoke(messages)  # 使用 invoke 方法
+        return response.content.strip()  # type: ignore # 提取 content 并调用 strip()
 
     def get_conversation_history(self, limit=4):
         conn = sqlite3.connect('conversation_history.db')
@@ -90,20 +80,13 @@ class Agent:
         if(len(rows) != 0):
             self.emotion_level = rows[0][1]
         conn.close()
-        # new_message = []        
-        # for row in rows:
-        #     new_message.append(HumanMessage(content=row[1]))
-        #     new_message.append(AIMessage(content=row[2]))
-        # print(new_message)
-        # return new_message
-        # 将历史会话整合为字符串
         history = "\n".join([f"用户: {row[2]}\nAI: {row[3]}" for row in rows])
         return history
 
 
-    def user_interact_with_agent(self, user_input):
+    async def user_interact_with_agent(self, user_input):
         context = f"{user_input}"
-        response = self.generate_response(context)
+        response = await self.generate_response(context)
 
         # 提取AI的回复
         greeting_start = 0

@@ -1,4 +1,4 @@
-from agent_class import Agent, init_db
+from Game.Agent.agent_history import Agent, init_db
 import os
 import json
 import sqlite3  # 引入SQLite
@@ -69,7 +69,7 @@ def game_test():
 
 
        """
-    Xiaoxiaoxiao = Agent(chat_model=zhipuai_chat_model, name="李舰", personality_traits="严谨专业",relationship="陌生人", context=context1)
+    Xiaoxiaoxiao = Agent(name="李舰", context=context1)
 
     # 用户与Agent的对话
     while True:

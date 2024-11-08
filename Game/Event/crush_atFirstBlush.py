@@ -2,8 +2,7 @@ from. import event as Event
 from main import Game
 from typing import Tuple
 from abc import ABC, abstractmethod
-from Agent.agent import Agent
-from Agent.agent2 import Agent as Agent2
+from Agent.agent_history import Agent
 import asyncio
 from PySide6.QtCore import QEventLoop
 import threading
@@ -105,8 +104,7 @@ class CrushAtFirstBlushEvent(Event.Event):
         当前关系：恋人
        """
         
-        self.agent = Agent(name="crush", personality_traits="温柔善良", context=context1)
-        #self.agent = Agent2(name=self.name, context=context1)
+        self.agent = Agent(name="crush", context=context1)
         self.loop = asyncio.new_event_loop() # 创建一个新的事件循环 用于跑agent
         threading.Thread(target=self.loop.run_forever, daemon=True).start() # 在一个单独的线程中启动事件循环，确保它一直在运行
         self.talk_remaining = 5
@@ -120,8 +118,6 @@ class CrushAtFirstBlushEvent(Event.Event):
 
     def event_start(self, **kwargs):
         print("event_crush_atFirstBlush start")
-        
-        
         
         self.step = 0
         for key, value in kwargs.items():
@@ -137,7 +133,6 @@ class CrushAtFirstBlushEvent(Event.Event):
 
         self.layout.label_name.setText(self.dialogue_list[self.step][0])
         self.layout.set_stream_text(self.dialogue_list[self.step][1])
-        print(self.agent)
         self.set_art()
 
         pass

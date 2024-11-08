@@ -482,19 +482,22 @@ class Game:
             self.currentEvent=self.allEvents["internship"]
             return True
         elif self.week==1:
-            # 第一周的事件
+            self.currentEvent=self.allEvents["crush_atFirstBlush"]
+            return True
+        elif self.week==2:
             self.currentEvent=self.allEvents["lecture_ACM"]
             return True
-        # elif self.week==2:
-        #     # 第二周的事件
-        #     self.currentEvent=self.allEvents["test"]
-        #     return True
-        # elif self.week==3:
-        #     # 第三周的事件
-        #     self.currentEvent=self.allEvents["test"]
-        #     return True
-        else:
-            self.currentEvent=self.allEvents["crush_atFirstBlush"]
+        elif self.week==3:
+            self.currentEvent=self.allEvents["club_recruit"]
+            return True
+        elif self.week==4:
+            self.currentEvent=self.allEvents["students_organization"]
+            return True
+        elif self.week==5:
+            self.currentEvent=self.allEvents["secondary_market"]
+            return True
+        elif self.week==6:
+            self.currentEvent=self.allEvents["internship"]
             return True
         return False
 

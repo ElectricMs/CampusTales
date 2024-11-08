@@ -5,8 +5,7 @@ from abc import ABC, abstractmethod
 import asyncio
 from PySide6.QtCore import QEventLoop
 from .DirectedGraph import DirectedGraph
-from Agent.agent import Agent
-from Agent.agent2 import Agent as Agent2
+from Agent.agent_history import Agent
 import threading
 
 
@@ -105,7 +104,7 @@ class LectureAcmEvent(Event.Event):
         当前关系：恋人
        """
         
-        self.agent = Agent(name="crush", personality_traits="温柔善良", context=context1)
+        self.agent = Agent(name="crush",  context=context1)
         #self.agent = Agent2(name=self.name, context=context1)
         self.loop = asyncio.new_event_loop() # 创建一个新的事件循环 用于跑agent
         threading.Thread(target=self.loop.run_forever, daemon=True).start() # 在一个单独的线程中启动事件循环，确保它一直在运行

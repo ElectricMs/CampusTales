@@ -2,13 +2,14 @@ from PySide6.QtCore import Qt,QEvent,QTimer, QEasingCurve, QPropertyAnimation, Q
 from PySide6.QtGui import QMouseEvent,QFont
 from PySide6.QtWidgets import QApplication, QWidget, QMainWindow, QPushButton, QStackedLayout, QGraphicsOpacityEffect, QGraphicsBlurEffect, QFrame,QLabel, QVBoxLayout
 # from UI_resource.Ui_cover import Ui_cover
-from UI_resource.Ui_agent_choose import Ui_Agent_choose
+from UI_resource.Ui_Agent_choose import Ui_Agent_choose
 from UI_resource.Ui_choose_model_1 import Ui_MainWindow as Ui_choose_model_1
 from UI_resource.Ui_allocateEnergy import Ui_allocateEnergy
 from Animation.yinru_start import MyWindow as GameLayout_initialAnimation
 from UI_resource.new_cover import MyWindow as GameLayout_MainMenu
 from Animation.write_widget import TypewriterEffectWidget as new_widget
 from setting_start import MyWindow as GameLayout_setting
+from end_start import MyWindow as GameLayout_end
 from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
 # Agent对话事件界面
 
@@ -189,6 +190,7 @@ class MyWindow(QMainWindow):
         self.game_layout_Agent= GameLayout_Agent()
         self.game_layout_choose_model_1= GameLayout_choose_model_1()
         self.game_layout_allocateEnergy= GameLayout_allocateEnergy()
+        self.game_layout_end= GameLayout_end()
 
         self.game_layout_setting=GameLayout_setting()
         self.game_layout_setting.set_mainWindow_instance(self)
@@ -205,6 +207,8 @@ class MyWindow(QMainWindow):
         self.stacked_layout.addWidget(self.game_layout_allocateEnergy) # 3
         self.stacked_layout.addWidget(self.game_layout_initialAnimation) # 4
         self.stacked_layout.addWidget(self.game_layout_setting)#5
+        self.stacked_layout.addWidget(self.game_layout_end) # 6
+
         central_widget = QWidget()
         central_widget.setLayout(self.stacked_layout)
         self.setCentralWidget(central_widget)
@@ -226,6 +230,9 @@ class MyWindow(QMainWindow):
         self.game_layout_main_menu.pushButton_3.clicked.connect(lambda: self.stacked_layout.setCurrentIndex(5))
         self.game_layout_main_menu.pushButton_4.clicked.connect(lambda: self.stacked_layout.setCurrentIndex(1))
         self.game_layout_main_menu.pushButton_5.clicked.connect(self.close)
+       
+
+
         self.game_layout_Agent.exit_button.clicked.connect(lambda: self.stacked_layout.setCurrentIndex(0))
         self.game_layout_setting.ui.exit_button.clicked.connect(lambda: self.stacked_layout.setCurrentIndex(0))
         self.game_layout_allocateEnergy.pushButton_exit.clicked.connect(lambda: self.stacked_layout.setCurrentIndex(0))

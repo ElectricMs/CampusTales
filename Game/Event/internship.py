@@ -238,12 +238,12 @@ class InternshipEvent(Event.Event):
         
     def event_end(self):
         self.refreshProbability()
-        # if self.first_start:
-        #     if self.emotion_level < 60:
-        #         pass
-        #     else:
-        #         self.game.mainlineEvents.append(["陪Crush", 0])
-        #         self.game.refreshMissionList()
+        if self.first_start:
+            if self.emotion_level < 60:
+                pass
+            else:
+                self.game.mainlineEvents.append(["实习机会", 0])
+                self.game.refreshMissionList()
         if self.agent_mode:
             self.game.Ui.stacked_layout.setCurrentIndex(1)
         else:
@@ -258,9 +258,9 @@ class InternshipEvent(Event.Event):
 
     def affection(self,*args):
         if self.emotion_level < 60:
-            return "bad ending"
+            return "上周我参加了实习面试，收获颇丰。但我好像太紧张了，没有及时调整心态，导致面试官对我的评价不够积极。"
         else:
-            return "good ending"
+            return "上周我参加了实习面试，收获颇丰。这次面试让我对实习机会有了更深的认识，也让我对自己的未来有了更清晰的规划。"
 
 
     dialogue_list = [

@@ -275,7 +275,7 @@ class StudentsOrganizationEvent(Event.Event):
             if self.emotion_level < 60:
                 pass
             else:
-                self.game.mainlineEvents.append(["陪Crush", 0])
+                self.game.mainlineEvents.append(["学生组织", 0])
                 self.game.refreshMissionList()
         if self.agent_mode:
             self.game.Ui.stacked_layout.setCurrentIndex(1)
@@ -291,9 +291,9 @@ class StudentsOrganizationEvent(Event.Event):
 
     def affection(self,*args):
         if self.emotion_level < 60:
-            return "bad ending"
+            return "上周我参加了学生组织的招新面试，但我回答的并不太好，回去后我没有收到消息，看来是落选了。"
         else:
-            return "good ending"
+            return "上周我参加了学生组织的招新面试，我回答的非常好，我收到了通知，我被接纳了。"
 
 
     dialogue_list = [
@@ -323,8 +323,8 @@ class StudentsOrganizationEvent(Event.Event):
         ["Narrator", "问题三：你最看重部门的哪一方面？"], # 22
         ["你", ""],
         ["部长", ""],
-        ["部长", "感谢你的真诚回答！我们相信你的加入将为部门注入新的活力与能量。接下来，我们会向你发送关于部门活动的详细信息与安排，请保持关注与期待哦！欢迎你成为我们大家庭的一员！"],
-        ["Narrator", "你感受到一股前所未有的激动与期待涌上心头。你知道，这将是一个全新的开始，一个充满挑战与机遇的旅程。在这里，你将收获成长与友谊，开启属于自己的精彩篇章。"],
+        ["部长", "感谢你的真诚回答！如果你通过了面试，我们会向你发送关于部门活动的详细信息与安排，请保持关注与期待哦！"],
+        ["Narrator", "你感受到一股前所未有的激动与期待涌上心头。你知道，这将是一个全新的开始，一个充满挑战与机遇的旅程。"],
         ["Narrator", "(End.)"],
     ]
     

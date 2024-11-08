@@ -389,6 +389,8 @@ class Game:
         def refreshMissionList():
             nonlocal count
             nonlocal pageNow
+            count = len(self.mainlineEvents)
+            page = count//5+1 if count%5!=0 else count//5
             maxMission = count if count < pageNow * 5 else pageNow * 5
             missionList = self.mainlineEvents[(pageNow-1)*5:maxMission]
             for  item in missionList:
@@ -479,10 +481,10 @@ class Game:
     def loadEvent(self):
         if self.week==0:
             # 第零周的事件
-            self.currentEvent=self.allEvents["internship"]
+            self.currentEvent=self.allEvents["crush_atFirstBlush"]
             return True
         elif self.week==1:
-            self.currentEvent=self.allEvents["crush_atFirstBlush"]
+            self.currentEvent=self.allEvents["secondary_market"]
             return True
         elif self.week==2:
             self.currentEvent=self.allEvents["lecture_ACM"]

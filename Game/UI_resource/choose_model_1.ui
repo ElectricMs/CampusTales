@@ -139,6 +139,12 @@ border-image: url(:/image2/resource/exit_hover.png);}</string>
        <height>35</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <family>微软雅黑</family>
+       <pointsize>15</pointsize>
+      </font>
+     </property>
      <property name="styleSheet">
       <string notr="true">#pushButton_next{
 border-image: url(:/image2/resource/next_button.png);
@@ -147,7 +153,7 @@ border-image: url(:/image2/resource/next_button.png);
 	border-image: url(:/image2/resource/next_button2.png);
 }</string>
      </property>
-     <property name="text">
+     <property name="plainText">
       <string/>
      </property>
     </widget>

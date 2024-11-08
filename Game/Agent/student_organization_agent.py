@@ -68,12 +68,13 @@ def game_test():
         当前好感度：14
 
 
+
        """
     Xiaoxiaoxiao = Agent(chat_model=zhipuai_chat_model, name="李舰", personality_traits="严谨专业",relationship="陌生人", context=context1)
 
     # 用户与Agent的对话
     while True:
-        user_input = input("你想对 面试官 说什么？（输入 'quit' 退出）: ")
+        user_input = input("你想对 ACM老师 说什么？（输入 'quit' 退出）: ")
         if user_input.lower() == "quit":
             print("游戏结束。")
             break

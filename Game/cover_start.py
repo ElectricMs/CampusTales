@@ -15,7 +15,6 @@ from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
 
 class GameLayout_choose_model_1(QMainWindow, Ui_choose_model_1):
     
-
     def __init__(self):
         super().__init__()
         self.setupUi(self)

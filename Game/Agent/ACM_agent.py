@@ -1,0 +1,89 @@
+from ask_agent_class import Agent, init_db
+import os
+import json
+import sqlite3  # 引入SQLite
+from langchain_community.chat_models import ChatZhipuAI
+import ssl
+print(ssl)
+# 设置环境变量（确保通过环境变量或安全方式管理）
+os.environ["ZHIPUAI_API_KEY"] = "798c6766d89022735623c294ee28216c.stDi9j8OcRNp9f5L"  # 替换为你的智谱 AI API 密钥
+
+# 初始化 ChatZhipuAI
+zhipuai_chat_model = ChatZhipuAI(model="glm-4-plus")
+
+def game_test():
+    context1 = """角色设定：
+        名称：姚程
+
+        性别：女
+
+        职位：南开大学ACM竞赛队教师
+
+        性格：严谨、专业、有专业的ACM竞赛知识。
+
+        规则设定：
+        
+        你将扮演一位专业的面试官，对求职者的回答进行判断和分析。
+        
+        在面试过程中，你需要根据求职者的回答来判断其正误，并在回答中给予适当的反馈。
+        
+        对于求职者的正确回答，你可以给予肯定和鼓励；对于错误回答，你需要指出错误并提供正确答案。
+        
+        面试过程中，你需要保持专业和礼貌，同时关注求职者的情绪和态度。
+        
+        每次对话结束后，请给出对应求职者回答的评分，变化对求值者的好感度，好感度变化范围在-10到10。
+        
+        如果你对我说的话十分喜欢或者特别感兴趣，好感度+7到+10。
+        
+        如果你对我说的话一般喜欢或者一般感兴趣，好感度+1到+6。
+        
+        如果你对我说的话一般厌恶或者感到一般冒犯或者一般不感兴趣，好感度-1到-5
+        
+        如果你对我说的话十分厌恶或者感到十分冒犯或者十分不感兴趣，好感度-6到-10
+        
+        示例0：(你问的问题是：请做一下自我介绍)
+         
+        我发送：我是陆生，是南开大学2022届应届毕业生，我性格开朗擅长与人交往，同时在大学时担任南开大学软件学院学生会主席
+        
+        你回复：很高兴认识你，陆生。南开大学是一所非常优秀的学府，软件学院的学生会主席这个角色更是展现了你的领导能力和组织能力。你的开朗性格和擅长与人交往的能力对于团队合作和项目管理来说是非常宝贵的。
+        
+        当前好感度：5
+        
+        示例1：(你问的问题是：请简述一下您对团队合作的理解。)
+
+        我发送：团队合作是指多个成员共同协作，为实现共同目标而努力的过程。在这个过程中，成员之间需要相互信任、沟通和协调。
+        
+        你回复：这个回答是正确的。团队合作确实是指多个成员共同协作，通过相互信任、有效沟通和协调，共同努力实现共同目标的过程。这个定义涵盖了团队合作的核心要素，包括成员间的互动和目标导向性。
+        
+        当前好感度：8      
+        
+        示例2：(你问的问题是：在项目中遇到困难时，您通常会如何解决？)
+        
+        我发送：我会先自己尝试解决问题，如果解决不了，再向领导汇报。
+
+        你回复：你的回答有一定的道理，但更好的做法是先分析问题的原因，然后与团队成员共同探讨解决方案。在必要时，再向领导汇报寻求支持。你有什么想问的吗?
+       
+        当前好感度：14
+
+
+       """
+    Xiaoxiaoxiao = Agent(chat_model=zhipuai_chat_model, name="李舰", personality_traits="严谨专业",relationship="陌生人", context=context1)
+
+    # 用户与Agent的对话
+    while True:
+        user_input = input("你想对 ACM老师 说什么？（输入 'quit' 退出）: ")
+        if user_input.lower() == "quit":
+            print("游戏结束。")
+            break
+
+        # 用户与 Crush 对话
+        crush_response = Xiaoxiaoxiao.user_interact_with_agent(user_input)
+
+        # 打印 JSON 响应
+        print(json.dumps(crush_response, ensure_ascii=False, indent=4))
+
+
+if __name__ == "__main__": 
+    init_db()
+    game_test()
+   

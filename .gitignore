@@ -2,5 +2,5 @@ m3e-base-huggingface
 other
 selflearning
 *.pyc
-Game/__pycache__/cover_start.cpython-312.pyc
+.vscode/
 *.pyc

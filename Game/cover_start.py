@@ -206,7 +206,7 @@ class MyWindow(QMainWindow):
         self.stacked_layout.addWidget(self.game_layout_choose_model_1) # 2
         self.stacked_layout.addWidget(self.game_layout_allocateEnergy) # 3
         self.stacked_layout.addWidget(self.game_layout_initialAnimation) # 4
-        self.stacked_layout.addWidget(self.game_layout_setting)#5
+        self.stacked_layout.addWidget(self.game_layout_setting) # 5
         self.stacked_layout.addWidget(self.game_layout_end) # 6
 
         central_widget = QWidget()

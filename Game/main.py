@@ -197,6 +197,76 @@ class Game:
         disablePushButton()
         
 
+    # 判断是否触发结局
+    def check_end(self):
+        """
+            1、如果金钱<00，不幸饿死。因为长期缺乏经济支持，无法满足基本生活需求，陷入绝
+            境，最终因饥饿而失去生命。
+            2、如果心情<20，郁郁而终。长期的心理压力和情绪低落使得个体失去对生活的热情，最
+            终走向抑郁，无法自拔，导致悲惨的结局。
+            3、如果健康<20，不幸猝死。身体状况极差，缺乏必要的医疗和锻炼，无法承受生活的重
+            压，最终因健康问题而猝然离世，留下未竟的事业和梦想。
+            4、保研:大三学年结束之后，如果累积【科研精力分配+竞赛精力分配】>1000，且【学习
+            +能力】>160，获得保研资格，成功进入心仪的研究生院校，继续学术之路。
+            5、考研:大四学年结束之后，如果【学习+能力】>160，且【科研精力分配】>300，成功
+            考入研究生，继续深造，追求更高的学术成就。
+            6、考公:大四学年结束之后，如果【学习+能力】>160，且【社交】>80，获得公务员考试
+            资格，成功进入政府部门工作，实现为人民服务的理想。
+            7、就业:大四学年结束之后，如果【学习+能力】>160，且【社交】>80，顺利在一家知名
+            企业就业，开始职业生涯，开启人生新篇章。
+            8、出国:大四学年结束之后，如果【学习+能力】>160，且【金钱】>100000，成功申请
+            到国外高校的研究生项目，踏上留学之路，体验不同的文化和教育。
+            9、创业:大四学年结束之后，如果【社交】>80，且【金钱】>100000，成功创业，开启
+            自己的事业，实现自我价值与梦想。
+            10、一般就业:大四学年结束之后，如果【学习+能力】在100-160之间，且【社交】>60
+            成功进入一家小型企业工作，虽然职位一般，但积累了工作经验，逐步适应职场生活。
+            11、选择非理想工作:大四学年结束之后，
+            ，如果【学习+能力】<100，面临就业压力，选择
+            了与专业无关的工作，虽然工作内容不理想，但希望能通过这份工作缓解经济压力，为未来
+            的职业规划打下基础。
+        """
+        if self.displaySetting["money"] <= 0:
+            self.Ui.stacked_layout.setCurrentIndex(6)
+            self.Ui.stacked_layout.currentWidget().set_stream_text("坏结局：不幸饿死\n  由于长期缺乏经济支持，你已经无法满足基本的生活需求。在一天没吃饭后，你最终昏倒了过去。")
+        elif self.displaySetting["mood"] <= 20:
+            self.Ui.stacked_layout.setCurrentIndex(6)
+            self.Ui.stacked_layout.currentWidget().set_stream_text("坏结局：郁郁而终\n  长期的心理压力和情绪低落使得个体失去对生活的热情，最终走向抑郁，无法自拔，导致悲惨的结局。")
+        elif self.displaySetting["health"] <= 20:
+            self.Ui.stacked_layout.setCurrentIndex(6)
+            self.Ui.stacked_layout.currentWidget().set_stream_text("坏结局：不幸猝死\n  身体状况极差，缺乏必要的医疗和锻炼，无法承受生活的重压，最终因健康问题而猝然离世，留下未竟的事业和梦想。")
+        elif self.week >= 17:
+            # 结算 要把其他事件的一些影响也加上去
+            # 保研
+
+            # 考研
+
+            # 考公
+            if self.displaySetting["study"] + self.displaySetting["ability"] > 160 and self.displaySetting["social"] > 80:
+                self.Ui.stacked_layout.setCurrentIndex(6)
+                self.Ui.stacked_layout.currentWidget().set_stream_text("好结局：考公成功\n  你成功考入公务员考试，成为一名优秀公务员，为人民服务，实现理想。")
+            # 就业
+            elif self.displaySetting["study"] + self.displaySetting["ability"] > 160 and self.displaySetting["social"] > 60:
+                self.Ui.stacked_layout.setCurrentIndex(6)
+                self.Ui.stacked_layout.currentWidget().set_stream_text("好结局：就业成功\n  你顺利进入一家知名企业工作，开始职业生涯，开启人生新篇章。")
+            # 出国
+            elif self.displaySetting["study"] + self.displaySetting["ability"] > 160 and self.displaySetting["money"] > 100000:
+                self.Ui.stacked_layout.setCurrentIndex(6)
+                self.Ui.stacked_layout.currentWidget().set_stream_text("好结局：出国留学\n  你成功申请到国外高校的研究生项目，踏上留学之路，体验不同的文化和教育。")
+            # 创业
+            elif self.displaySetting["social"] > 80 and self.displaySetting["money"] > 100000:
+                self.Ui.stacked_layout.setCurrentIndex(6)
+                self.Ui.stacked_layout.currentWidget().set_stream_text("好结局：创业成功\n  你成功创业，开启自己的事业，实现自我价值与梦想。")
+            # 一般就业
+            elif self.displaySetting["study"] + self.displaySetting["ability"] > 100 and self.displaySetting["social"] > 60:
+                self.Ui.stacked_layout.setCurrentIndex(6)
+                self.Ui.stacked_layout.currentWidget().set_stream_text("结局：一般就业\n  你顺利进入一家小型企业工作，虽然职位一般，但积累了工作经验，逐步适应职场生活。")
+            # 选择非理想工作
+            elif self.displaySetting["study"] + self.displaySetting["ability"] < 100:
+                self.Ui.stacked_layout.setCurrentIndex(6)
+                self.Ui.stacked_layout.currentWidget().set_stream_text("结局：选择非理想工作\n  你选择了与专业无关的工作，虽然工作内容不理想，但希望能通过这份工作缓解经济压力，为未来的职业规划打下基础。")
+            pass
+
+
     # 点击下一周时触发
     def nextWeek(self):
         self.week+=1
@@ -209,13 +279,13 @@ class Game:
             print(result[0],":",result[1],end=" ")
         print()
 
-
         # 重新更新精力
         self.energy=10
         for mission in self.mainlineEvents:
             mission[1]=0
         self.refreshMissionList()
 
+        self.check_end()
 
         # 返回diary文字
         def returnDiaryText() -> str:
@@ -246,25 +316,19 @@ class Game:
             for key, value in allocate_count.items():
                 if key == "学习":
                     text += escape_get_random_activity("认真学习", value+compensate) + "\n"
-                    print(text)
                 elif key == "锻炼":
                     text += escape_get_random_activity("体育运动", value+compensate) + "\n"
-                    print(text)
                 elif key == "社交":
                     text += escape_get_random_activity("广泛交友", value+compensate) + "\n"
-                    print(text)
                 elif key == "娱乐":
                     text += escape_get_random_activity("打游戏娱乐", value+compensate) + "\n"
-                    print(text)
                 elif key == "休息":
                     text += escape_get_random_activity("休息放松", value+compensate) + "\n"
-                    print(text)
                 elif key == "陪npy":
                     # 这种事件调用事件的判断函数
                     pass
             return text
         
-
         # 调整属性
         def adjustSetting(week_result: list[list]) -> None:
             for result in week_result:
@@ -300,17 +364,10 @@ class Game:
             diary_text += dialogue.get_random_talk_terminal()
         else:
             diary_text += dialogue.get_random_talk()
-        # print("diary text1:",diary_text)
         randomEvent = self.randomEvents.get_random_event()
         diary_text += "\n" + randomEvent.description
-        # print("diary text2:",diary_text)
         diary_text += "\n" + returnDiaryText()
         ui.widget_diary.label_diary_content.setTextToDraw(diary_text)
-        # ui.label_diary_content.setText(diary_text)
-        # test
-        for k,v in self.displaySetting.items():
-            print(k,":",v,end=" ")
-        print()
 
 
     # 分配能量
@@ -509,10 +566,6 @@ class Game:
 
         for event in self.allEvents.values():
             self.eventProbablity[event.name]=event.probability
-        pass
-
-
-        
         # 这里需要有更多的操作
         pass
 

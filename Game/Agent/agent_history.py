@@ -35,11 +35,11 @@ def init_db():
 
 
 class Agent:
-    def __init__(self, name, context, initial_emotion=30):
+    def __init__(self, name, context, initial_emotion=50):
         self.name = name
         self.emotion_level = initial_emotion  # 范围: -100 到 +100
         self.relationship = "陌生人"
-        self.chat_model = ChatZhipuAI(model="glm-4-plus", temperature=0.2)
+        self.chat_model = ChatZhipuAI(model="GLM-4-Flash", temperature=0.2)
         self.context = context
         # Define the prompt template
         self.prompt_template = PromptTemplate(

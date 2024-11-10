@@ -254,21 +254,28 @@ class LectureAcmEvent(Event.Event):
         
     def event_end(self):
         self.refreshProbability()
-        self.affection()
-        self.game.Ui.stacked_layout.setCurrentIndex(3)
+        if self.first_start:
+            if self.step == 26:
+                self.game.mainlineEvents.append(["ACM竞赛", 0])
+                self.game.refreshMissionList()
+            self.first_start = False
+        if self.agent_mode:
+            self.game.Ui.stacked_layout.setCurrentIndex(1)
+        else:
+            self.game.Ui.stacked_layout.setCurrentIndex(3)
+            self.game.progress["layout"]=3
+        self.agent_mode = False
         
-
 
     def refreshProbability(self):
         pass
 
 
     def affection(self,*args):
-        self.game.mainlineEvents.append(["ACM竞赛", 0])
-        self.game.refreshMissionList()
-
-        pass
-
+        if self.step == 26:
+            return "上周我参加了ACM竞赛讲座，讲座后我和老师交谈了很久，我觉得这竞赛还挺有意思的。"
+        else:
+            return "上周有ACM竞赛讲座，但我感觉我不太有时间再参加竞赛了，所以最终还是没去听。"
     
 
     dialogue_list = [

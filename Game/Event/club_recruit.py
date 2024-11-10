@@ -148,10 +148,13 @@ class ClubRecruitEvent(Event.Event):
         
     def event_end(self):
         self.refreshProbability()
-        self.affection()
-
+        
+        self.game.mainlineEvents.append(["社团", 0])
+        self.game.refreshMissionList()
+        
         self.game.Ui.stacked_layout.setCurrentIndex(3)
         self.game.progress["layout"]=3
+        self.agent_mode = False
 
 
 
@@ -160,7 +163,7 @@ class ClubRecruitEvent(Event.Event):
 
 
     def affection(self,*args):
-        pass
+        return f"上周我加入了{self.club_choosed}社团，似乎挺有意思的。"
 
     
     club_list = [

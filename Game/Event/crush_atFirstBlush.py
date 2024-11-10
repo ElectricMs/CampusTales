@@ -246,11 +246,12 @@ class CrushAtFirstBlushEvent(Event.Event):
     def event_end(self):
         self.refreshProbability()
         if self.first_start:
-            if self.emotion_level < 60:
+            if self.emotion_level < 30:
                 pass
             else:
                 self.game.mainlineEvents.append(["陪Crush", 0])
                 self.game.refreshMissionList()
+            self.first_start = False
         if self.agent_mode:
             self.game.Ui.stacked_layout.setCurrentIndex(1)
         else:

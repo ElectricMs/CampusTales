@@ -109,7 +109,11 @@ class SecondaryMarketEvent(Event.Event):
         
     def event_end(self):
         self.refreshProbability()
-        self.affection()
+        if self.step == 18:
+            self.game.displaySetting["study"] += 10
+            self.game.displaySetting["mood"] += 10
+            self.game.displaySetting["ability"] += 10
+            self.game.displaySetting["money"] -= 50
 
         self.game.Ui.stacked_layout.setCurrentIndex(3)
         self.game.progress["layout"]=3
@@ -121,7 +125,10 @@ class SecondaryMarketEvent(Event.Event):
 
 
     def affection(self,*args):
-        pass
+        if self.step == 18:
+            return "上周我在二手市场中遇到了一位很有趣的学长，他的书很有收藏价值。"
+        else:
+            return "上周我去二手市场中逛了逛，市场里有许多好书，但我最终还是没有购买。"
 
     
 

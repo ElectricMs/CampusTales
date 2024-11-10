@@ -9,13 +9,11 @@ from langchain_community.chat_models import ChatZhipuAI
 from langchain.schema import SystemMessage, HumanMessage, AIMessage
 from langchain_core.prompts import StringPromptTemplate
 
-import ssl
-print(ssl)
 # 设置环境变量（确保通过环境变量或安全方式管理）
 os.environ["ZHIPUAI_API_KEY"] = "798c6766d89022735623c294ee28216c.stDi9j8OcRNp9f5L"  # 替换为你的智谱 AI API 密钥
 
 # 初始化 ChatZhipuAI
-zhipuai_chat_model = ChatZhipuAI(model="glm-4-plus")
+zhipuai_chat_model = ChatZhipuAI(model="glm-4-flash")
 
 
 # SQLite数据库初始化

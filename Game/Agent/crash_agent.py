@@ -92,7 +92,7 @@ def game_test():
         当前好感度：210。
 
        """
-    Xiaoxiaoxiao = Agent(chat_model=zhipuai_chat_model, name="萧小小", personality_traits="温柔善良",relationship="陌生人", context=context1)
+    Xiaoxiaoxiao = Agent(name="萧小小", context=context1)
 
     # 用户与Agent的对话
     while True:

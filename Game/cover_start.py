@@ -32,11 +32,12 @@ class GameLayout_choose_model_1(QMainWindow, Ui_choose_model_1):
         #6-8:男主的普通态、男主的微笑态、男主的新衣服
         #9-10：面试官的普通态、面试官的微笑态
         #11-12：两个女老师的照片
+        #13-14:两个新的学长
         self.img_path_list=["url(:/people/resource/new/girl_NOMEL-removebg-preview.png)","url(:/people/resource/girl_shy-removebg-preview (2).png)","url(:/people/resource/girl_smile-removebg-preview.png)",
                             "url(:/people/resource/boy_normal_-removebg-preview.png)","url(:/people/resource/new/boy_smile-removebg-preview.png)","url(:/people/resource/new/女主角-removebg-preview.png)",
                             "url(:/people/resource/new/zj_normel-removebg-preview.png)","url(:/people/resource/new/zj_happy-removebg-preview.png)","url(:/people/resource/new/zj_tiyuke-removebg-preview.png)",
                             "url(:/people/resource/new/interviewer_normal.png)","url(:/people/resource/new/interviewer_smile.png)","url(:/people/resource/new/female_teacher1.png)",
-                            "url(:/people/resource/new/female_teacher2.png)"]
+                            "url(:/people/resource/new/female_teacher2.png)","url(:/people/resource/new/00002-726064193-removebg-preview.png)","url(:/people/resource/new/00001-4273977208-removebg-preview.png)"]
         self.change_label_img_right(self.img_path_list[7])
         self.change_label_img_left(self.img_path_list[3])
         #self.change_centralWidget_background(self.img_path_list[3])

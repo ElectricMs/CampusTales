@@ -270,7 +270,7 @@ class LectureAcmEvent(Event.Event):
             self.layout.label_img_right.hide()
             #self.layout.change_label_img_left(self.layout.img_path_list[11])
         elif self.step == 2:
-            self.layout.change_label_img_left(self.layout.img_path_list[3])
+            self.layout.change_label_img_left(self.layout.img_path_list[13])
             self.layout.label_img_left.show()
         elif self.step == 5:
             user_choice("Yes", "No")# 6/20

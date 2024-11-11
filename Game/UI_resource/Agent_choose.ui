@@ -118,8 +118,8 @@ color: rgb(85, 0, 0);}
    <widget class="QPushButton" name="pushButton_4">
     <property name="geometry">
      <rect>
-      <x>820</x>
-      <y>460</y>
+      <x>730</x>
+      <y>180</y>
       <width>221</width>
       <height>80</height>
      </rect>
@@ -143,9 +143,9 @@ color: rgb(85, 0, 0);}
    <widget class="QPushButton" name="pushButton_5">
     <property name="geometry">
      <rect>
-      <x>690</x>
-      <y>160</y>
-      <width>461</width>
+      <x>770</x>
+      <y>460</y>
+      <width>211</width>
       <height>80</height>
      </rect>
     </property>
@@ -161,7 +161,7 @@ border-image: url(:/image/resource/Agent/对话标签2.jpg);
 color: rgb(85, 0, 0);}</string>
     </property>
     <property name="text">
-     <string>senior female schoolmate</string>
+     <string>?</string>
     </property>
    </widget>
    <widget class="QPushButton" name="exit_button">

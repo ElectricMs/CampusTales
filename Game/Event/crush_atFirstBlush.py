@@ -262,6 +262,8 @@ class CrushAtFirstBlushEvent(Event.Event):
             else:
                 self.game.mainlineEvents.append(["陪Crush", 0])
                 self.game.refreshMissionList()
+                self.game.refresh_left()
+
             self.first_start = False
         if self.agent_mode:
             self.game.Ui.stacked_layout.setCurrentIndex(1)

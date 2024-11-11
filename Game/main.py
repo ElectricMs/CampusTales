@@ -376,22 +376,7 @@ class Game:
         ui.widget_diary.label_diary_content.setTextToDraw(diary_text)
        
        
-
-
-    # 分配能量
-    def allocateEnergy(self):
-        # 这里需要分配精力
-        # 学习 运动 社交 娱乐 
-        # 附加：陪npy 竞赛 科研 等
-        count = len(self.mainlineEvents)
-        page = count//5+1 if count%5!=0 else count//5
-        pageNow = 1
-        for item in self.Ui.game_layout_allocateEnergy.frame_selectArea.findChildren(ClickableLabel):
-            item.setParent(None)
-            item.deleteLater()
-            item = None
-        
-                
+    def refresh_left(self):
         #初始y的偏移量
         y_offset = 0
         num=1
@@ -415,6 +400,23 @@ class Game:
             y_offset+=28
             label.show()
             num+=1
+
+    # 分配能量
+    def allocateEnergy(self):
+        # 这里需要分配精力
+        # 学习 运动 社交 娱乐 
+        # 附加：陪npy 竞赛 科研 等
+        count = len(self.mainlineEvents)
+        page = count//5+1 if count%5!=0 else count//5
+        pageNow = 1
+        for item in self.Ui.game_layout_allocateEnergy.frame_selectArea.findChildren(ClickableLabel):
+            item.setParent(None)
+            item.deleteLater()
+            item = None
+        
+        self.refresh_left()
+        
+        
         # print("nihao")
            
 

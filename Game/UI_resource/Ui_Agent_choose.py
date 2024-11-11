@@ -65,7 +65,7 @@ class Ui_Agent_choose(object):
 "")
         self.pushButton_4 = QPushButton(self.centralwidget)
         self.pushButton_4.setObjectName(u"pushButton_4")
-        self.pushButton_4.setGeometry(QRect(820, 460, 221, 80))
+        self.pushButton_4.setGeometry(QRect(730, 180, 221, 80))
         self.pushButton_4.setFont(font)
         self.pushButton_4.setStyleSheet(u"#pushButton_4{\n"
 "border-image: url(:/image/resource/Agent/\u5bf9\u8bdd\u6807\u7b7e2.jpg);\n"
@@ -73,7 +73,7 @@ class Ui_Agent_choose(object):
 "")
         self.pushButton_5 = QPushButton(self.centralwidget)
         self.pushButton_5.setObjectName(u"pushButton_5")
-        self.pushButton_5.setGeometry(QRect(690, 160, 461, 80))
+        self.pushButton_5.setGeometry(QRect(770, 460, 211, 80))
         self.pushButton_5.setFont(font)
         self.pushButton_5.setStyleSheet(u"#pushButton_5{\n"
 "border-image: url(:/image/resource/Agent/\u5bf9\u8bdd\u6807\u7b7e2.jpg);\n"
@@ -98,7 +98,7 @@ class Ui_Agent_choose(object):
         self.pushButton_2.setText(QCoreApplication.translate("Agent_choose", u"president", None))
         self.pushButton_3.setText(QCoreApplication.translate("Agent_choose", u"Teacher", None))
         self.pushButton_4.setText(QCoreApplication.translate("Agent_choose", u"interviewer", None))
-        self.pushButton_5.setText(QCoreApplication.translate("Agent_choose", u"senior female schoolmate", None))
+        self.pushButton_5.setText(QCoreApplication.translate("Agent_choose", u"?", None))
         self.exit_button.setText("")
     # retranslateUi
 

@@ -121,7 +121,7 @@ class GameLayout_allocateEnergy(QMainWindow, Ui_allocateEnergy):
         self.frame_selectArea.setGeometry(QRect(0,120,500,500))
         #目前的三张人物图片，都存放在resource1_rc中
         #self.img_path_list=["url(:/people/resource/boy_normal_-removebg-preview.png)","url(:/people/resource/girl_shy-removebg-preview (2).png)","url(:/people/resource/girl_smile-removebg-preview.png)"]
-        ###此处是用来更换主人公头像的,性别选女用女生图，性别男用男生图
+        
         self.change_graphicsView("url(:/people/resource/new/zj_normel-removebg-preview.png)")
 
     

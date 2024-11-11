@@ -252,12 +252,20 @@ class StudentsOrganizationEvent(Event.Event):
                         self.layout.pushButton_option3.show()
                         self.layout.pushButton_option3.setText(arg)
         
-
+        
         if self.step == 0:
-            pass
+            self.layout.change_centralWidget_background(self.layout.background_img_list[3])
+            self.layout.change_label_img_left(self.layout.img_path_list[4])
+            self.layout.change_label_img_right(self.layout.img_path_list[6])
+            self.layout.label_img_left.hide()
+            self.layout.label_img_right.hide()
+        elif self.step==3:
+            self.layout.label_img_left.show()
         elif self.step == 13:
             input_choices("加入文艺部", "加入学习部", "加入体育部")
             self.layout.pushButton_next.hide()
+        elif self.step==14:
+            self.layout.label_img_right.show()
         elif self.step == 17:
             self.input_mode = True
             user_input()

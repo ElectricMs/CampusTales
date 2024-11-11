@@ -219,10 +219,16 @@ class InternshipEvent(Event.Event):
         self.layout.pushButton_option3.hide()
 
         if self.step == 0:
-            pass
+            self.layout.change_centralWidget_background(self.layout.background_img_list[2])
+            self.layout.change_label_img_left(self.layout.img_path_list[10])
+            self.layout.label_img_left.hide()
+            self.layout.label_img_right.hide()
         elif self.step == 3:
             self.layout.pushButton_next.hide()
             user_choice(" 勇敢进入面试，用实力回答面试官的问题", "暂时放弃，觉得自己还需更多准备，保持对实习机会的关注")
+        elif self.step==4:
+            self.layout.label_img_left.show()
+            self.layout.label_img_right.show()
         elif self.step == 6:
             self.input_mode = True
             user_input()

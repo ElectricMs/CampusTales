@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'agent_choose.ui'
+## Form generated from reading UI file 'Agent_choose.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.2
+## Created by: Qt User Interface Compiler version 6.8.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -29,7 +29,7 @@ class Ui_Agent_choose(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.pushButton = QPushButton(self.centralwidget)
         self.pushButton.setObjectName(u"pushButton")
-        self.pushButton.setGeometry(QRect(160, 180, 201, 81))
+        self.pushButton.setGeometry(QRect(470, 330, 201, 81))
         font = QFont()
         font.setFamilies([u"\u7ad9\u9177\u5c0f\u8587LOGO\u4f53"])
         font.setPointSize(30)
@@ -50,14 +50,14 @@ class Ui_Agent_choose(object):
 "#label{letter-spacing:3px;}")
         self.pushButton_2 = QPushButton(self.centralwidget)
         self.pushButton_2.setObjectName(u"pushButton_2")
-        self.pushButton_2.setGeometry(QRect(140, 410, 200, 80))
+        self.pushButton_2.setGeometry(QRect(210, 500, 200, 80))
         self.pushButton_2.setFont(font)
         self.pushButton_2.setStyleSheet(u"#pushButton_2{\n"
 "border-image: url(:/image/resource/Agent/\u5bf9\u8bdd\u6807\u7b7e2.jpg);\n"
 "color: rgb(85, 0, 0);}")
         self.pushButton_3 = QPushButton(self.centralwidget)
         self.pushButton_3.setObjectName(u"pushButton_3")
-        self.pushButton_3.setGeometry(QRect(780, 440, 200, 80))
+        self.pushButton_3.setGeometry(QRect(150, 210, 200, 80))
         self.pushButton_3.setFont(font)
         self.pushButton_3.setStyleSheet(u"#pushButton_3{\n"
 "border-image: url(:/image/resource/Agent/\u5bf9\u8bdd\u6807\u7b7e2.jpg);\n"
@@ -65,7 +65,7 @@ class Ui_Agent_choose(object):
 "")
         self.pushButton_4 = QPushButton(self.centralwidget)
         self.pushButton_4.setObjectName(u"pushButton_4")
-        self.pushButton_4.setGeometry(QRect(540, 270, 200, 80))
+        self.pushButton_4.setGeometry(QRect(820, 460, 221, 80))
         self.pushButton_4.setFont(font)
         self.pushButton_4.setStyleSheet(u"#pushButton_4{\n"
 "border-image: url(:/image/resource/Agent/\u5bf9\u8bdd\u6807\u7b7e2.jpg);\n"
@@ -73,7 +73,7 @@ class Ui_Agent_choose(object):
 "")
         self.pushButton_5 = QPushButton(self.centralwidget)
         self.pushButton_5.setObjectName(u"pushButton_5")
-        self.pushButton_5.setGeometry(QRect(780, 140, 200, 80))
+        self.pushButton_5.setGeometry(QRect(690, 160, 461, 80))
         self.pushButton_5.setFont(font)
         self.pushButton_5.setStyleSheet(u"#pushButton_5{\n"
 "border-image: url(:/image/resource/Agent/\u5bf9\u8bdd\u6807\u7b7e2.jpg);\n"
@@ -96,9 +96,9 @@ class Ui_Agent_choose(object):
         self.pushButton.setText(QCoreApplication.translate("Agent_choose", u"girlfriend", None))
         self.label.setText(QCoreApplication.translate("Agent_choose", u"AGENT", None))
         self.pushButton_2.setText(QCoreApplication.translate("Agent_choose", u"president", None))
-        self.pushButton_3.setText(QCoreApplication.translate("Agent_choose", u"president", None))
-        self.pushButton_4.setText(QCoreApplication.translate("Agent_choose", u"president", None))
-        self.pushButton_5.setText(QCoreApplication.translate("Agent_choose", u"president", None))
+        self.pushButton_3.setText(QCoreApplication.translate("Agent_choose", u"Teacher", None))
+        self.pushButton_4.setText(QCoreApplication.translate("Agent_choose", u"interviewer", None))
+        self.pushButton_5.setText(QCoreApplication.translate("Agent_choose", u"senior female schoolmate", None))
         self.exit_button.setText("")
     # retranslateUi
 

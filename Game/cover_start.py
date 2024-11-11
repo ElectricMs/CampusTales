@@ -19,10 +19,31 @@ class GameLayout_choose_model_1(QMainWindow, Ui_choose_model_1):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        #目前的三张人物图片，都存放在resource1_rc中
-        self.img_path_list=["url(:/people/resource/girl_smile-removebg-preview.png)","url(:/people/resource/girl_shy-removebg-preview (2).png)","url(:/people/resource/boy_normal_-removebg-preview.png)"]
-        self.change_background_img_left(self.img_path_list[1])
-        
+
+
+        #self.background_img_list从0到3，分别是教室、讲座教室、办公室、社团选择
+        self.background_img_list=["url(:/image1/resource/classroom.png)","url(:/image1/resource/new/讲座教室.png)","url(:/image1/resource/new/办公室.png)","url(:/image1/resource/new/社团选择.png)"]
+
+
+        #self.img_path_list装了所有人物的图片资源
+        #0-2:crush的普通、害羞、微笑
+        #3-4:president的普通、喜悦态
+        #5:学姐的图片 Agent选择界面中的senior female schoolmate
+        #6-8:男主的普通态、男主的微笑态、男主的新衣服
+        #9-10：面试官的普通态、面试官的微笑态
+        #11-12：两个女老师的照片
+        self.img_path_list=["url(:/people/resource/new/girl_NOMEL-removebg-preview.png)","url(:/people/resource/girl_shy-removebg-preview (2).png)","url(:/people/resource/girl_smile-removebg-preview.png)",
+                            "url(:/people/resource/boy_normal_-removebg-preview.png)","url(:/people/resource/new/boy_smile-removebg-preview.png)","url(:/people/resource/new/女主角-removebg-preview.png)",
+                            "url(:/people/resource/new/zj_normel-removebg-preview.png)","url(:/people/resource/new/zj_happy-removebg-preview.png)","url(:/people/resource/new/zj_tiyuke-removebg-preview.png)",
+                            "url(:/people/resource/new/interviewer_normal.png)","url(:/people/resource/new/interviewer_smile.png)","url(:/people/resource/new/female_teacher1.png)",
+                            "url(:/people/resource/new/female_teacher2.png)"]
+        self.change_label_img_right(self.img_path_list[7])
+        self.change_label_img_left(self.img_path_list[3])
+        #self.change_centralWidget_background(self.img_path_list[3])
+
+
+
+
         self.islock = True
         #初始好感度为0
         self.progressBar_second.setVisible(False)
@@ -33,7 +54,7 @@ class GameLayout_choose_model_1(QMainWindow, Ui_choose_model_1):
         self.opacity_effect_8 = QGraphicsOpacityEffect()
         
         self.label_img_left.setGraphicsEffect(self.opacity_effect_6)
-        self.label_8.setGraphicsEffect(self.opacity_effect_8)
+        #self.label_8.setGraphicsEffect(self.opacity_effect_8)
         self.opacity_effect_8.setOpacity(0)
         self.opacity_effect_6.setOpacity(1)
         
@@ -54,10 +75,12 @@ class GameLayout_choose_model_1(QMainWindow, Ui_choose_model_1):
             self.progressBar.setVisible(True)
         
     #更换self.label_img_left背景图片的函数
-    def change_background_img_left(self,img_path):
+    def change_label_img_left(self,img_path):
         self.label_img_left.setStyleSheet(f'border-image: {img_path};')
-    
-        
+    def change_label_img_right(self,img_path):
+        self.label_img_right.setStyleSheet(f'border-image: {img_path};')
+    def change_centralWidget_background(self,img_path):
+        self.centralwidget.setStyleSheet("#centralwidget{"+f'border-image:{img_path};'+"}")
     def set_stream_text(self, text):
         from setting_start import InteractionTimerInterval
         if not isinstance(text, str):
@@ -96,9 +119,9 @@ class GameLayout_allocateEnergy(QMainWindow, Ui_allocateEnergy):
         self.label_5.setWordWrap(True)
         self.frame_selectArea.setGeometry(QRect(0,120,500,500))
         #目前的三张人物图片，都存放在resource1_rc中
-        self.img_path_list=["url(:/people/resource/boy_normal_-removebg-preview.png)","url(:/people/resource/girl_shy-removebg-preview (2).png)","url(:/people/resource/girl_smile-removebg-preview.png)"]
+        #self.img_path_list=["url(:/people/resource/boy_normal_-removebg-preview.png)","url(:/people/resource/girl_shy-removebg-preview (2).png)","url(:/people/resource/girl_smile-removebg-preview.png)"]
         ###此处是用来更换主人公头像的,性别选女用女生图，性别男用男生图
-        self.change_graphicsView(self.img_path_list[1])
+        self.change_graphicsView("url(:/people/resource/new/zj_normel-removebg-preview.png)")
 
     
     def change_name(self,new_name):

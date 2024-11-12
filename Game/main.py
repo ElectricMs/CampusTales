@@ -197,7 +197,7 @@ class Game:
         disablePushButton()
         
 
-    # 判断是否触发结局
+     # 判断是否触发结局
     def check_end(self):
         """
             1、如果金钱<00，不幸饿死。因为长期缺乏经济支持，无法满足基本生活需求，陷入绝
@@ -237,9 +237,7 @@ class Game:
         elif self.week >= 17:
             # 结算 要把其他事件的一些影响也加上去
             # 保研
-
             # 考研
-
             # 考公
             if self.displaySetting["study"] + self.displaySetting["ability"] > 160 and self.displaySetting["social"] > 80:
                 self.Ui.stacked_layout.setCurrentIndex(6)
@@ -279,6 +277,7 @@ class Game:
             print(result[0],":",result[1],end=" ")
         print()
 
+
         # 重新更新精力
         self.energy=10
         for mission in self.mainlineEvents:
@@ -316,14 +315,19 @@ class Game:
             for key, value in allocate_count.items():
                 if key == "学习":
                     text += escape_get_random_activity("认真学习", value+compensate) + "\n"
+                    
                 elif key == "锻炼":
                     text += escape_get_random_activity("体育运动", value+compensate) + "\n"
+                    
                 elif key == "社交":
                     text += escape_get_random_activity("广泛交友", value+compensate) + "\n"
+                    
                 elif key == "娱乐":
                     text += escape_get_random_activity("打游戏娱乐", value+compensate) + "\n"
+                    
                 elif key == "休息":
                     text += escape_get_random_activity("休息放松", value+compensate) + "\n"
+                    
                 elif key == "陪npy":
                     # 这种事件调用事件的判断函数
                     pass
@@ -364,26 +368,15 @@ class Game:
             diary_text += dialogue.get_random_talk_terminal()
         else:
             diary_text += dialogue.get_random_talk()
+       
         randomEvent = self.randomEvents.get_random_event()
         diary_text += "\n" + randomEvent.description
+       
         diary_text += "\n" + returnDiaryText()
         ui.widget_diary.label_diary_content.setTextToDraw(diary_text)
-
-
-    # 分配能量
-    def allocateEnergy(self):
-        # 这里需要分配精力
-        # 学习 运动 社交 娱乐 
-        # 附加：陪npy 竞赛 科研 等
-        count = len(self.mainlineEvents)
-        page = count//5+1 if count%5!=0 else count//5
-        pageNow = 1
-        for item in self.Ui.game_layout_allocateEnergy.frame_selectArea.findChildren(ClickableLabel):
-            item.setParent(None)
-            item.deleteLater()
-            item = None
-        
-                
+       
+       
+    def refresh_left(self):
         #初始y的偏移量
         y_offset = 0
         num=1
@@ -399,7 +392,7 @@ class Game:
             font1.setFamilies([u"\u5343\u56fe\u7b14\u950b\u624b\u5199\u4f53"])
             font1.setPointSize(17)
             font1.setBold(True)
-            label.setGeometry(QRect(0,0,100,30))
+            label.setGeometry(QRect(0,0,150,30))
             label.setFont(font1)
             label.setStyleSheet(u"background-color: transparent;\n")
             label.move(350,y_offset)
@@ -407,6 +400,23 @@ class Game:
             y_offset+=28
             label.show()
             num+=1
+
+    # 分配能量
+    def allocateEnergy(self):
+        # 这里需要分配精力
+        # 学习 运动 社交 娱乐 
+        # 附加：陪npy 竞赛 科研 等
+        count = len(self.mainlineEvents)
+        page = count//5+1 if count%5!=0 else count//5
+        pageNow = 1
+        for item in self.Ui.game_layout_allocateEnergy.frame_selectArea.findChildren(ClickableLabel):
+            item.setParent(None)
+            item.deleteLater()
+            item = None
+        
+        self.refresh_left()
+        
+        
         # print("nihao")
            
 
@@ -566,6 +576,7 @@ class Game:
 
         for event in self.allEvents.values():
             self.eventProbablity[event.name]=event.probability
+        
         # 这里需要有更多的操作
         pass
 

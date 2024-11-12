@@ -223,10 +223,19 @@ class CrushAtFirstBlushEvent(Event.Event):
                         self.layout.pushButton_option3.setText(arg)
         
         if self.step == 0:
-            self.layout.label_img_left.hide()
+            
+            self.layout.label_name.setText("president")
+            # self.layout.change_centralWidget_background(self.layout.background_img_list[0])
+            self.layout.change_label_img_left(self.layout.img_path_list[3])
+            self.layout.change_label_img_right(self.layout.img_path_list[7])
+            self.layout.label_img_right.hide()
+            # self.layout.label_img_left.show()
         elif self.step == 3:
-            self.layout.label_img_left.show()
+            self.layout.label_name.setText("Crush")
+            self.layout.change_label_img_left(self.layout.img_path_list[2])
+            
         elif self.step == 6:
+            self.layout.label_img_right.show()
             self.input_mode = True
             user_input("你好！", "我喜欢你！")
         elif self.step == 8:
@@ -241,7 +250,9 @@ class CrushAtFirstBlushEvent(Event.Event):
         elif self.step == 14:
             self.input_mode = True
             user_input()
-
+        elif self.step==16:
+            self.layout.progressBar.setVisible(False)
+            self.layout.progressBar_second.setVisible(False)
         
     def event_end(self):
         self.refreshProbability()
@@ -251,6 +262,8 @@ class CrushAtFirstBlushEvent(Event.Event):
             else:
                 self.game.mainlineEvents.append(["陪Crush", 0])
                 self.game.refreshMissionList()
+                self.game.refresh_left()
+
             self.first_start = False
         if self.agent_mode:
             self.game.Ui.stacked_layout.setCurrentIndex(1)
@@ -272,10 +285,10 @@ class CrushAtFirstBlushEvent(Event.Event):
 
 
     dialogue_list = [
-        ["Narrator", "\"各位大一新生还有学长学姐们，欢迎来到迎新晚会！\""], # 0
+        ["Narrator", "\"各位大一新生们，欢迎来到迎新晚会！\""], # 0
         ["Narrator", "舞台上灯光璀璨，音乐欢快。学生会成员正在表演节目，观众席上坐满了新生和老生。你有些紧张而又有点期待地看着四周。"],
         ["你", "\"好多人啊，我有点紧张……不过，听说今晚会有机会认识很多新朋友，我还是鼓起勇气来参加了。\""],
-        ["Narrator", "你四处张望，突然他的目光被一个人吸引住了——一位站在不远处，穿着一件简单的白色连衣裙，笑容甜美的女生。"],
+        ["Narrator", "你四处张望，突然目光被一个人吸引住了——一位站在不远处，穿着一件简单的白色连衣裙，笑容甜美的女生。"],
         ["你", "\"她好漂亮，感觉很亲切……我从来没有这么心动过。我要不要过去打个招呼？\""],
         ["Narrator", "你深呼吸几下，鼓起勇气向她走去。"], # 5
         ["你", ""],  # 6 这里要输入你自己的对话，发送给Agent

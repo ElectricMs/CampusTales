@@ -153,7 +153,7 @@ border-image: url(:/image2/resource/next_button.png);
 	border-image: url(:/image2/resource/next_button2.png);
 }</string>
      </property>
-     <property name="plainText">
+     <property name="plainText" stdset="0">
       <string/>
      </property>
     </widget>
@@ -280,30 +280,14 @@ border:None;
    <widget class="QLabel" name="label_img_left">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>220</y>
-      <width>450</width>
-      <height>450</height>
+      <x>10</x>
+      <y>200</y>
+      <width>500</width>
+      <height>500</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">border-image: url(:/people/resource/girl_smile-removebg-preview.png);</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_8">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>220</y>
-      <width>450</width>
-      <height>450</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border-image: url(:/people/resource/girl_shy-removebg-preview (2).png);</string>
     </property>
     <property name="text">
      <string/>
@@ -420,7 +404,6 @@ background:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #FFC0CB,stop:1 
     </property>
    </widget>
    <zorder>label_img_left</zorder>
-   <zorder>label_8</zorder>
    <zorder>label_img_right</zorder>
    <zorder>frame</zorder>
    <zorder>pushButton_option1</zorder>

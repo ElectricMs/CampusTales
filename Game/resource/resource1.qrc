@@ -1,6 +1,8 @@
 <RCC>
   <qresource prefix="image1">
-    <file>屏幕截图 2023-07-09 224553.png</file>
+    <file>resource/new/办公室.png</file>
+    <file>resource/new/讲座教室.png</file>
+    <file>resource/new/社团选择.png</file>
     <file>resource/button.png</file>
     <file>resource/button2.png</file>
     <file>resource/button3.png</file>
@@ -14,19 +16,21 @@
     <file>resource/next_button2.png</file>
     <file>resource/save_button2.png</file>
     <file>resource/save_hover.png</file>
-    <file>resource/qload.png</file>
-    <file>resource/load.png</file>
-    <file>resource/qload2.png</file>
-    <file>resource/qsave.png</file>
-    <file>resource/qsave2.png</file>
-    <file>resource/save.png</file>
-    <file>resource/save2.png</file>
-    <file>resource/screen.png</file>
-    <file>resource/screen2.png</file>
-    <file>resource/title.png</file>
-    <file>resource/title2.png</file>
   </qresource>
   <qresource prefix="people">
+    <file>resource/new/00000-2737521387-removebg-preview.png</file>
+    <file>resource/new/00001-4273977208-removebg-preview.png</file>
+    <file>resource/new/00002-726064193-removebg-preview.png</file>
+    <file>resource/new/boy_smile-removebg-preview.png</file>
+    <file>resource/new/female_teacher1.png</file>
+    <file>resource/new/female_teacher2.png</file>
+    <file>resource/new/girl_NOMEL-removebg-preview.png</file>
+    <file>resource/new/interviewer_normal.png</file>
+    <file>resource/new/interviewer_smile.png</file>
+    <file>resource/new/zj_happy-removebg-preview.png</file>
+    <file>resource/new/zj_normel-removebg-preview.png</file>
+    <file>resource/new/zj_tiyuke-removebg-preview.png</file>
+    <file>resource/new/女主角-removebg-preview.png</file>
     <file>resource/girl_shy-removebg-preview (2).png</file>
     <file>resource/boy_normal_-removebg-preview.png</file>
     <file>resource/girl_smile-removebg-preview.png</file>

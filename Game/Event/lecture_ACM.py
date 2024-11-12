@@ -234,9 +234,25 @@ class LectureAcmEvent(Event.Event):
         self.layout.pushButton_option2.hide()
         self.layout.pushButton_option3.hide()
 
-        if self.step == 5:
+        if self.step == 0:
+            self.layout.change_centralWidget_background(self.layout.background_img_list[1])
+            self.layout.label_img_left.hide()
+            self.layout.label_img_right.hide()
+            #self.layout.change_label_img_left(self.layout.img_path_list[11])
+        elif self.step == 2:
+            self.layout.change_label_img_left(self.layout.img_path_list[13])
+            self.layout.label_img_left.show()
+        elif self.step == 5:
             user_choice("Yes", "No")# 6/20
             self.layout.pushButton_next.hide()
+        elif self.step==6:
+            self.layout.label_img_right.hide()
+            self.layout.label_img_left.hide()
+        elif self.step==9:
+            self.layout.change_label_img_left(self.layout.img_path_list[12])
+            self.layout.change_label_img_right(self.layout.img_path_list[7])
+            self.layout.label_img_right.show()
+            self.layout.label_img_left.show()
         elif self.step == 10:
             user_choice("询问竞赛准备", "探讨团队协作", "分享个人经历")
             self.layout.pushButton_next.hide()

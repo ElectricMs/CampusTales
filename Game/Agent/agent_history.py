@@ -88,7 +88,7 @@ class Agent:
 
         # 提取AI的回复
         greeting_start = 0
-        greeting_end = response.find("\n\n")
+        greeting_end = response.find("\n")
         greeting = response[greeting_start:greeting_end].strip()
 
         goodness_match = re.search(r'当前好感度：(\d+)', response)

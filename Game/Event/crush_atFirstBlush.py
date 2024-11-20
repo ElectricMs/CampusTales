@@ -110,6 +110,7 @@ class CrushAtFirstBlushEvent(Event.Event):
         self.talk_remaining = 5
         self.emotion_level = 0
         self.first_start = True
+        self.agent_mode = False
         
         
     def if_join(self)-> Tuple[str, str]:
@@ -123,9 +124,9 @@ class CrushAtFirstBlushEvent(Event.Event):
         for key, value in kwargs.items():
             if key == "agent_mode" and value==True:
                 self.agent_mode = True
-                self.step = 5
-        self.game.Ui.stacked_layout.setCurrentIndex(2)
+                self.step = 18
 
+        self.game.Ui.stacked_layout.setCurrentIndex(2)
         self.layout.pushButton_option1.hide()
         self.layout.pushButton_option2.hide()
         self.layout.pushButton_option3.hide()
@@ -141,13 +142,15 @@ class CrushAtFirstBlushEvent(Event.Event):
     def next(self,pos = None):
 
         self.step += 1
-        if self.step >= len(self.dialogue_list):
+        if self.step >= len(self.dialogue_list) or self.step == 17:
             self.event_end()
             return
 
         self.set_art()
         self.layout.label_name.setText(self.dialogue_list[self.step][0])
         self.layout.set_stream_text(self.dialogue_list[self.step][1])
+        if self.step == 19:
+            self.step = 17
 
         
         if self.input_mode:
@@ -206,8 +209,12 @@ class CrushAtFirstBlushEvent(Event.Event):
             
             self.layout.plainTextEdit_input.show()
             self.layout.label_content.clear()
-            self.layout.plainTextEdit_input.setPlaceholderText(f"在上方选择你喜欢的选项（如果有的话），或在此输入你想说的吧！\n你还有{self.talk_remaining}次对话机会！")
+            if self.agent_mode:
+                self.layout.plainTextEdit_input.setPlaceholderText("现在是自由对话模式，尽情与Agent对话吧！")
+            else:
+                self.layout.plainTextEdit_input.setPlaceholderText(f"在上方选择你喜欢的选项（如果有的话），或在此输入你想说的吧！\n你还有{self.talk_remaining}次对话机会！")
             
+
             count = 0
             for arg in args:
                 if isinstance(arg, str):
@@ -223,10 +230,17 @@ class CrushAtFirstBlushEvent(Event.Event):
                         self.layout.pushButton_option3.setText(arg)
         
         if self.step == 0:
-            self.layout.label_img_left.hide()
+            
+            self.layout.label_name.setText("president")
+            self.layout.change_label_img_left(self.layout.img_path_list[3])
+            self.layout.change_label_img_right(self.layout.img_path_list[7])
+            self.layout.label_img_right.hide()
         elif self.step == 3:
-            self.layout.label_img_left.show()
+            self.layout.label_name.setText("Crush")
+            self.layout.change_label_img_left(self.layout.img_path_list[2])
+            
         elif self.step == 6:
+            self.layout.label_img_right.show()
             self.input_mode = True
             user_input("你好！", "我喜欢你！")
         elif self.step == 8:
@@ -241,7 +255,16 @@ class CrushAtFirstBlushEvent(Event.Event):
         elif self.step == 14:
             self.input_mode = True
             user_input()
-
+        elif self.step == 16:
+            self.layout.progressBar.setVisible(False)
+            self.layout.progressBar_second.setVisible(False)
+        elif self.step == 18:
+            self.layout.change_label_img_left(self.layout.img_path_list[2])
+            self.layout.change_label_img_right(self.layout.img_path_list[7])
+            self.input_mode = True
+            user_input()
+        elif self.step == 19:
+            self.input_mode = False
         
     def event_end(self):
         self.refreshProbability()
@@ -251,6 +274,8 @@ class CrushAtFirstBlushEvent(Event.Event):
             else:
                 self.game.mainlineEvents.append(["陪Crush", 0])
                 self.game.refreshMissionList()
+                self.game.refresh_left()
+
             self.first_start = False
         if self.agent_mode:
             self.game.Ui.stacked_layout.setCurrentIndex(1)
@@ -272,10 +297,10 @@ class CrushAtFirstBlushEvent(Event.Event):
 
 
     dialogue_list = [
-        ["Narrator", "\"各位大一新生还有学长学姐们，欢迎来到迎新晚会！\""], # 0
+        ["Narrator", "\"各位大一新生们，欢迎来到迎新晚会！\""], # 0
         ["Narrator", "舞台上灯光璀璨，音乐欢快。学生会成员正在表演节目，观众席上坐满了新生和老生。你有些紧张而又有点期待地看着四周。"],
         ["你", "\"好多人啊，我有点紧张……不过，听说今晚会有机会认识很多新朋友，我还是鼓起勇气来参加了。\""],
-        ["Narrator", "你四处张望，突然他的目光被一个人吸引住了——一位站在不远处，穿着一件简单的白色连衣裙，笑容甜美的女生。"],
+        ["Narrator", "你四处张望，突然目光被一个人吸引住了——一位站在不远处，穿着一件简单的白色连衣裙，笑容甜美的女生。"],
         ["你", "\"她好漂亮，感觉很亲切……我从来没有这么心动过。我要不要过去打个招呼？\""],
         ["Narrator", "你深呼吸几下，鼓起勇气向她走去。"], # 5
         ["你", ""],  # 6 这里要输入你自己的对话，发送给Agent
@@ -289,5 +314,13 @@ class CrushAtFirstBlushEvent(Event.Event):
         ["你", ""], # 14
         ["Crush", ""],
         ["Narrator", "(End.)"],
+        ["Narrator", "(End.)"],
+        ["你", ""], # 18
+        ["Crush", ""],
+    ]
+
+    interact_list = [
+        ["你", ""],
+        ["Crush", ""],
     ]
     

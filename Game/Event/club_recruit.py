@@ -124,7 +124,12 @@ class ClubRecruitEvent(Event.Event):
         self.layout.pushButton_option3.hide()
 
         if self.step == 0:
-            # self.layout.label_img_left.hide()
+            self.layout.change_centralWidget_background(self.layout.background_img_list[3])
+            self.layout.change_label_img_left(self.layout.img_path_list[5])
+            self.layout.change_label_img_right(self.layout.img_path_list[6])
+            #self.layout.label_name.setText("社团学姐")
+            self.layout.label_img_right.hide()
+            self.layout.label_img_left.hide()
             pass
         elif self.step == 3:
             user_choice("学术类社团", "体育类社团", "公益类社团")
@@ -136,6 +141,9 @@ class ClubRecruitEvent(Event.Event):
         elif self.step == 6:
             user_choice("志愿者行动团", "绿色地球环保社", "爱心传递协会")
         elif self.step == 7:
+            
+            self.layout.label_img_right.show()
+            self.layout.label_img_left.show()
             user_choice("我刚开始接触这方面，想多学习了解", "我已经接触一段时间了", "我只是想加入社团，了解一下")
             self.layout.pushButton_next.hide()
         elif self.step == 8:

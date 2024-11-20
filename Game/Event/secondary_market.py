@@ -95,10 +95,19 @@ class SecondaryMarketEvent(Event.Event):
         self.layout.pushButton_option2.hide()
         self.layout.pushButton_option3.hide()
         self.layout.pushButton_next.show()
-
+        
         if self.step == 0:
-            pass
+            self.layout.change_label_img_right(self.layout.img_path_list[7])
+            self.layout.change_label_img_left(self.layout.img_path_list[14])
+            self.layout.label_img_left.hide()
+            self.layout.label_img_right.hide()
+            self.layout.change_centralWidget_background(self.layout.background_img_list[0])
+        elif self.step == 2:
+            self.layout.label_img_right.show()
+        elif self.step == 3:
+            self.layout.label_img_left.show()
         elif self.step == 4:
+            
             user_choice("与学长交流，探索书籍的奥秘", "暂时不逛，未来再来探访")
             self.layout.pushButton_next.hide()
         elif self.step == 8:

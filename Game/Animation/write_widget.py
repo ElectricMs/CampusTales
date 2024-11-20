@@ -166,7 +166,7 @@ class TypewriterEffectWidget(QWidget):
         self.label_diary_img.setStyleSheet(u"#label_diary_img{border-image: url(:/image/resource/Strength_assign/paper2_yellow_l.png);}")
 
         # 内容
-        self.label_diary_content =CustomLabel(self, "屏幕截图_2024-10-23_140034-removebg-preview.png", 184, 166)
+        self.label_diary_content =CustomLabel(self, "Game/Animation/hand-removebg-preview.png", 184, 166)
         self.label_diary_content.setObjectName(u"label_diary_content")
         self.label_diary_content.setGeometry(QRect(290, 42, 581, 561))
 

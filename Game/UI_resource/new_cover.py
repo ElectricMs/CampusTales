@@ -50,10 +50,15 @@ class MyWindow(QMainWindow):
         # 设置窗口标题
         self.setWindowTitle("PySide6 示例")
         central_widget=QWidget()
+        
 
-        self.image_files = [fn for fn in listdir() if fn.startswith('img') and fn.endswith('.png')]
-        self.images = [Image.open(fn).resize((1280, 720)).convert('RGBA') for fn in self.image_files]
+        self.image_files = [fn for fn in listdir('Game/UI_resource/') if fn.startswith('img') and fn.endswith('.png')]
+        
+
+        
+        self.images = [Image.open(f"Game/UI_resource/{fn}").resize((1280, 720)).convert('RGBA') for fn in self.image_files]
         self.alphas = np.linspace(0, 1, 100)
+        
         
         total_image=[]
         for im1, im2 in zip(self.images[:-1], self.images[1:]):

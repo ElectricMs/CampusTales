@@ -261,13 +261,14 @@ class MyWindow(QMainWindow):
         self.game_layout_setting.ui.exit_button.clicked.connect(lambda: self.stacked_layout.setCurrentIndex(0))
         self.game_layout_allocateEnergy.pushButton_exit.clicked.connect(lambda: self.stacked_layout.setCurrentIndex(0))
         self.game_layout_allocateEnergy.pushButton_next.clicked.connect(self.nextWeek)
-        self.game_layout_Agent.pushButton.clicked.connect(self.agent_girlfriend)
+
         self.game_layout_allocateEnergy.pushButton_yes.clicked.connect(lambda: self.game.event_true())
         self.game_layout_allocateEnergy.pushButton_no.clicked.connect(lambda: self.game.event_false())
         self.game_layout_choose_model_1.pushButton_next.clicked.connect(lambda: self.agent_next(pos = 0))
         self.game_layout_choose_model_1.pushButton_option1.clicked.connect(lambda: self.agent_next(pos = 1))
         self.game_layout_choose_model_1.pushButton_option2.clicked.connect(lambda: self.agent_next(pos = 2))
         self.game_layout_choose_model_1.pushButton_option3.clicked.connect(lambda: self.agent_next(pos = 3))
+        self.game_layout_choose_model_1.pushButton_exit.clicked.connect(lambda: self.stacked_layout.setCurrentIndex(0))
 
         self.game_layout_allocateEnergy.pushButton_nextPage.clicked.connect(lambda: self.game.pageTuning(1))
         self.game_layout_allocateEnergy.pushButton_previousPage.clicked.connect(lambda: self.game.pageTuning(-1))
@@ -282,9 +283,16 @@ class MyWindow(QMainWindow):
         self.game_layout_allocateEnergy.pushButton_plus3.clicked.connect(lambda: self.game.modifyEnergy(1,3))
         self.game_layout_allocateEnergy.pushButton_plus4.clicked.connect(lambda: self.game.modifyEnergy(1,4))
         self.game_layout_allocateEnergy.pushButton_plus5.clicked.connect(lambda: self.game.modifyEnergy(1,5))
-        #这里没太看明白
-        self.game_layout_allocateEnergy.pushButton_diary_next.clicked.connect(lambda: self.game.next())
+        self.game_layout_allocateEnergy.pushButton_diary_next.clicked.connect(lambda: self.game.next())#这里没太看明白
 
+        self.game_layout_Agent.pushButton.clicked.connect(self.agent_girlfriend)
+        self.game_layout_Agent.pushButton_2.clicked.connect(self.agent_president)
+        self.game_layout_Agent.pushButton_3.clicked.connect(self.agent_teacher)
+        self.game_layout_Agent.pushButton_4.clicked.connect(self.agent_interviewer)
+        # self.game_layout_Agent.pushButton.setEnabled(False)
+        # self.game_layout_Agent.pushButton_2.setEnabled(False)
+        # self.game_layout_Agent.pushButton_3.setEnabled(False)
+        # self.game_layout_Agent.pushButton_4.setEnabled(False)
 
     def game_start(self):
         if self.first_start_game:
@@ -304,24 +312,35 @@ class MyWindow(QMainWindow):
         self.game.nextWeek()
 
 
-    def agent_girlfriend(self):
-        from Event.crush_atFirstBlush import CrushAtFirstBlushEvent
-        # 这里的处理不太好，只是为了调试方便
-        # from main import Game
-        # if hasattr(self, 'game'):
-        #     if isinstance(self.game, Game):
-        #         self.event_crush_atFirstBlush = event_crush_atFirstBlush(self.game)
-        # else:
-        #     self.game = Game(self)
-        #     self.event_crush_atFirstBlush = event_crush_atFirstBlush(Game(self), agent_mode=True)
-        #     self.game.currentEvent = self.event_crush_atFirstBlush
-        # self.event_crush_atFirstBlush.event_start()
-        
+    def agent_girlfriend(self):      
         if 'crush_atFirstBlush' in self.game.allEvents:
-            CrushAtFirstBlushEvent=self.game.allEvents['crush_atFirstBlush']
-            CrushAtFirstBlushEvent.event_start(agent_mode=True)
+            crush_at_first_blush=self.game.allEvents['crush_atFirstBlush']
+            crush_at_first_blush.event_start(agent_mode=True)
         else:
             print("event_crush_atFirstBlush not found")
+
+    def agent_president(self):
+        if 'students_organization' in self.game.allEvents:
+            students_organization=self.game.allEvents['students_organization']
+            students_organization.event_start(agent_mode=True)
+        else:
+            print("event_students_organization not found")
+
+    def agent_teacher(self):
+        if 'lecture_ACM' in self.game.allEvents:
+            lecture_ACM=self.game.allEvents['lecture_ACM']
+            lecture_ACM.event_start(agent_mode=True)
+        else:
+            print("event_lecture_ACM not found")
+
+    def agent_interviewer(self):
+        if 'internship' in self.game.allEvents:
+            internship=self.game.allEvents['internship']
+            internship.event_start(agent_mode=True)
+        else:
+            print("event_internship not found")
+
+
     def change_sound(self,value):
         self.audio_output.setVolume(value/100.0)
         self.game_layout_initialAnimation.sound_effect.setVolume(value/100.0)

@@ -10,10 +10,10 @@ from langchain.schema import SystemMessage, HumanMessage, AIMessage
 from langchain_core.prompts import StringPromptTemplate
 
 # 设置环境变量（确保通过环境变量或安全方式管理）
-os.environ["ZHIPUAI_API_KEY"] = "798c6766d89022735623c294ee28216c.stDi9j8OcRNp9f5L"  # 替换为你的智谱 AI API 密钥
+os.environ["ZHIPUAI_API_KEY"] = "48bd2ea58466e86e6bd5f3b67d68690f.YTLK9Dxy9Xdx32Ma"  # 替换为你的智谱 AI API 密钥
 
 # 初始化 ChatZhipuAI
-zhipuai_chat_model = ChatZhipuAI(model="glm-4-flash")
+zhipuai_chat_model = ChatZhipuAI(model="glm-4-plus")
 
 
 # SQLite数据库初始化
@@ -68,7 +68,7 @@ class Agent:
         response = await self.chat_model.ainvoke(messages)  # 使用 invoke 方法
         return response.content.strip()  # type: ignore # 提取 content 并调用 strip()
 
-    def get_conversation_history(self, limit=4):
+    def get_conversation_history(self, limit=2):
         conn = sqlite3.connect('conversation_history.db')
         cursor = conn.cursor()
         # 查询历史会话

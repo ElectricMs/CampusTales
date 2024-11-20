@@ -2,7 +2,7 @@ import os
 import json
 import re
 import sqlite3  # 引入SQLite
-
+import random
 from langchain.chains.llm import LLMChain
 from langchain.prompts import PromptTemplate
 from langchain_community.chat_models import ChatZhipuAI
@@ -107,7 +107,9 @@ class Agent:
 
         # 更新好感度
         if goodness==None or goodness - self.emotion_level > 10 or goodness - self.emotion_level< -15 : # type: ignore
-            self.emotion_level = self.emotion_level + 1 # type: ignore
+            #随机出一个-1-3之间的数字
+            random_number = random.randint(-1, 3)
+            self.emotion_level = self.emotion_level + random_number # type: ignore
         else:
             self.emotion_level = goodness
       

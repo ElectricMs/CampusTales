@@ -78,6 +78,7 @@ class StudentsOrganizationEvent(Event.Event):
         self.emotion_level = 0
         self.first_start = True
         self.chosed_option = None
+        self.agent_mode = False
         
         
     def if_join(self)-> Tuple[str, str]:
@@ -89,10 +90,10 @@ class StudentsOrganizationEvent(Event.Event):
         
         
         self.step = 0
-        # for key, value in kwargs.items():
-        #     if key == "agent_mode" and value==True:
-        #         self.agent_mode = True
-        #         self.step = 5
+        for key, value in kwargs.items():
+            if key == "agent_mode" and value==True:
+                self.agent_mode = True
+                self.step = 28
         self.game.Ui.stacked_layout.setCurrentIndex(2)
 
         self.layout.pushButton_option1.hide()
@@ -102,14 +103,14 @@ class StudentsOrganizationEvent(Event.Event):
 
         self.layout.label_name.setText(self.dialogue_list[self.step][0])
         self.layout.set_stream_text(self.dialogue_list[self.step][1])
-        # print(self.agent)
+
         self.set_art()
 
 
     def next(self,pos = None):
 
         self.step += 1
-        if self.step >= len(self.dialogue_list):
+        if self.step >= len(self.dialogue_list) or self.step == 28:
             self.event_end()
             return
         elif self.step == 14:
@@ -119,10 +120,14 @@ class StudentsOrganizationEvent(Event.Event):
                 self.chosed_option = "学习部"
             else :
                 self.chosed_option = "体育部"
+        
 
         self.set_art()
         self.layout.label_name.setText(self.dialogue_list[self.step][0])
         self.layout.set_stream_text(self.dialogue_list[self.step][1])
+
+        if self.step == 30:
+            self.step = 28
 
         
         if self.input_mode:
@@ -187,7 +192,10 @@ class StudentsOrganizationEvent(Event.Event):
             
             self.layout.plainTextEdit_input.show()
             self.layout.label_content.clear()
-            self.layout.plainTextEdit_input.setPlaceholderText("在此输入你想说的吧！")
+            if self.agent_mode:
+                self.layout.plainTextEdit_input.setPlaceholderText("现在是自由对话模式，尽情与Agent对话吧！")
+            else:
+                self.layout.plainTextEdit_input.setPlaceholderText("在此输入你想说的吧！")
             
             count = 0
             for arg in args:
@@ -242,6 +250,15 @@ class StudentsOrganizationEvent(Event.Event):
         elif self.step == 23:
             self.input_mode = True
             user_input()
+        elif self.step == 28:
+            self.layout.change_centralWidget_background(self.layout.background_img_list[3])
+            self.layout.change_label_img_left(self.layout.img_path_list[4])
+            self.layout.change_label_img_right(self.layout.img_path_list[6])
+        elif self.step == 29:
+            self.input_mode = True
+            user_input()
+        elif self.step == 30:
+            self.input_mode = False
 
         
     def event_end(self):
@@ -301,5 +318,8 @@ class StudentsOrganizationEvent(Event.Event):
         ["部长", "感谢你的真诚回答！如果你通过了面试，我们会向你发送关于部门活动的详细信息与安排，请保持关注与期待哦！"],
         ["Narrator", "你感受到一股前所未有的激动与期待涌上心头。你知道，这将是一个全新的开始，一个充满挑战与机遇的旅程。"],
         ["Narrator", "(End.)"],
+        ["Narrator", "现在是自由对话模式，尽情与Agent对话吧！"], # 28
+        ["你", ""], # 29
+        ["部长", ""],
     ]
     

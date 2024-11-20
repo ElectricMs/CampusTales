@@ -81,6 +81,7 @@ class LectureAcmEvent(Event.Event):
         self.talk_remaining = 3
         self.emotion_level = 0
         self.first_start = True
+        self.agent_mode = False
        
        
 
@@ -93,6 +94,10 @@ class LectureAcmEvent(Event.Event):
         
         
         self.step = 0
+        for key, value in kwargs.items():
+            if key == "agent_mode" and value==True:
+                self.agent_mode = True
+                self.step = 29
         self.game.Ui.stacked_layout.setCurrentIndex(2)
 
         self.layout.pushButton_option1.hide()
@@ -111,7 +116,7 @@ class LectureAcmEvent(Event.Event):
     def next(self, pos = None):
 
         self.step += 1
-        if self.step >= len(self.dialogue_list) or self.step == 26:
+        if self.step >= len(self.dialogue_list) or self.step == 26 or self.step == 29:
             self.event_end()
             return
         
@@ -138,6 +143,9 @@ class LectureAcmEvent(Event.Event):
         self.set_art()
         self.layout.label_name.setText(self.dialogue_list[self.step][0])
         self.layout.set_stream_text(self.dialogue_list[self.step][1])
+
+        if self.step == 31:
+            self.step =29
 
         if self.input_mode:
            
@@ -198,7 +206,10 @@ class LectureAcmEvent(Event.Event):
             
             self.layout.plainTextEdit_input.show()
             self.layout.label_content.clear()
-            self.layout.plainTextEdit_input.setPlaceholderText(f"继续向老师询问吧！\n你还有{self.talk_remaining}次对话机会！")
+            if self.agent_mode:
+                self.layout.plainTextEdit_input.setPlaceholderText("现在是自由对话模式，尽情与Agent对话吧！")
+            else:
+                self.layout.plainTextEdit_input.setPlaceholderText(f"继续向老师询问吧！\n你还有{self.talk_remaining}次对话机会！")
             
             count = 0
             for arg in args:
@@ -265,6 +276,16 @@ class LectureAcmEvent(Event.Event):
         elif self.step == 21:
             self.input_mode = True
             user_input()
+        elif self.step == 29:
+            self.layout.change_centralWidget_background(self.layout.background_img_list[1])
+            self.layout.change_label_img_left(self.layout.img_path_list[12])
+            self.layout.change_label_img_right(self.layout.img_path_list[7])
+        elif self.step == 30:
+            self.input_mode = True
+            user_input()
+        elif self.step == 31:
+            self.input_mode = False
+        
    
 
         
@@ -329,6 +350,9 @@ class LectureAcmEvent(Event.Event):
         ,["Narrator", "尽管你对ACM竞赛讲座充满了好奇与期待，但经过深思熟虑后，你还是决定暂时不参加。你认为目前自己需要更多时间来准备作业，同时也想先巩固自己的编程基础。"] # 26
         ,["Narrator", "在广场上，你与同学们挥手告别，并约定未来有机会再一起参加ACM竞赛的活动。虽然这次没有参加讲座，但这次预告让你更加了解了ACM竞赛的魅力和挑战，也为你的编程之路指明了一个方向。"] # 27
         ,["Narrator", "End."] # 28
+        ,["Narrator", "现在是自由对话模式，尽情与Agent对话吧！"] # 29
+        ,["你", ""] # 30
+        ,["老师", ""] # 31
     ]
 
 

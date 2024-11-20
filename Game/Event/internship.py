@@ -82,6 +82,7 @@ class InternshipEvent(Event.Event):
         threading.Thread(target=self.loop.run_forever, daemon=True).start() # 在一个单独的线程中启动事件循环，确保它一直在运行
         self.emotion_level = 0
         self.first_start = True
+        self.input_mode = False
         
         
     def if_join(self)-> Tuple[str, str]:
@@ -91,13 +92,11 @@ class InternshipEvent(Event.Event):
     def event_start(self, **kwargs):
         print("InternshipEvent start")
         
-        
-        
         self.step = 0
         for key, value in kwargs.items():
             if key == "agent_mode" and value==True:
                 self.agent_mode = True
-                self.step = 5
+                self.step = 19
         self.game.Ui.stacked_layout.setCurrentIndex(2)
 
         self.layout.pushButton_option1.hide()
@@ -116,7 +115,7 @@ class InternshipEvent(Event.Event):
     def next(self,pos = None):
 
         self.step += 1
-        if self.step >= len(self.dialogue_list) or self.step == 16:
+        if self.step >= len(self.dialogue_list) or self.step == 16 or self.step == 29:
             self.event_end()
             return
         elif self.step == 4:
@@ -129,7 +128,6 @@ class InternshipEvent(Event.Event):
         self.layout.label_name.setText(self.dialogue_list[self.step][0])
         self.layout.set_stream_text(self.dialogue_list[self.step][1])
 
-        
         if self.input_mode:
            
             # 用户自选回答阶段，step不自增，结束用户回答阶段时再自增
@@ -179,13 +177,19 @@ class InternshipEvent(Event.Event):
             self.input_mode = False
             return
 
+        if self.step == 21:
+            self.step = 19
+
 
     def set_art(self):
         def user_input(*args):
             
             self.layout.plainTextEdit_input.show()
             self.layout.label_content.clear()
-            self.layout.plainTextEdit_input.setPlaceholderText(f"回答面试官的问题吧！\n（{self.dialogue_list[self.step - 1 ][1]}）")
+            if self.agent_mode:
+                self.layout.plainTextEdit_input.setPlaceholderText("现在是自由对话模式，尽情与Agent对话吧！")
+            else:
+                self.layout.plainTextEdit_input.setPlaceholderText(f"回答面试官的问题吧！\n（{self.dialogue_list[self.step - 1 ][1]}）")
             
             count = 0
             for arg in args:
@@ -241,6 +245,13 @@ class InternshipEvent(Event.Event):
         elif self.step == 12:
             self.input_mode = True
             user_input()
+        elif self.step == 19:
+            self.layout.change_centralWidget_background(self.layout.background_img_list[2])
+            self.layout.change_label_img_left(self.layout.img_path_list[10])
+        elif self.step == 20:
+            self.input_mode = True
+            user_input()
+
 
 
 
@@ -294,6 +305,9 @@ class InternshipEvent(Event.Event):
 
         ["Narrator", "尽管你对实习机会充满期待，但在面试前的最后一刻，你还是决定暂时放弃。你觉得自己在编程技能上还有待提高，同时也希望能有更多时间来准备即将到来的课程项目和考试。"],
         ["Narrator", "你决定保持对实习机会的关注，未来当自己更加成熟和自信时，再勇敢地迈出这一步。这次决定让你更加明白自己的现状和需求，也为你的未来规划提供了一个清晰的方向。"],
-        ["Narrator", "(End.)"], # 28
+        ["Narrator", "(End.)"], # 18
+        ["Narrator", "现在是自由对话模式，尽情与Agent对话吧！"], # 19
+        ["你", ""], # 20
+        ["面试官", ""], # 21
     ]
     

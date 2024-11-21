@@ -4,3 +4,6 @@ selflearning
 *.pyc
 .vscode/
 *.pyc
+build
+dist
+CampusTales.spec

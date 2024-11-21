@@ -1,5 +1,7 @@
 import sqlite3
 import random
+import os
+import sys
 
 # 连接到SQLite数据库
 # 数据库文件是 university_life.db
@@ -7,7 +9,20 @@ import random
 
 
 class db_connection:
-    conn = sqlite3.connect('Game/activity/university_life.db')
+    def resource_path(relative_path):
+        """ Get absolute path to resource, works for dev and for PyInstaller """
+        try:
+            base_path = sys._MEIPASS
+        except Exception:
+            base_path = os.path.abspath(".")
+
+        return os.path.join(base_path, relative_path)
+
+    # 获取数据库文件的绝对路径
+    db_path = resource_path('Game/activity/university_life.db')
+
+    # 连接到数据库
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     def __init__(self):
         pass

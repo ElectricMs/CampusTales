@@ -7,6 +7,7 @@ from os import listdir
 import numpy as np
 from PIL import Image,ImageQt
 import resource.resoure_main_rc
+import os
 
 
 class DynamicBackgroundLabel(QLabel):
@@ -50,13 +51,23 @@ class MyWindow(QMainWindow):
         # 设置窗口标题
         self.setWindowTitle("PySide6 示例")
         central_widget=QWidget()
-        
+        def resource_path(relative_path):
+            """ Get absolute path to resource, works for dev and for PyInstaller """
+            try:
+                base_path = sys._MEIPASS
+            except Exception: 
+                base_path = os.path.abspath(".")
 
-        self.image_files = [fn for fn in listdir('Game/UI_resource/') if fn.startswith('img') and fn.endswith('.png')]
-        
+            return os.path.join(base_path, relative_path)
 
-        
-        self.images = [Image.open(f"Game/UI_resource/{fn}").resize((1280, 720)).convert('RGBA') for fn in self.image_files]
+        # 获取图片文件的相对路径
+        image_dir = 'Game/UI_resource'
+
+        # 获取图片文件列表
+        self.image_files = [fn for fn in listdir(resource_path(image_dir)) if fn.startswith('img') and fn.endswith('.png')]
+
+        # 加载并处理图片
+        self.images = [Image.open(resource_path(os.path.join(image_dir, fn))).resize((1280, 720)).convert('RGBA') for fn in self.image_files]
         self.alphas = np.linspace(0, 1, 100)
         
         

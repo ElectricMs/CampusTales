@@ -364,17 +364,22 @@ class MyWindow(QMainWindow):
         self.game_layout_setting.name_lineEdit.setText(new_name)
 
 if __name__=="__main__":
-    app=QApplication([])
-    window=MyWindow()
-    from main import Game
-    if hasattr(window, 'game'):
-        if isinstance(window.game, Game):
-            pass
+    try:
+        app=QApplication([])
+        window=MyWindow()
+        from main import Game
+        if hasattr(window, 'game'):
+            if isinstance(window.game, Game):
+                pass
+            else:
+                window.game = Game(window)
+                print(window.game)      
         else:
-            window.game = Game(window)
-            print(window.game)      
-    else:
-        window.game = Game(window)     
-        print(window.game)
-    window.show()
-    app.exec()
+            window.game = Game(window)     
+            print(window.game)
+        window.show()
+        app.exec()
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    finally:
+        input("Press Enter to exit...")

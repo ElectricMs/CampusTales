@@ -8,6 +8,7 @@ from langchain.prompts import PromptTemplate
 from langchain_community.chat_models import ChatZhipuAI
 from langchain.schema import SystemMessage, HumanMessage, AIMessage
 from langchain_core.prompts import StringPromptTemplate
+import sys
 
 # 设置环境变量（确保通过环境变量或安全方式管理）
 os.environ["ZHIPUAI_API_KEY"] = "48bd2ea58466e86e6bd5f3b67d68690f.YTLK9Dxy9Xdx32Ma"  # 替换为你的智谱 AI API 密钥
@@ -18,7 +19,21 @@ zhipuai_chat_model = ChatZhipuAI(model="glm-4-plus")
 
 # SQLite数据库初始化
 def init_db():
-    conn = sqlite3.connect('conversation_history.db')
+    # conn = sqlite3.connect('conversation_history.db')
+    def resource_path(relative_path):
+        """ Get absolute path to resource, works for dev and for PyInstaller """
+        try:
+            base_path = sys._MEIPASS
+        except Exception:
+            base_path = os.path.abspath(".")
+
+        return os.path.join(base_path, relative_path)
+
+    # 获取数据库文件的绝对路径
+    db_path = resource_path('Game/conversation_history.db')
+
+    # 连接到数据库
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     # 创建用于存储对话的表
     cursor.execute('''

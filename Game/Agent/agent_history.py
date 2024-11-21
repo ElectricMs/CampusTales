@@ -15,10 +15,15 @@ os.environ["ZHIPUAI_API_KEY"] = "48bd2ea58466e86e6bd5f3b67d68690f.YTLK9Dxy9Xdx32
 # 初始化 ChatZhipuAI
 zhipuai_chat_model = ChatZhipuAI(model="glm-4-plus")
 
+# 获取当前文件的目录
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+# 构建数据库文件的完整路径
+db_path = os.path.join(current_dir, 'conversation_history.db')
 
 # SQLite数据库初始化
 def init_db():
-    conn = sqlite3.connect('conversation_history.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     # 创建用于存储对话的表
     cursor.execute('''
@@ -68,7 +73,7 @@ class Agent:
         return response.content.strip()  # type: ignore # 提取 content 并调用 strip()
 
     def get_conversation_history(self, limit=2):
-        conn = sqlite3.connect('conversation_history.db')
+        conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
         # 查询历史会话
         cursor.execute('SELECT agent_name, emotion_level, user_input, ai_response FROM conversation WHERE agent_name = ? ORDER BY id DESC LIMIT ?', (self.name, limit))
@@ -139,7 +144,7 @@ class Agent:
 
 
     def save_conversation_to_db(self, user_input, ai_response):
-        conn = sqlite3.connect('conversation_history.db')
+        conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
         # 插入对话到数据库
         cursor.execute('INSERT INTO conversation (agent_name, emotion_level ,user_input, ai_response) VALUES (?, ?, ?, ?)', (self.name, self.emotion_level ,user_input, ai_response))

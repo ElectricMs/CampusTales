@@ -39,16 +39,16 @@ class Agent:
         self.name = name
         self.emotion_level = initial_emotion  # 范围: -100 到 +100
         self.relationship = "陌生人"
-        self.chat_model = ChatZhipuAI(model="GLM-4-Flash", temperature=0.2)
+        self.chat_model = zhipuai_chat_model
         self.context = context
         # Define the prompt template
         self.prompt_template = PromptTemplate(
-            input_variables=["context", "emotion_level", "relationship"],
+            input_variables=["context", "emotion_level"],
             template="""
-            你的当前好感度为{emotion_level}，当前关系为：{relationship}。
 
             {context}
             
+            你的当前好感度为{emotion_level}
             """
         )
 
@@ -57,7 +57,6 @@ class Agent:
         history = self.get_conversation_history()
         chat_prompt = self.prompt_template.format(
             emotion_level=self.emotion_level,
-            relationship=self.relationship,
             context=self.context + "\n" + history
         )
         messages = [
@@ -108,7 +107,7 @@ class Agent:
         # 更新好感度
         if goodness==None or goodness - self.emotion_level > 10 or goodness - self.emotion_level< -15 : # type: ignore
             #随机出一个-1-3之间的数字
-            random_number = random.randint(-1, 3)
+            random_number = random.randint(-5, 15)
             self.emotion_level = self.emotion_level + random_number # type: ignore
         else:
             self.emotion_level = goodness

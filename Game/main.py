@@ -368,6 +368,7 @@ class Game:
         
         ui = self.Ui.game_layout_allocateEnergy
         diary_text = ""
+        diary_text += f"第{self.week}周\n"
         if self.week == 1:
             diary_text += dialogue.get_random_welcoming()
         elif self.week >= 16:

@@ -268,7 +268,7 @@ class MyWindow(QMainWindow):
         self.game_layout_choose_model_1.pushButton_option1.clicked.connect(lambda: self.agent_next(pos = 1))
         self.game_layout_choose_model_1.pushButton_option2.clicked.connect(lambda: self.agent_next(pos = 2))
         self.game_layout_choose_model_1.pushButton_option3.clicked.connect(lambda: self.agent_next(pos = 3))
-        self.game_layout_choose_model_1.pushButton_exit.clicked.connect(lambda: self.stacked_layout.setCurrentIndex(0))
+        self.game_layout_choose_model_1.pushButton_exit.clicked.connect(self.exit)
 
         self.game_layout_allocateEnergy.pushButton_nextPage.clicked.connect(lambda: self.game.pageTuning(1))
         self.game_layout_allocateEnergy.pushButton_previousPage.clicked.connect(lambda: self.game.pageTuning(-1))
@@ -304,8 +304,14 @@ class MyWindow(QMainWindow):
 
 
     def agent_next(self, pos=None):
-        self.game.currentEvent.next(pos=pos)
+        if self.game.isAgent:
+            self.game.currentAgentEvent.next(pos=pos)
+        else:
+            self.game.currentEvent.next(pos=pos)
 
+    def exit(self):
+        self.stacked_layout.setCurrentIndex(0)
+        self.game.isAgent=False
 
     def nextWeek(self):
         print("next week")
@@ -315,6 +321,8 @@ class MyWindow(QMainWindow):
     def agent_girlfriend(self):      
         if 'crush_atFirstBlush' in self.game.allEvents:
             crush_at_first_blush=self.game.allEvents['crush_atFirstBlush']
+            self.game.currentAgentEvent = crush_at_first_blush
+            self.game.isAgent = True
             crush_at_first_blush.event_start(agent_mode=True)
         else:
             print("event_crush_atFirstBlush not found")
@@ -322,6 +330,8 @@ class MyWindow(QMainWindow):
     def agent_president(self):
         if 'students_organization' in self.game.allEvents:
             students_organization=self.game.allEvents['students_organization']
+            self.game.currentAgentEvent = students_organization
+            self.game.isAgent = True
             students_organization.event_start(agent_mode=True)
         else:
             print("event_students_organization not found")
@@ -329,6 +339,8 @@ class MyWindow(QMainWindow):
     def agent_teacher(self):
         if 'lecture_ACM' in self.game.allEvents:
             lecture_ACM=self.game.allEvents['lecture_ACM']
+            self.game.currentAgentEvent = lecture_ACM
+            self.game.isAgent = True
             lecture_ACM.event_start(agent_mode=True)
         else:
             print("event_lecture_ACM not found")
@@ -336,6 +348,8 @@ class MyWindow(QMainWindow):
     def agent_interviewer(self):
         if 'internship' in self.game.allEvents:
             internship=self.game.allEvents['internship']
+            self.game.currentAgentEvent = internship
+            self.game.isAgent = True
             internship.event_start(agent_mode=True)
         else:
             print("event_internship not found")

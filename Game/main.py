@@ -43,6 +43,12 @@ class Game:
 
         # 当前正在进行的事件
         self.currentEvent:Event
+
+        # 当前正在进行的Agent
+        self.currentAgentEvent:Event
+
+        # 是否为Agent
+        self.isAgent=False
         
         # 存放所有可选事件的概率，格式为 {事件名:概率}
         self.eventProbablity={}

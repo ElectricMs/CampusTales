@@ -124,7 +124,7 @@ class CrushAtFirstBlushEvent(Event.Event):
         for key, value in kwargs.items():
             if key == "agent_mode" and value==True:
                 self.agent_mode = True
-                self.step = 18
+                self.step = 17
 
         self.game.Ui.stacked_layout.setCurrentIndex(2)
         self.layout.pushButton_option1.hide()
@@ -149,9 +149,6 @@ class CrushAtFirstBlushEvent(Event.Event):
         self.set_art()
         self.layout.label_name.setText(self.dialogue_list[self.step][0])
         self.layout.set_stream_text(self.dialogue_list[self.step][1])
-        if self.step == 19:
-            self.step = 17
-
         
         if self.input_mode:
            
@@ -203,6 +200,9 @@ class CrushAtFirstBlushEvent(Event.Event):
             self.input_mode = False
             return
 
+        if self.step == 19:
+            self.step = 17
+
 
     def set_art(self):
         def user_input(*args):
@@ -232,6 +232,7 @@ class CrushAtFirstBlushEvent(Event.Event):
         if self.step == 0:
             
             self.layout.label_name.setText("president")
+            self.layout.change_centralWidget_background(self.layout.background_img_list[0])
             self.layout.change_label_img_left(self.layout.img_path_list[3])
             self.layout.change_label_img_right(self.layout.img_path_list[7])
             self.layout.label_img_right.hide()
@@ -258,13 +259,14 @@ class CrushAtFirstBlushEvent(Event.Event):
         elif self.step == 16:
             self.layout.progressBar.setVisible(False)
             self.layout.progressBar_second.setVisible(False)
-        elif self.step == 18:
+        elif self.step == 17:
+            self.layout.change_centralWidget_background(self.layout.background_img_list[0])
             self.layout.change_label_img_left(self.layout.img_path_list[2])
             self.layout.change_label_img_right(self.layout.img_path_list[7])
+        elif self.step == 18:
             self.input_mode = True
             user_input()
-        elif self.step == 19:
-            self.input_mode = False
+
         
     def event_end(self):
         self.refreshProbability()
@@ -314,7 +316,7 @@ class CrushAtFirstBlushEvent(Event.Event):
         ["你", ""], # 14
         ["Crush", ""],
         ["Narrator", "(End.)"],
-        ["Narrator", "(End.)"],
+        ["Narrator", "现在是自由对话模式，尽情与Agent对话吧！"],
         ["你", ""], # 18
         ["Crush", ""],
     ]

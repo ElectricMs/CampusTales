@@ -41,6 +41,32 @@ pip list
 
 # 一旦虚拟环境被激活，使用下面的命令来生成requirements.txt文件：
 pip freeze > requirements.txt
+
+# 尝试使用Pyinstaller打包为exe文件：
+pyinstaller --name=CampusTales --icon=images/icon.ico --onefile --add-data "config.json:." --add-data "images:images" main.py
+
+pyinstaller --name=CampusTales --onefile \
+    --add-data "activity:activity" \
+    --add-data "Agent:Agent" \
+    --add-data "Animation:Animation" \
+    --add-data "Event:Event" \
+    --add-data "resource:resource" \
+    --add-data "UI_resource:UI_resource" \
+    --add-data "屏幕截图_2024-10-23_140034-removebg-preview.png:." \
+    --add-data "conversation_history.db:." \
+    --add-data "img黑夜1.png:." \
+    --add-data "img黄昏1.png:." \
+    --add-data "img落日1.png:." \
+    --add-data "img清晨1.png:." \
+    --add-data "README.md:." \
+    cover_start.py
+
+pyinstaller --name=CampusTales --onefile  --add-data "Game:Game" --add-data "conversation_history.db:." --add-data "README.md:." Game\cover_start.py
+
+pyinstaller --name=CampusTales --onefile --console --add-data "Game:Game" --add-data "conversation_history.db:." --add-data "README.md:." Game\cover_start.py
+
+pyinstaller --name=CampusTales --onefile --add-data "Game:Game" --add-data "conversation_history.db:." --add-data "README.md:." --hidden-import pydantic.deprecated.decorator Game\cover_start.py
+
 ```
 
 

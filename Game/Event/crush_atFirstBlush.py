@@ -103,7 +103,7 @@ class CrushAtFirstBlushEvent(Event.Event):
 
         当前关系：恋人
        """
-        
+        Agent.init_db()
         self.agent = Agent(name="crush", context=context1)
         self.loop = asyncio.new_event_loop() # 创建一个新的事件循环 用于跑agent
         threading.Thread(target=self.loop.run_forever, daemon=True).start() # 在一个单独的线程中启动事件循环，确保它一直在运行

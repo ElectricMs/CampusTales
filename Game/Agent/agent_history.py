@@ -21,22 +21,6 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 # 构建数据库文件的完整路径
 db_path = os.path.join(current_dir, 'conversation_history.db')
 
-# SQLite数据库初始化
-def init_db():
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
-    # 创建用于存储对话的表
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS conversation (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            agent_name VARCHAR(255),
-            emotion_level INT,          
-            user_input TEXT,
-            ai_response TEXT
-        )
-    ''')
-    conn.commit()
-    conn.close()
 
 
 class Agent:
@@ -57,6 +41,23 @@ class Agent:
             """
         )
 
+    # SQLite数据库初始化
+    def init_db():
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        # 创建用于存储对话的表
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS conversation (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                agent_name VARCHAR(255),
+                emotion_level INT,          
+                user_input TEXT,
+                ai_response TEXT
+            )
+        ''')
+        conn.commit()
+        conn.close()
+        
     async def generate_response(self, context):
         # 结合历史会话
         history = self.get_conversation_history()
@@ -68,8 +69,9 @@ class Agent:
             SystemMessage(content=chat_prompt),
             HumanMessage(content=context)
         ]
-
+        print(messages)
         response = await self.chat_model.ainvoke(messages)  # 使用 invoke 方法
+        
         return response.content.strip()  # type: ignore # 提取 content 并调用 strip()
 
     def get_conversation_history(self, limit=2):
@@ -78,13 +80,19 @@ class Agent:
         # 查询历史会话
         cursor.execute('SELECT agent_name, emotion_level, user_input, ai_response FROM conversation WHERE agent_name = ? ORDER BY id DESC LIMIT ?', (self.name, limit))
         rows = cursor.fetchall()
+        print("查询结果")
         print(rows)
-        if(len(rows) != 0):
+        
+        if len(rows) == 0:
+            self.emotion_level = 50  # 默认情感等级
+            history = "无历史记录"
+        else:
             self.emotion_level = rows[0][1]
+            history = "\n".join([f"用户: {row[2]}\nAI: {row[3]}" for row in rows])
+        
         conn.close()
-        history = "\n".join([f"用户: {row[2]}\nAI: {row[3]}" for row in rows])
+        print(history)
         return history
-
 
     async def user_interact_with_agent(self, user_input):
         context = f"{user_input}"

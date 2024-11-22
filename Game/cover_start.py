@@ -21,8 +21,8 @@ class GameLayout_choose_model_1(QMainWindow, Ui_choose_model_1):
         self.setupUi(self)
 
 
-        #self.background_img_list从0到3，分别是教室、讲座教室、办公室、社团选择
-        self.background_img_list=["url(:/image1/resource/classroom.png)","url(:/image1/resource/new/讲座教室.png)","url(:/image1/resource/new/办公室.png)","url(:/image1/resource/new/社团选择.png)"]
+        #self.background_img_list从0到4，分别是教室、讲座教室、办公室、社团选择、学生会
+        self.background_img_list=["url(:/image1/resource/classroom.png)","url(:/image1/resource/new/讲座教室.png)","url(:/image1/resource/new/办公室.png)","url(:/image1/resource/new/社团选择.png)","url(:/image1/resource/new/学生会.png)"]
 
 
         #self.img_path_list装了所有人物的图片资源

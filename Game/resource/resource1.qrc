@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="image1">
+    <file>resource/new/学生会.png</file>
     <file>resource/new/办公室.png</file>
     <file>resource/new/讲座教室.png</file>
     <file>resource/new/社团选择.png</file>

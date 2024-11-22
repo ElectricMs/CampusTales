@@ -247,7 +247,7 @@ class StudentsOrganizationEvent(Event.Event):
         
         
         if self.step == 0:
-            self.layout.change_centralWidget_background(self.layout.background_img_list[3])
+            self.layout.change_centralWidget_background(self.layout.background_img_list[4])
             self.layout.change_label_img_left(self.layout.img_path_list[4])
             self.layout.change_label_img_right(self.layout.img_path_list[6])
             self.layout.label_img_left.hide()

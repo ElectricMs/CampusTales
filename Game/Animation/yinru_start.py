@@ -4,6 +4,8 @@ from PySide6.QtWidgets import QApplication,QWidget,QMainWindow,QPushButton,QLabe
 from PySide6.QtMultimedia import QSoundEffect
 from Animation.Ui_yinru import Ui_Page1
 import Animation.resoure_main_rc
+import sys
+import os
 
 
 class CustomPlainTextEdit(QPlainTextEdit):
@@ -39,7 +41,20 @@ class MyWindow(QMainWindow):
         self.callback_setCurrentIndex_allocateEnergy = callback
         # 创建一个QSoundEffect实例来播放音效
         self.sound_effect = QSoundEffect(self)
-        self.sound_effect.setSource(QUrl.fromLocalFile('Game\Animation\机械键盘打字音效.wav'))# type: ignore  # 替换为你的音频文件路径
+
+        def resource_path(relative_path):
+            """ Get absolute path to resource, works for dev and for PyInstaller """
+            try:
+                base_path = sys._MEIPASS
+            except Exception:
+                base_path = os.path.abspath(".")
+
+            return os.path.join(base_path, relative_path)
+
+        audio_file_path = resource_path('Game\Animation\typing.wav')
+
+        self.sound_effect.setSource(QUrl.fromLocalFile(audio_file_path)) 
+        print("typing sounds set successfully")
         self.sound_effect.setVolume(0.6)
         self.ui.test_pushButton.setVisible(False)
         self.ui.test_pushButton.clicked.connect(self.start_flow_text)

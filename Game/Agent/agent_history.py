@@ -16,12 +16,16 @@ os.environ["ZHIPUAI_API_KEY"] = "48bd2ea58466e86e6bd5f3b67d68690f.YTLK9Dxy9Xdx32
 # 初始化 ChatZhipuAI
 zhipuai_chat_model = ChatZhipuAI(model="glm-4-plus")
 
-# 获取当前文件的目录
-current_dir = os.path.dirname(os.path.abspath(__file__))
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
 
-# 构建数据库文件的完整路径
-db_path = os.path.join(current_dir, 'conversation_history.db')
+    return os.path.join(base_path, relative_path)
 
+db_path = resource_path('Game/Agent/conversation_history.db')
 
 
 class Agent:

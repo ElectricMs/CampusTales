@@ -204,6 +204,8 @@ class Game:
         
 
      # 判断是否触发结局
+    
+    
     def check_end(self):
         """
             1、如果金钱<00，不幸饿死。因为长期缺乏经济支持，无法满足基本生活需求，陷入绝
@@ -558,21 +560,21 @@ class Game:
             self.currentEvent=self.allEvents["crush_atFirstBlush"]
             return True
         elif self.week==1:
-            self.currentEvent=self.allEvents["secondary_market"]
-            return True
-        elif self.week==2:
-            self.currentEvent=self.allEvents["lecture_ACM"]
+            self.currentEvent=self.allEvents["students_organization"]
             return True
         elif self.week==3:
             self.currentEvent=self.allEvents["club_recruit"]
             return True
-        elif self.week==4:
-            self.currentEvent=self.allEvents["students_organization"]
-            return True
-        elif self.week==5:
+        elif self.week==6:
             self.currentEvent=self.allEvents["secondary_market"]
             return True
-        elif self.week==6:
+        elif self.week==9:
+            self.currentEvent=self.allEvents["lecture_ACM"]
+            return True
+        elif self.week==11:
+            self.currentEvent=self.allEvents["secondary_market"]
+            return True
+        elif self.week==14:
             self.currentEvent=self.allEvents["internship"]
             return True
         return False

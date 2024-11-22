@@ -11,6 +11,8 @@ from Animation.write_widget import TypewriterEffectWidget as new_widget
 from setting_start import MyWindow as GameLayout_setting
 from end_start import MyWindow as GameLayout_end
 from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
+import sys
+import os
 # Agent对话事件界面
 
 
@@ -202,9 +204,20 @@ class MyWindow(QMainWindow):
         self.audio_output.setVolume(0.6)
         # 将媒体播放器与音频输出连接起来
         self.player.setAudioOutput(self.audio_output)
-         # 设置要播放的音频文件路径
-        audio_file_path = 'Game/Animation/水月陵 - Raised bed.flac'
+        # 设置要播放的音频文件路径
+        def resource_path(relative_path):
+            """ Get absolute path to resource, works for dev and for PyInstaller """
+            try:
+                base_path = sys._MEIPASS
+            except Exception:
+                base_path = os.path.abspath(".")
+
+            return os.path.join(base_path, relative_path)
+
+        audio_file_path = resource_path('Game/Animation/bgm.flac')
+        # audio_file_path = 'Game/Animation/水月陵 - Raised bed.flac'
         self.player.setSource(QUrl.fromLocalFile(audio_file_path))
+        print("bgm set successfully")
 
         # 设置循环播放
         self.player.setLoops(QMediaPlayer.Loops.Infinite)
@@ -289,10 +302,10 @@ class MyWindow(QMainWindow):
         self.game_layout_Agent.pushButton_2.clicked.connect(self.agent_president)
         self.game_layout_Agent.pushButton_3.clicked.connect(self.agent_teacher)
         self.game_layout_Agent.pushButton_4.clicked.connect(self.agent_interviewer)
-        # self.game_layout_Agent.pushButton.setEnabled(False)
-        # self.game_layout_Agent.pushButton_2.setEnabled(False)
-        # self.game_layout_Agent.pushButton_3.setEnabled(False)
-        # self.game_layout_Agent.pushButton_4.setEnabled(False)
+        self.game_layout_Agent.pushButton.setEnabled(False)
+        self.game_layout_Agent.pushButton_2.setEnabled(False)
+        self.game_layout_Agent.pushButton_3.setEnabled(False)
+        self.game_layout_Agent.pushButton_4.setEnabled(False)
 
     def game_start(self):
         if self.first_start_game:

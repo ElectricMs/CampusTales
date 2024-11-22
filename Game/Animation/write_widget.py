@@ -3,6 +3,7 @@ from PySide6.QtWidgets import QApplication, QWidget,QLabel,QPushButton
 from PySide6.QtGui import QPainter, QColor, QFont, QImage, QFontMetrics,QTransform,QPixmap
 from PySide6.QtCore import QTimer, Qt,QRect,QUrl
 from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
+import os
 
 import resource.resource3_rc
 
@@ -50,8 +51,19 @@ class CustomLabel(QLabel):
         self.player.setAudioOutput(self.audio_output)
 
         # 设置要播放的音频文件路径
-        audio_file_path = 'Game/Animation/书写.wav'
+        # audio_file_path = 'Game/Animation/书写.wav'
+        def resource_path(relative_path):
+            """ Get absolute path to resource, works for dev and for PyInstaller """
+            try:
+                base_path = sys._MEIPASS
+            except Exception:
+                base_path = os.path.abspath(".")
+
+            return os.path.join(base_path, relative_path)
+
+        audio_file_path = resource_path('Game/Animation/writing.wav')
         self.player.setSource(QUrl.fromLocalFile(audio_file_path))
+        print("writing sounds set successfully")
 
         # 设置循环播放
         self.player.setLoops(QMediaPlayer.Loops.Infinite)

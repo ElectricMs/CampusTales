@@ -65,7 +65,7 @@ pyinstaller --name=CampusTales --onefile  --add-data "Game:Game" --add-data "con
 
 pyinstaller --name=CampusTales --onefile --console --add-data "Game:Game" --add-data "conversation_history.db:." --add-data "README.md:." Game\cover_start.py
 
-pyinstaller --name=CampusTales --onefile --add-data "Game:Game" --add-data "conversation_history.db:." --add-data "README.md:." --hidden-import pydantic.deprecated.decorator --icon="Game\icon.jpg" Game\cover_start.py
+pyinstaller --name=CampusTales --icon="Game\icon.ico" --onefile --add-data "Game:Game" --add-data "conversation_history.db:." --add-data "README.md:." --hidden-import pydantic.deprecated.decorator Game\cover_start.py
 
 ```
 

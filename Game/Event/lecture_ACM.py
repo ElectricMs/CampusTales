@@ -312,6 +312,7 @@ class LectureAcmEvent(Event.Event):
         self.refreshProbability()
         if self.first_start:
             if self.step == 26:
+                self.game.Ui.game_layout_Agent.pushButton_3.setEnabled(True)
                 self.game.mainlineEvents.append(["ACM竞赛", 0])
                 self.game.refreshMissionList()
             self.first_start = False

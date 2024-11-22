@@ -282,9 +282,10 @@ class StudentsOrganizationEvent(Event.Event):
     def event_end(self):
         self.refreshProbability()
         if self.first_start:
-            if self.emotion_level < 60:
+            if self.emotion_level < 30:
                 pass
             else:
+                self.game.Ui.game_layout_Agent.pushButton_2.setEnabled(True)
                 self.game.mainlineEvents.append(["学生组织", 0])
                 self.game.refreshMissionList()
         if self.agent_mode:

@@ -178,7 +178,17 @@ class TypewriterEffectWidget(QWidget):
         self.label_diary_img.setStyleSheet(u"#label_diary_img{border-image: url(:/image/resource/Strength_assign/paper2_yellow_l.png);}")
 
         # 内容
-        self.label_diary_content =CustomLabel(self, "Game/Animation/hand-removebg-preview.png", 184, 166)
+        def resource_path(relative_path):
+            """ Get absolute path to resource, works for dev and for PyInstaller """
+            try:
+                base_path = sys._MEIPASS
+            except Exception:
+                base_path = os.path.abspath(".")
+
+            return os.path.join(base_path, relative_path)
+
+        pic_path = resource_path("Game/Animation/hand-removebg-preview.png")
+        self.label_diary_content =CustomLabel(self, pic_path, 184, 166)
         self.label_diary_content.setObjectName(u"label_diary_content")
         self.label_diary_content.setGeometry(QRect(290, 42, 581, 561))
 

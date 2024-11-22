@@ -274,6 +274,7 @@ class CrushAtFirstBlushEvent(Event.Event):
             if self.emotion_level < 30:
                 pass
             else:
+                self.game.Ui.game_layout_Agent.pushButton.setEnabled(True)
                 self.game.mainlineEvents.append(["陪Crush", 0])
                 self.game.refreshMissionList()
                 self.game.refresh_left()

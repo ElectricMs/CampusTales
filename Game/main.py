@@ -179,10 +179,13 @@ class Game:
     def next(self):
         # 我暂定日记只会展示一页好了，后面再改成可以展示多页的形式
         self.Ui.game_layout_allocateEnergy.blur_recover()
-        self.loadEvent()
+        self.Ui.game_layout_allocateEnergy.label_money_value.setText(str(self.displaySetting["money"]))
+        if self.loadEvent() == False:
+            return
+        
         self.Ui.game_layout_allocateEnergy.label_content.setText(self.currentEvent.if_join()[0] + "," + self.currentEvent.if_join()[1]) 
         self.Ui.game_layout_allocateEnergy.frame_modal.setVisible(True)
-        self.Ui.game_layout_allocateEnergy.label_money_value.setText(str(self.displaySetting["money"]))
+        
         #wyd加的用于暂停定时器
         self.Ui.game_layout_allocateEnergy.widget_diary.label_diary_content.timer.stop()
         def disablePushButton():
@@ -267,10 +270,11 @@ class Game:
                 self.Ui.stacked_layout.setCurrentIndex(6)
                 self.Ui.stacked_layout.currentWidget().set_stream_text("结局：一般就业\n  你顺利进入一家小型企业工作，虽然职位一般，但积累了工作经验，逐步适应职场生活。")
             # 选择非理想工作
-            elif self.displaySetting["study"] + self.displaySetting["ability"] < 100:
+            # elif self.displaySetting["study"] + self.displaySetting["ability"] < 100:
+            else:
                 self.Ui.stacked_layout.setCurrentIndex(6)
                 self.Ui.stacked_layout.currentWidget().set_stream_text("结局：选择非理想工作\n  你选择了与专业无关的工作，虽然工作内容不理想，但希望能通过这份工作缓解经济压力，为未来的职业规划打下基础。")
-            pass
+            
 
 
     # 点击下一周时触发

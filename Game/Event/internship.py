@@ -93,7 +93,7 @@ class InternshipEvent(Event.Event):
 
        """
         
-
+        Agent.init_db()
         self.agent = Agent(name="interviewer",  context=context1)
         #self.agent = Agent2(name=self.name, context=context1)
         self.loop = asyncio.new_event_loop() # 创建一个新的事件循环 用于跑agent
